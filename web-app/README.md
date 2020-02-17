@@ -1,5 +1,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## How to setup project
+
+First go and clone the repository into your favorite editor, for example I am working in JetBrains WebStorm.
+#### 1. Open terminal and navigate into the folder for the web-app: `cd web-app`
+#### 2. For first install run command: `npm install`
+    This will install all the necessary libraries into your IDE.
+#### 3. To run the web app in the testing environment: `npm start`
+    See below for more information on this.
+ 
+
 ## Available Scripts
 
 In the project directory, you can run:
