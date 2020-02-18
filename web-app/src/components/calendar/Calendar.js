@@ -4,7 +4,7 @@ class calendar extends Component {
     render() {
         return (
             <div>
-                <span> This is where a calendar will appear. Or a date picker. Whatever</span>
+                <span> This is where a calendar will appear.</span>
             </div>
         )
     }
