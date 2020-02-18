@@ -1,10 +1,20 @@
 import React, {Component} from "react";
+import Calendar from "react-calendar";
 
 class calendar extends Component {
+    state = {
+        date: new Date(),
+    };
+
+    onChange = date => this.setState({date});
+
     render() {
         return (
             <div>
-                <span> This is where a calendar will appear.</span>
+                <Calendar
+                    onChange={this.onChange}
+                    value={this.state.date}
+                />
             </div>
         )
     }
