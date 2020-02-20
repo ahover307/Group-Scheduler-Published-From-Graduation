@@ -1,5 +1,5 @@
 import React from 'react';
-import ParamountLogo from "./components/png/ParamountLogo.png";
+import ParamountLogo from "./png/ParamountLogo.png";
 
 const SplashScreen = () => {
     return (
