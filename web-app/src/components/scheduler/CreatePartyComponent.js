@@ -6,6 +6,13 @@ const CreatePartyComponent = () => {
             <div>
                 <span className={"card-title"}> Schedule a room</span>
                 <p>Enter your information below</p>
+                <form>
+                    <label>
+                        Name:
+                        <input type={'text'} name={'name'}/>
+                    </label>
+                    <input type={'submit'} value={"Submit"}/>
+                </form>
             </div>
         </div>
     );
