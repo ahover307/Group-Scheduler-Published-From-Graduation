@@ -3,6 +3,14 @@ import Calendar from "react-calendar";
 import MainScheduler from "../scheduler/MainScheduler";
 
 class calendar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            date: new Date(),
+        }
+    }
+
     state = {
         date: new Date(),
     };
