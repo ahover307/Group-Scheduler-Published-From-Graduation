@@ -1,29 +1,20 @@
 import React, {Component} from "react";
 import Calendar from "react-calendar";
-import MainScheduler from "../scheduler/MainScheduler";
 
 class calendar extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            date: new Date(),
-        }
-    }
-
     state = {
         date: new Date(),
     };
 
     onClickDay = date => {
-        <MainScheduler date={date}/>
+        // <MainScheduler date={date}/>
     };
 
 //https://www.npmjs.com/package/react-calendar
     render() {
         return (
             <div>
-                <div className={'center'}>
+                <div className={'container center'}>
                     <Calendar
                         calendarType={"US"}
                         onClickDay={this.onClickDay}

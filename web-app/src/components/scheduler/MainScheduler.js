@@ -3,23 +3,15 @@ import TimeList from "./TimeList";
 import CreatePartyComponent from './CreatePartyComponent';
 
 class MainScheduler extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            partyDate: this.props.date,
-        }
-    }
-
     render() {
         return (
             <div className={"black-text"}>
-                <p>{this.state.date}</p>
+                {/*<p>{this.state.date}</p>*/}
                 <div className="row">
-                    <div className="col s12 m6">
+                    <div className="col s12">
                         <TimeList/>
                     </div>
-                    <div className="col s12 m5 offset-m1">
+                    <div className="col s12">
                         <CreatePartyComponent/>
                     </div>
                 </div>
