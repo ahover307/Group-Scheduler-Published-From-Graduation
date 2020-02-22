@@ -1,4 +1,6 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 const firebaseConfig = {
     apiKey: "AIzaSyBIyEdACmURTID4gh9KsJyJcbi0tCc8h-s",
@@ -11,6 +13,7 @@ const firebaseConfig = {
     measurementId: "G-J2VK2JJSJ4"
 };
 
-var fire = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
+firebase.firestore().settings({timestampsInSnapshots: true});
 
-export default fire;
+export default firebase;
