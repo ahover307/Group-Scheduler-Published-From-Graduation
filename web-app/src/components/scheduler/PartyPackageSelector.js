@@ -13,7 +13,6 @@ class PartyPackageSelector extends Component {
 
     render() {
         return (
-            <div className={'container'}>
                 <form>
                     <div className={'container'}>
                         <label>
@@ -70,9 +69,6 @@ class PartyPackageSelector extends Component {
                         </label>
                     </div>
                 </form>
-
-            </div>
-
         )
     }
 }

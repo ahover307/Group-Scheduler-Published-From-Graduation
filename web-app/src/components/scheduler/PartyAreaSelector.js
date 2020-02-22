@@ -6,7 +6,7 @@ class PartyAreaSelector extends Component {
         partyArea1: -1,
         partyArea2: -1,
         partyArea3: -1,
-        areasNeeded: 2
+        areasNeeded: 3
     };
 
 
@@ -27,6 +27,7 @@ class PartyAreaSelector extends Component {
     handleSubmit = (e) => {
         console.log('Submit submitted');
     };
+
 
     render() {
         const partyTypes = [

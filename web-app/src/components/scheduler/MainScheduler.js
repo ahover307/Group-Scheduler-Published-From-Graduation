@@ -3,17 +3,17 @@ import TimeList from "./TimeList";
 import CreatePartyComponent from './CreatePartyComponent';
 import PartyPackageSelector from "./PartyPackageSelector";
 import PartyAreaSelector from "./PartyAreaSelector";
+import M from "materialize-css";
 
 class MainScheduler extends Component {
     state = {
         partyType: 0
     };
 
-    handleChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.id
-        })
-    };
+    componentDidMount() {
+        M.AutoInit();
+        console.log('Auto init ran')
+    }
 
     render() {
         return (
