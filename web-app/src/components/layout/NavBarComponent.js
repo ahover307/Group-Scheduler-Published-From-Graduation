@@ -5,6 +5,7 @@ import ParamountLogo from '../../png/ParamountLogo.png'
 const NavBarComponent = () => {
     return (
         //TODO This will need adjusted when we add state data
+        //Todo add adjustment for making it mobile responsive
         <nav className={"nav-wrapper purple"}>
             <div className="container">
                 <Link to={'/'} className={'brand-logo'}><img src={ParamountLogo} alt={"Paramount Sports"}

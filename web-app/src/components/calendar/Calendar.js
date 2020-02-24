@@ -11,6 +11,8 @@ class calendar extends Component {
     };
 
 //https://www.npmjs.com/package/react-calendar
+    //todo make calendar on click go to the scheduler page for that date
+    //todo get the date going.
     render() {
         return (
             <div>

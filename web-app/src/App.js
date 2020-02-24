@@ -9,6 +9,9 @@ import SplashScreen from './SplashScreen';
 
 import './App.css';
 
+//todo submit to the confirmation called
+//todo go to payment before confirming
+
 function App() {
     return (
         <div>

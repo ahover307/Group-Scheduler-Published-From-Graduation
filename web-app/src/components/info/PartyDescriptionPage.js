@@ -5,6 +5,7 @@ import NinjaPartyDescription from "./NinjaPartyDescription";
 
 
 class PartyDescriptionPage extends Component {
+    //todo add css here, right now its pretty gross
     render() {
         return (
             <div className={"black-text"}>
