@@ -1,8 +1,16 @@
-const initState = {}
+const initState = {};
 
-//todo Do something with this
 const projectReducer = (state = initState, action) => {
-    return state;
-}
+    switch (action.type) {
+        case 'CREATE_PARTY_SUCCESS':
+            console.log('create project success');
+            return state;
+        case 'CREATE_PARTY_ERROR':
+            console.log('create project error');
+            return state;
+        default:
+            return state;
+    }
+};
 
-export default projectReducer()
+export default projectReducer;

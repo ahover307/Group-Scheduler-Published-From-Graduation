@@ -1,4 +1,7 @@
 import React, {Component} from "react";
+import {createParty} from "../../store/actions/partyActions";
+import connect from "react-redux/es/connect/connect";
+
 
 class CreatePartyComponent extends Component {
     state = {
@@ -16,7 +19,7 @@ class CreatePartyComponent extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        this.props.createParty(this.state);
     };
 
     render() {
@@ -65,4 +68,10 @@ class CreatePartyComponent extends Component {
     }
 }
 
-export default CreatePartyComponent;
+const mapDispatchToProps = dispatch => {
+    return {
+        createParty: (party) => dispatch(createParty(party))
+    }
+};
+
+export default connect(null, mapDispatchToProps)(CreatePartyComponent);
