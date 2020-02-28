@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FinalDetailsActivity"
+    android:background="@color/colorPrimary">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="133dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="4dp"
+        android:contentDescription="@string/logo"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@mipmap/paramount_logo" />
+
+    <EditText
+        android:id="@+id/edit_contact_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:width="164dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/edit_contact_first"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edit_contact_last"
+        app:layout_constraintTop_toBottomOf="@+id/edit_host_first" />
+
+    <EditText
+        android:id="@+id/edit_contact_last"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:width="164dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/edit_contact_last"
+        app:layout_constraintEnd_toStartOf="@+id/edit_contact_first"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_host_last" />
+
+    <EditText
+        android:id="@+id/edit_host_last"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="21dp"
+        android:width="164dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/edit_host_last"
+        app:layout_constraintEnd_toStartOf="@+id/edit_host_first"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+        android:id="@+id/edit_host_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="16dp"
+        android:width="164dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/edit_host_first"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edit_host_last"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+        android:id="@+id/edit_contact_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="@string/edit_contact_email"
+        app:layout_constraintStart_toStartOf="@+id/edit_contact_last"
+        app:layout_constraintTop_toBottomOf="@+id/edit_contact_last" />
+
+    <EditText
+        android:id="@+id/edit_contact_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:width="86dp"
+        android:ems="10"
+        android:inputType="phone"
+        android:text="@string/edit_contact_phone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/edit_contact_email"
+        app:layout_constraintEnd_toEndOf="@+id/edit_contact_first"
+        app:layout_constraintStart_toEndOf="@+id/edit_contact_email" />
+
+    <Button
+        android:id="@+id/button_details_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorAccent"
+        android:text="@string/button_submit"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/edit_contact_phone" />
+</androidx.constraintlayout.widget.ConstraintLayout>
