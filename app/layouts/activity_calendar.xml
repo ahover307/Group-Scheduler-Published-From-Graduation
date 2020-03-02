@@ -18,7 +18,7 @@
         android:text="@string/button_submit"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/calendarView" />
+        app:layout_constraintEnd_toEndOf="@+id/datePicker1" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -46,24 +46,36 @@
         android:id="@+id/text_calendarInstructs"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:text="@string/text_calendarInstructions"
         android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/calendarView"
-        app:layout_constraintEnd_toEndOf="@+id/calendarView"
-        app:layout_constraintStart_toStartOf="@+id/calendarView" />
+        app:layout_constraintBottom_toTopOf="@+id/datePicker1"
+        app:layout_constraintEnd_toEndOf="@+id/datePicker1"
+        app:layout_constraintStart_toStartOf="@+id/datePicker1"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <CalendarView
-        android:id="@+id/calendarView"
+<!--    <CalendarView-->
+<!--        android:id="@+id/calendarView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <DatePicker
+        android:id="@+id/datePicker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:datePickerMode="calendar"
+        app:layout_constraintBottom_toTopOf="@+id/button_details_submit2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
