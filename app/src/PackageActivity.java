@@ -2,12 +2,17 @@ package edu.psu.jbr5410.paramount;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class PackageActivity extends AppCompatActivity {
@@ -18,12 +23,16 @@ public class PackageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_package);
 
         Intent intent = getIntent();
-        Long date = intent.getLongExtra("date", -1);
-        Date d = new Date();
-        d.setTime(date);
+
+        int day = intent.getIntExtra("day", 1);
+        int month = intent.getIntExtra("month", 1);
+        int year = intent.getIntExtra("year", 1);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
 
         EditText textDate = findViewById(R.id.text_date);
-        textDate.setText(d.toString());
+        textDate.setText(calendar.getTime().toString());
     }
 
     public void Submit(View view) {
@@ -40,4 +49,5 @@ public class PackageActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+
 }
