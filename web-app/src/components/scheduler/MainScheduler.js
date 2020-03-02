@@ -5,18 +5,17 @@ import PartyPackageSelector from "./PartyPackageSelector";
 import PartyAreaSelector from "./PartyAreaSelector";
 import M from "materialize-css";
 
-
-
-
 class MainScheduler extends Component {
     state = {
         partyType: 0
     };
+
     componentDidMount() {
         M.AutoInit();
         console.log('Auto init ran')
     }
 
+    //todo database and state
     render() {
         return (
             <div className={"black-text"}>
@@ -36,11 +35,8 @@ class MainScheduler extends Component {
                     </div>
                 </div>
             </div>
-
-
         );
     }
 }
-
 
 export default MainScheduler;

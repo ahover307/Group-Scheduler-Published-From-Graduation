@@ -6,7 +6,24 @@ class PartyAreaSelector extends Component {
         partyArea1: -1,
         partyArea2: -1,
         partyArea3: -1,
-        areasNeeded: 3
+        partyPackage: 6
+    };
+
+    areasNeeded = () => {
+        if (this.state.partyPackage === 0 || this.state.partyPackage === 1)
+            return 1;
+        else if (this.state.partyPackage === 2)
+            return 2;
+        else if (this.state.partyPackage === 3)
+            return 3;
+        else if (this.state.partyPackage === 5)
+            return 1;
+        else if (this.state.partyPackage === 6 || this.state.partyPackage === 7 || this.state.partyPackage === 8)
+            return 2;
+        else if (this.state.partyPackage === 9)
+            return 1;
+        else
+            return -1;
     };
 
 
@@ -22,6 +39,9 @@ class PartyAreaSelector extends Component {
         if ('third' === e.target.name) {
             this.setState({partyArea3: e.target.value});
         }
+
+        console.log(this.state);
+        console.log(this.areasNeeded())
     };
 
     handleSubmit = (e) => {
@@ -50,7 +70,7 @@ class PartyAreaSelector extends Component {
                     <form action={'#'} onSubmit={this.handleSubmit}>
                         <div className={'input-field'}>
                             <select name={'first'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.state.areasNeeded < 1} onChange={this.handleChange}>
+                                    disabled={this.areasNeeded() < 1} onChange={this.handleChange}>
                                 <option value={''} disabled={true}>Choose First Party Area</option>
                                 {optionsList}
                             </select>
@@ -58,7 +78,7 @@ class PartyAreaSelector extends Component {
 
                         <div className="input-field">
                             <select name={'second'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.state.areasNeeded < 2} onChange={this.handleChange}>
+                                    disabled={this.areasNeeded() < 2} onChange={this.handleChange}>
                                 <option value={''} disabled>Choose Second Party Area</option>
                                 {optionsList}
                             </select>
@@ -66,7 +86,7 @@ class PartyAreaSelector extends Component {
 
                         <div className="input-field">
                             <select name={'third'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.state.areasNeeded < 3} onChange={this.handleChange}>
+                                    disabled={this.areasNeeded() < 3} onChange={this.handleChange}>
                                 <option value={''} disabled>Choose Third Party Area</option>
                                 {optionsList}
                             </select>

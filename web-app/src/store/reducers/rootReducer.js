@@ -1,11 +1,11 @@
 import authReducer from "./authReducer";
-import projectReducer from "./projectReducer";
+import partyReducer from "./partyReducer";
 import {combineReducers} from "redux";
 
 //todo this is not done
 const rootReducer = combineReducers({
     auth: authReducer,
-    project: projectReducer
+    party: partyReducer
 });
 
 export default rootReducer
