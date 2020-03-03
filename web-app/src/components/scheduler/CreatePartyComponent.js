@@ -24,7 +24,7 @@ class CreatePartyComponent extends Component {
 
     render() {
         return (
-            <div className={"container"}>
+            <div className={"container"} style={{width: '60%'}}>
                 <form onSubmit={this.handleSubmit}>
                     <h5> Schedule a room</h5>
 
