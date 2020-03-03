@@ -5,26 +5,20 @@ import PartyPackageSelector from "./PartyPackageSelector";
 import PartyAreaSelector from "./PartyAreaSelector";
 import M from "materialize-css";
 
-
-
-
-
 class MainScheduler extends Component {
     state = {
         partyType: 0
     };
+
     componentDidMount() {
         M.AutoInit();
-
         console.log('Auto init ran')
     }
-
-
 
     render() {
         return (
 
-            <div className="carousel carousel-slider center " style={{height: '500px'}}  >
+            <div className="carousel carousel-slider center " style={{height: '500px'}}>
                 <div className="carousel-item white-text" style={{padding: '5%'}}>
                     <PartyPackageSelector/>
                     <div className="carousel-fixed-item center">
