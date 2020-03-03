@@ -1,4 +1,5 @@
 import React from 'react';
+import './DescriptionNotes.css';
 
 const DescriptionNotes = () => {
     return (
@@ -7,7 +8,7 @@ const DescriptionNotes = () => {
 
             <br/>
 
-            <div>
+            <div class = "cent">
                 <strong>MAIN GYM</strong>
                 <p>
                     Our main gym provides entertainment for all ages. Your party helper will run your party however you
@@ -19,7 +20,7 @@ const DescriptionNotes = () => {
 
             <br/>
 
-            <div>
+            <div class = "cent">
                 <strong>ROCK WALL</strong>
                 <p>
                     Our Rock Wall is a great place to learn a new skill or improve your technique while having fun with
@@ -30,7 +31,7 @@ const DescriptionNotes = () => {
 
             <br/>
 
-            <div>
+            <div class = "cent">
                 <strong>KIDMAZIUM</strong>
                 <p>
                     The Kidmazium is a multi-level climbing and play structure for children aged up to 12 years.
@@ -41,7 +42,7 @@ const DescriptionNotes = () => {
 
             <br/>
 
-            <div>
+            <div class = "cent">
                 <strong>PRESCHOOL PARTY</strong>
                 <p>
                     Our preschool gym is the perfect size for your preschooler and friends!

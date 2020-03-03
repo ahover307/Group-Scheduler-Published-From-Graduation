@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Calendar from "react-calendar";
+import './Calendar.css';
 
 class calendar extends Component {
     state = {
@@ -15,7 +16,7 @@ class calendar extends Component {
     //todo get the date going.
     render() {
         return (
-            <div>
+            <div class = "cent">
                 <div className={'container center'}>
                     <Calendar
                         calendarType={"US"}
