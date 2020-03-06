@@ -7,6 +7,10 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
     response.send("Hello from Firebase!");
 });
 
-exports.partyTime = functions.https.onRequest((request, response) => {
-    response.send("party times");
+exports.partyTime = functions.https.onCall((data, context) => {
+    const partyPackage = data.partyPackage;
+
+    const uid = context.auth.uid;
+
+    return {};
 });
