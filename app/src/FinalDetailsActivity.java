@@ -12,10 +12,11 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FinalDetailsActivity extends AppCompatActivity {
     Button save;
-    DatabaseReference ref;
+    FirebaseFirestore ref;
     EditText name, host, email, phoneNumber;
     Party party;
     String date, partyPackage, room;
@@ -37,7 +38,7 @@ public class FinalDetailsActivity extends AppCompatActivity {
 
         save = (Button) findViewById(R.id.button_details_submit);
         party = new Party();
-        ref = FirebaseDatabase.getInstance().getReference().child("Parties");
+        ref = FirebaseFirestore.getInstance();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +50,7 @@ public class FinalDetailsActivity extends AppCompatActivity {
                 party.setDate(date);
                 party.setPartyPackage(partyPackage);
                 party.setRoom(room);
-                ref.push().setValue(party);
+                ref.collection("Parties").add(party);
 
                 Toast.makeText(FinalDetailsActivity.this, "Done", Toast.LENGTH_LONG).show();
 
