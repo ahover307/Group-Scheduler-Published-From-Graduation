@@ -1,9 +1,13 @@
+import $ from 'jquery'
 import React, {Component} from "react";
 import TimeList from "./TimeList";
 import CreatePartyComponent from './CreatePartyComponent';
 import PartyPackageSelector from "./PartyPackageSelector";
 import PartyAreaSelector from "./PartyAreaSelector";
 import M from "materialize-css";
+
+import {Carousel} from 'react-materialize'
+
 
 class MainScheduler extends Component {
     state = {
@@ -15,42 +19,70 @@ class MainScheduler extends Component {
         console.log('Auto init ran')
     }
 
+    nextEvent() {
+
+        $(document).ready(function () {
+            $("#myCarousel").on('click', '#btnContinue', function (e) {
+
+                e.stopPropagation();
+                const el = document.getElementById("myCarousel");
+                const instance = M.Carousel.getInstance(el);
+                instance.next();
+
+            });
+        });
+
+    }
+
+    prevEvent() {
+        $(document).ready(function () {
+            $("#myCarousel").on('click','#btnPrevious', function (e) {
+
+                e.stopPropagation();
+                const el = document.getElementById("myCarousel");
+                const instance = M.Carousel.getInstance(el);
+                instance.prev();
+
+            });
+        });
+
+    }
+
+
     render() {
         return (
-
-            <div className="carousel carousel-slider center " style={{height: '500px'}}>
-                <div className="carousel-item white-text" style={{padding: '5%'}}>
+            <Carousel
+                className={"center carousel"}
+                options={{
+                    fullWidth: true,
+                    indicators: false
+                }}
+                carouselId={'myCarousel'}>
+                <div className={'carousel-item'}>
                     <PartyPackageSelector/>
-                    <div className="carousel-fixed-item center">
-                        <a className="btn waves-effect blue white-text darken-text-2">Next</a>
-                    </div>
+                    <button className={'btn next'} id={"btnContinue"} onClick={this.nextEvent()}>Next</button>
                 </div>
-                <div className="carousel-item  white-text" style={{padding: '5%'}}>
+                <div className={'carousel-item'}>
                     <PartyAreaSelector/>
-                    <div className="carousel-fixed-item ">
-                        <a className="btn waves-effect red white-text darken-text-2">Previous</a>
-                        <a className="btn waves-effect blue  white-text darken-text-2">Next</a>
-                    </div>
+                    <button className={'btn'} id={"btnPrevious"} onClick={this.prevEvent()}>Back</button>
+                    <button className={'btn'} id={"btnContinue"} onClick={this.nextEvent()}>Next</button>
                 </div>
-                <div className="carousel-item  white-text" style={{padding: '5%'}}>
+                <div className={'carousel-item'}>
                     <TimeList/>
-                    <div className="carousel-fixed-item center">
-                        <a className="btn waves-effect red  white-text darken-text-2">Previous</a>
-                        <a className="btn waves-effect blue  white-text darken-text-2">Next</a>
-                    </div>
+                    <button className={'btn'} id={"btnPrevious"} onClick={this.prevEvent()}>Back</button>
+                    <button className={'btn'} id={"btnContinue"} onClick={this.nextEvent()}>Next</button>
                 </div>
-                <div className="carousel-item white-text">
+                <div className={'carousel-item'}>
                     <CreatePartyComponent/>
-                    <div className="carousel-fixed-item center">
-                        <a className="btn waves-effect red  white-text darken-text-2">Previous</a>
-                        <a className="btn waves-effect blue  white-text darken-text-2">Submit</a>
-                    </div>
+                    <button className={'btn'} id={"btnContinue"} onClick={this.nextEvent()}>Next</button>
                 </div>
-            </div>
+            </Carousel>
+
+        )
 
 
-        );
     }
 }
 
 export default MainScheduler;
+
