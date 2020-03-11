@@ -1,6 +1,7 @@
 import React from 'react';
 import ParamountLogo from "./png/ParamountLogo.png";
 
+
 const SplashScreen = () => {
     return (
         <header className="App-header">
