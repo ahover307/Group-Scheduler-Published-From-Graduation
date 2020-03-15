@@ -5,8 +5,6 @@ import * as firebase from "firebase";
 class CreatePartyComponent extends Component {
 
     state = {
-        dayOfTheWeek: 'saturday',
-        party: 'main',
         partyName: '',
         participantsAge: 0,
         contactName: '',
