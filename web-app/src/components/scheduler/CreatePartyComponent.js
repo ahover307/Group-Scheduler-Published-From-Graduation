@@ -42,7 +42,8 @@ class CreatePartyComponent extends Component {
         var functions = firebase.functions;
 
         let letsCreateAParty = firebase.functions().httpsCallable('checkPartyTime');
-        letsCreateAParty(this.state);
+        let timesAvailableArray = letsCreateAParty(this.state);
+        console.log(timesAvailableArray);
     };
 
 
