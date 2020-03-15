@@ -57,7 +57,8 @@ class MainScheduler extends Component {
                     fullWidth: true,
                     indicators: false
                 }}
-                carouselId={'myCarousel'}>
+                carouselId={'myCarousel'}
+                style = {{height: '750px'}}>
                 <div className={'carousel-item'}>
                     <PartyPackageSelector/>
                     <button className={'btn next'} id={"btnContinue"} onClick={this.nextEvent()}>Next</button>
@@ -72,7 +73,7 @@ class MainScheduler extends Component {
                     <button className={'btn'} id={"btnPrevious"} onClick={this.prevEvent()}>Back</button>
                     <button className={'btn'} id={"btnContinue"} onClick={this.nextEvent()}>Next</button>
                 </div>
-                <div className={'carousel-item'}>
+                <div className={'carousel-item'} style={{height : '700px'}}>
                     <CreatePartyComponent/>
                     <button className={'btn'} id={"btnContinue"} onClick={this.nextEvent()}>Next</button>
                 </div>

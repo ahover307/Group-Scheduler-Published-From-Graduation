@@ -4,6 +4,7 @@ import connect from "react-redux/es/connect/connect";
 
 
 class CreatePartyComponent extends Component {
+
     state = {
         partyName: '',
         hostName: '',
@@ -15,12 +16,16 @@ class CreatePartyComponent extends Component {
         this.setState({
             [e.target.id]: e.target.value
         });
+
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.createParty(this.state);
     };
+
+
+
 
     render() {
         return (
@@ -68,10 +73,7 @@ class CreatePartyComponent extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        createParty: (party) => dispatch(createParty(party))
-    }
-};
 
-export default connect(null, mapDispatchToProps)(CreatePartyComponent);
+
+
+export default CreatePartyComponent

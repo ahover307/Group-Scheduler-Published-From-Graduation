@@ -11,6 +11,8 @@ class PartyPackageSelector extends Component {
         console.log(e.target.id);
     };
 
+
+
     render() {
         return (
             <form>
