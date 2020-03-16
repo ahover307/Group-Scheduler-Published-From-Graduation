@@ -1,13 +1,6 @@
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 
-firebase.initializeApp({
-    apiKey: '### FIREBASE API KEY ###',
-    authDomain: '### FIREBASE AUTH DOMAIN ###',
-    projectId: '### CLOUD FUNCTIONS PROJECT ID ###'
-    databaseURL: 'https://### YOUR DATABASE NAME ###.firebaseio.com',
-});
-
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -26,7 +19,7 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
     const partiesRef = db.collection('Parties');
     let query;
 
-    //Create reference to reserved times table
+    //TODO Create reference to reserved times table
 
     //Array to return
     let times = [[]];
@@ -37,7 +30,6 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
         let filledTimes = [[]];
         //Array of times that are reserved
         let outsideReservedHours = [];
-        //TODO required party length
         let requiredPartyLength;
         if (partyPackage === 0) {
             requiredPartyLength = 12;
@@ -49,54 +41,106 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
 
         let openHours;
         let closeHours;
+
         const hoursRef = db.collection('NormallyAvailable').doc(data.dayOfTheWeek);
         let getDoc = hoursRef.get()
             .then(doc => {
                 if (!doc.exists) {
                     //TODO throw error here
+                    return 0;
                 } else {
-                    openHours = doc.data().start;
-                    closeHours = doc.data().end;
+                    return [doc.data().start, doc.data().end];
                 }
             }).catch(err => {
-                //TODO Throw more errors here
+                // Throwing an HttpsError so that the client gets the error details.
+                throw new functions.https.HttpsError('failed-unsuccessfully', 'Could not find open hours: ' + err);
             });
+        openHours = getDoc[0];
+        closeHours = getDoc[1];
 
 
         //TODO check database for any special reserved times. If the query returns an error for not finding a document, take that as not having any special times to book out.
-
-
-        //Finish setting up the query
-        //TODO get the date to check the query correctly.
+        //Query the database. Save one list for area requested.
         if (data.party === 'main') {
-            query = partiesRef.where('date', '==', data.day).where('mainGymStart', '=>', 0);
-        } else if (data.party === 'km') {
-            query = partiesRef.where('date', '==', data.day).where('kmStart', '=>', 0);
-        } else if (data.party === 'rw') {
-            query = partiesRef.where('date', '==', data.day).where('rwStart', '=>', 0);
-        } else if (data.party === 'preschool') {
-            query = partiesRef.where('date', '==', data.day).where('preschoolStart', '=>', 0);
-        }
-        //TODO throw error on else
-        else {
-            console.log('error');
-        }
+            filledTimes = partiesRef.where('date', '==', data.partyDate).get()
+                .then((snapshot) => {
+                    let temp = [];
+                    //Put each into a list that we will keep
+                    snapshot.forEach(doc => {
+                        //put the things in a list and keep em there
+                        temp.push([doc.data().getKey('mainGymStart'), doc.data().getKey('mainGymEnd')])
+                    });
 
-        //Query the database. Save one list for each area requested.
-        query.get()
-            .then((snapshot) => {
-                //Put each into a list that we will keep
-                snapshot.foreach(doc => {
-                    //put the things in a list and keep em there
-                    //TODO Find out why the data function is underlined
-                    filledTimes.push([doc.data().getKey('mainGymStart'), doc.data().getKey('mainGymEnd')])
+                    return temp;
                 })
-            })
-            .catch((err) => {
-                //TODO Error
-                //do a real error here
-                console.log('Error getting documents', err)
-            });
+                .catch((err) => {
+                    // Throwing an HttpsError so that the client gets the error details.
+                    throw new functions.https.HttpsError('failed-unsuccessfully', 'failed in mg doc search: ' + err);
+                });
+        } else if (data.party === 'km') {
+            filledTimes = partiesRef.where('date', '==', data.partyDate).get()
+                .then((snapshot) => {
+                    let temp = [];
+                    //Put each into a list that we will keep
+                    snapshot.forEach(doc => {
+                        //put the things in a list and keep em there
+                        temp.push([doc.data().getKey('kmStart'), doc.data().getKey('kmEnd')])
+                    });
+                    return temp;
+                })
+                .catch((err) => {
+                    // Throwing an HttpsError so that the client gets the error details.
+                    throw new functions.https.HttpsError('failed-unsuccessfully', 'failed in km doc search: ' + err);
+                });
+        } else if (data.party === 'rw') {
+            filledTimes = partiesRef.where('date', '==', data.partyDate).get()
+                .then((snapshot) => {
+                    let temp = [];
+                    //Put each into a list that we will keep
+                    snapshot.forEach(doc => {
+                        //put the things in a list and keep em there
+                        temp.push([doc.data().getKey('rwStart'), doc.data().getKey('rwEnd')])
+                    })
+                    return temp;
+                })
+                .catch((err) => {
+                    // Throwing an HttpsError so that the client gets the error details.
+                    throw new functions.https.HttpsError('failed-unsuccessfully', 'failed in rw doc search: ' + err);
+                });
+        } else if (data.party === 'preschool') {
+            filledTimes = partiesRef.where('date', '==', data.partyDate).get()
+                .then((snapshot) => {
+                    let temp = [];
+                    //Put each into a list that we will keep
+                    snapshot.forEach(doc => {
+                        //put the things in a list and keep em there
+                        temp.push([doc.data().getKey('preschoolStart'), doc.data().getKey('preschoolEnd')])
+                    });
+                    return temp;
+                })
+                .catch((err) => {
+                    // Throwing an HttpsError so that the client gets the error details.
+                    throw new functions.https.HttpsError('failed-unsuccessfully', 'failed in preschool doc search: ' + err);
+                });
+        } else if (data.party === 'ninja') {
+            filledTimes = partiesRef.where('date', '==', data.partyDate).get()
+                .then((snapshot) => {
+                    let temp = [];
+                    //Put each into a list that we will keep
+                    snapshot.forEach(doc => {
+                        //put the things in a list and keep em there
+                        temp.push([doc.data().getKey('ninjaStart'), doc.data().getKey('ninjaEnd')])
+                    });
+                    return temp;
+                })
+                .catch((err) => {
+                    // Throwing an HttpsError so that the client gets the error details.
+                    throw new functions.https.HttpsError('failed-unsuccessfully', 'failed in ninja doc search: ' + err);
+                });
+        } else {
+            // Throwing an HttpsError so that the client gets the error details.
+            throw new functions.https.HttpsError('failed-unsuccessfully', 'failed in the else somewhere');
+        }
 
         //Array of available times for party room - Must check rules for these times
         let availableTimes = [];
@@ -110,6 +154,8 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
         }
         //TODO Check of the specialized reserved times
         // for (let i = ....
+
+
         //Mark off the other parties from the reserved times
         for (let i = 0; i < filledTimes.length; i++) {
             let start = filledTimes[i][0];
@@ -141,14 +187,14 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
         }
 
     }
-    //If it has two rooms to handle
-    else if (partyPackage === 2 || partyPackage === 6 || partyPackage === 7 || partyPackage === 8) {
-
-    }
-    //If it has a three rooms to handle
-    else if (partyPackage === 3) {
-
-    }
+    // //If it has two rooms to handle
+    // else if (partyPackage === 2 || partyPackage === 6 || partyPackage === 7 || partyPackage === 8) {
+    //
+    // }
+    // //If it has a three rooms to handle
+    // else if (partyPackage === 3) {
+    //
+    // }
 
 
     //Return list of available times.

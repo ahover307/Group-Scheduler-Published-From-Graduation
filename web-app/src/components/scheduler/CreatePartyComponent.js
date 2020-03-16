@@ -1,16 +1,32 @@
 import React, {Component} from "react";
-import {createParty} from "../../store/actions/partyActions";
-import connect from "react-redux/es/connect/connect";
+import * as firebase from "firebase";
 
 
 class CreatePartyComponent extends Component {
 
     state = {
         partyName: '',
-        hostName: '',
+        participantsAge: 0,
+        contactName: '',
         email: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        payPalInfo: 0,
+        partyDate: '',
+        partyStartTime: 0,
+        partyEndTime: 0,
+        partyPackage: 0,
+        mainGymStart: 0,
+        mainGymEnd: 0,
+        kmStart: 0,
+        kmEnd: 0,
+        rwGymStart: 0,
+        rwGymEnd: 0,
+        preschoolStart: 0,
+        preschoolEnd: 0,
+        ninjaStart: 0,
+        ninjaEnd: 0,
     };
+
 
     handleChange = (e) => {
         this.setState({
@@ -22,6 +38,12 @@ class CreatePartyComponent extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.createParty(this.state);
+
+        var functions = firebase.functions;
+
+        let letsCreateAParty = firebase.functions().httpsCallable('checkPartyTime');
+        let timesAvailableArray = letsCreateAParty(this.state);
+        console.log(timesAvailableArray);
     };
 
 
