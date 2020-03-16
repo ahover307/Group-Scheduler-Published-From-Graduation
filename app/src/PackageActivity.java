@@ -36,13 +36,18 @@ public class PackageActivity extends AppCompatActivity {
     }
 
     public void Submit(View view) {
-        Intent intent = new Intent(this, RoomActivity.class);
+        Spinner packageSpinner = findViewById(R.id.spinner_packages);
+        String partyPackage = packageSpinner.getSelectedItem().toString();
+        Intent intent;
+        if (partyPackage.equals("Double Play"))
+            intent = new Intent(this, TwoRoomActivity.class);
+        else if (partyPackage.equals("Triple Play"))
+            intent = new Intent(this, ThreeRoomActivity.class);
+        else
+            intent = new Intent(this, RoomActivity.class);
 
         EditText textDate = findViewById(R.id.text_date);
         String date = textDate.getText().toString();
-
-        Spinner packageSpinner = findViewById(R.id.spinner_packages);
-        String partyPackage = packageSpinner.getSelectedItem().toString();
 
         intent.putExtra("date", date);
         intent.putExtra("package", partyPackage);
