@@ -36,13 +36,17 @@ class MainSchedulerCollaps extends Component {
         rwGymStart: 0
     };
 
+    // Update state from PartyPackageSelector to MainScheduler
     callBackFunctionPartyPackage = (childData) => {
         this.setState({
             partyPackage: childData
         })
     };
 
+    // Update state from PartyAreaSelector to MainScheduler
 
+
+    // Update state from CreatePartyComponent to MainScheduler
     callbackFunctionPartyName = (childData) => {
         this.setState({
             partyName: childData,
@@ -63,10 +67,6 @@ class MainSchedulerCollaps extends Component {
             phoneNumber: childData,
         })
     };
-
-    preventOpenPartyArea () {
-        $(".PartyArea").on("click", function(e) { e.stopPropagation(); });
-    }
 
 
     componentDidMount() {

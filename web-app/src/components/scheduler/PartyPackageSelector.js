@@ -5,14 +5,10 @@ class PartyPackageSelector extends Component {
         partyPackage: 0
     };
 
-
     handleChange = (e) => {
-
         this.props.parentCallBackPartyPackage(e.target.id)
         console.log(e.target.id);
     };
-
-
 
     render() {
         return (

@@ -3,7 +3,6 @@ import * as firebase from "firebase";
 
 
 class CreatePartyComponent extends Component {
-
     state = {
         partyName: '',
         participantsAge: 0,
@@ -27,9 +26,6 @@ class CreatePartyComponent extends Component {
         ninjaEnd: 0,
     };
 
-
-
-
     render() {
         return (
             <div className={"container"} style={{width: '60%'}}>
@@ -43,7 +39,6 @@ class CreatePartyComponent extends Component {
                             this.props.parentCallbackPartyName(e.target.value);
                         }}/>
                         <span className="helper-text" data-error="Please enter in the name of the party person"/>
-
                     </div>
 
                     <div className={'input-field'}>
@@ -79,8 +74,6 @@ class CreatePartyComponent extends Component {
         );
     }
 }
-
-
 
 
 export default CreatePartyComponent

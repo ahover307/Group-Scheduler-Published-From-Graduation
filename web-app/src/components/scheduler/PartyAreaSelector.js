@@ -9,25 +9,23 @@ class PartyAreaSelector extends Component {
         partyPackage: 0
     };
 
-
+    // Do not change it to ===, for some reason it doesn't work
     areasNeeded = () => {
-        console.log(this.props.data)
-        if (this.props.data === 0 || this.props.data === 1)
+        if (this.props.data == 0 || this.props.data == 1)
             return 1;
-        else if (this.props.data === 2)
+        else if (this.props.data == 2)
             return 2;
-        else if (this.props.data === 3)
+        else if (this.props.data == 3)
             return 3;
-        else if (this.props.data === 5)
+        else if (this.props.data == 5)
             return 1;
-        else if (this.props.data === 6 || this.props.data === 7 || this.props.data === 8)
+        else if (this.props.data == 6 || this.props.data == 7 || this.props.data == 8)
             return 2;
-        else if (this.props.data === 9)
+        else if (this.props.data == 9)
             return 1;
         else
             return -1;
     };
-
 
     handleChange = (e) => {
         if ('first' === e.target.name) {
@@ -49,7 +47,6 @@ class PartyAreaSelector extends Component {
     handleSubmit = (e) => {
         console.log('Submit submitted');
     };
-    componentWillReceiveProps(newProps) { this.setState(newProps); }
 
     render() {
         const partyTypes = [
@@ -58,8 +55,8 @@ class PartyAreaSelector extends Component {
             'Preschool',
             'Rock Wall'
         ];
-        const optionsList = [];
 
+        const optionsList = [];
         for (const [index, value] of partyTypes.entries()) {
             optionsList.push(
                 <option key={index} value={index}>{value}</option>
@@ -70,7 +67,6 @@ class PartyAreaSelector extends Component {
             <div className={'container'}>
                 <div className={'container'}>
                     <form action={'#'} onSubmit={this.handleSubmit}>
-
                         <div className={'input-field'}>
                             <select name={'first'} className={'browser-default'} defaultValue={''}
                                     disabled={this.areasNeeded() < 1} onChange={this.handleChange}>
@@ -86,7 +82,6 @@ class PartyAreaSelector extends Component {
                                 {optionsList}
                             </select>
                         </div>
-
                         <div className="input-field">
                             <select name={'third'} className={'browser-default'} defaultValue={''}
                                     disabled={this.areasNeeded() < 3} onChange={this.handleChange}>
