@@ -6,21 +6,23 @@ class PartyAreaSelector extends Component {
         partyArea1: -1,
         partyArea2: -1,
         partyArea3: -1,
-        partyPackage: 6
+        partyPackage: 0
     };
 
+
     areasNeeded = () => {
-        if (this.state.partyPackage === 0 || this.state.partyPackage === 1)
+        console.log(this.props.data)
+        if (this.props.data === 0 || this.props.data === 1)
             return 1;
-        else if (this.state.partyPackage === 2)
+        else if (this.props.data === 2)
             return 2;
-        else if (this.state.partyPackage === 3)
+        else if (this.props.data === 3)
             return 3;
-        else if (this.state.partyPackage === 5)
+        else if (this.props.data === 5)
             return 1;
-        else if (this.state.partyPackage === 6 || this.state.partyPackage === 7 || this.state.partyPackage === 8)
+        else if (this.props.data === 6 || this.props.data === 7 || this.props.data === 8)
             return 2;
-        else if (this.state.partyPackage === 9)
+        else if (this.props.data === 9)
             return 1;
         else
             return -1;
@@ -47,7 +49,7 @@ class PartyAreaSelector extends Component {
     handleSubmit = (e) => {
         console.log('Submit submitted');
     };
-
+    componentWillReceiveProps(newProps) { this.setState(newProps); }
 
     render() {
         const partyTypes = [
@@ -68,6 +70,7 @@ class PartyAreaSelector extends Component {
             <div className={'container'}>
                 <div className={'container'}>
                     <form action={'#'} onSubmit={this.handleSubmit}>
+
                         <div className={'input-field'}>
                             <select name={'first'} className={'browser-default'} defaultValue={''}
                                     disabled={this.areasNeeded() < 1} onChange={this.handleChange}>

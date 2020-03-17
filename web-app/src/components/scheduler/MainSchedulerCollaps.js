@@ -8,6 +8,7 @@ import M from "materialize-css";
 import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
 import {createParty} from "../../store/actions/partyActions";
 import connect from "react-redux/es/connect/connect";
+import * as firebase from "firebase";
 
 
 class MainSchedulerCollaps extends Component {
@@ -35,14 +36,53 @@ class MainSchedulerCollaps extends Component {
         rwGymStart: 0
     };
 
+    callBackFunctionPartyPackage = (childData) => {
+        this.setState({
+            partyPackage: childData
+        })
+    };
+
+
+    callbackFunctionPartyName = (childData) => {
+        this.setState({
+            partyName: childData,
+        })
+    };
+    callbackFunctionHostName = (childData) => {
+        this.setState({
+            hostName: childData,
+        })
+    };
+    callbackFunctionEmail = (childData) => {
+        this.setState({
+            email: childData,
+        })
+    };
+    callbackFunctionPhoneNumber = (childData) => {
+        this.setState({
+            phoneNumber: childData,
+        })
+    };
+
+    preventOpenPartyArea () {
+        $(".PartyArea").on("click", function(e) { e.stopPropagation(); });
+    }
+
+
     componentDidMount() {
         M.AutoInit();
         console.log('Auto init ran')
     }
 
     handleSubmit = (e) => {
+
         e.preventDefault();
         this.props.createParty(this.state);
+
+        // const functions = firebase.functions;
+        // let letsCreateAParty = functions.httpsCallable('checkPartyTime');
+        // let timesAvailableArray = letsCreateAParty(this.state);
+        // console.log(timesAvailableArray);
     };
 
 
@@ -50,38 +90,43 @@ class MainSchedulerCollaps extends Component {
 
     render() {
         return (
-            <Collapsible accordion>
+            <Collapsible popout>
                 <CollapsibleItem
                     expanded={true}
                     header="Select Party Package"
-                    icon={<Icon>filter_drama</Icon>}
+                    icon={<Icon>check</Icon>}
                     node="div"
+                    className={'PartyPackage'}
                 >
-                    <PartyPackageSelector/>
+                    <PartyPackageSelector parentCallBackPartyPackage = {this.callBackFunctionPartyPackage}/>
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
                     header="Select Party Area"
                     icon={<Icon>place</Icon>}
                     node="div"
+                    className={'PartyArea'}
                 >
-                    <PartyAreaSelector/>
+                    <PartyAreaSelector data = {this.state.partyPackage}/>
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
                     header="Select a Time Slot"
-                    icon={<Icon>whatshot</Icon>}
+                    icon={<Icon>watch</Icon>}
                     node="div"
-                >
+                    className={'TimeList'}
+                    >
                     <TimeList/>
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
                     header="Enter your final information"
-                    icon={<Icon>whatshot</Icon>}
+                    icon={<Icon>info</Icon>}
                     node="div"
+                    className={'Info'}
                 >
-                    <CreatePartyComponent/>
+                    <CreatePartyComponent parentCallbackPartyName = {this.callbackFunctionPartyName} parentCallBackHostName = {this.callbackFunctionHostName}
+                    parentCallBackEmail = {this.callbackFunctionEmail} parentCallBackPhoneNumber = {this.callbackFunctionPhoneNumber}/>
                 </CollapsibleItem>
                 <div className={'input-field'}>
                     <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>

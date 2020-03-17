@@ -10,6 +10,8 @@ import {Carousel} from 'react-materialize'
 
 
 class MainScheduler extends Component {
+
+
     state = {
         partyName: '',
         participantsAge: 0,

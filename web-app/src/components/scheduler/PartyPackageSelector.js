@@ -7,7 +7,8 @@ class PartyPackageSelector extends Component {
 
 
     handleChange = (e) => {
-        this.setState({partyPackage: e.target.id});
+
+        this.props.parentCallBackPartyPackage(e.target.id)
         console.log(e.target.id);
     };
 
@@ -15,7 +16,7 @@ class PartyPackageSelector extends Component {
 
     render() {
         return (
-            <form>
+            <form aria-required={'true'}>
                 <div className={'container'}>
                     <label>
                         <input name={'partyType'} id={'1'} type={'radio'} onChange={this.handleChange}/>
