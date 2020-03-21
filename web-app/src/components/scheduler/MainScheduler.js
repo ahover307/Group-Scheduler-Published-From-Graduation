@@ -25,7 +25,7 @@ class MainScheduler extends Component {
         partyPackage: 0,
         roomsRequested: [],
         roomTimes: [[]],
-        DayOfWeek: 0
+        dayOfWeek: 0
     };
 
     componentDidMount() {
