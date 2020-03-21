@@ -23,16 +23,9 @@ class MainScheduler extends Component {
         partyStartTime: 0,
         partyEndTime: 0,
         partyPackage: 0,
-        mainGymStart: 0,
-        mainGymEnd: 0,
-        kmStart: 0,
-        kmEnd: 0,
-        rwGymStart: 0,
-        rwGymEnd: 0,
-        preschoolStart: 0,
-        preschoolEnd: 0,
-        ninjaStart: 0,
-        ninjaEnd: 0,
+        roomsRequested: [],
+        roomTimes: [[]],
+        DayOfWeek: 0
     };
 
     componentDidMount() {
