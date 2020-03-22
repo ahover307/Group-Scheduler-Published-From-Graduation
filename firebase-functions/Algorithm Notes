@@ -12,3 +12,6 @@
 4. Remember a time slot if step 3 passes
 5. Repeat steps 3 and 4 for the entire length of the available times
 6. Return a json file that encodes the available times.
+
+
+NINJA MUST BE FIRST WHEN USING TWO ROOMS. OTHERWISE THE TIMES WILL BE WRONG
