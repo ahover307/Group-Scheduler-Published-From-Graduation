@@ -7,7 +7,7 @@ const stripe = require('stripe')(functions.config().stripe.testkey)
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.paymentIntent = functions.https.onCall((data, context) => {
-    const stripe = require('stripe')('sk_test_v9k8fKhH1oq3R0EnF2vg8n7M00zReeGEZs');
+    const stripe = require('stripe')('pk_test_rKltl8cKNz9NLrOL7w1KT22800Yi2Zh7n9');
 
     (async () => {
         const paymentIntent = await stripe.paymentIntents.create({
