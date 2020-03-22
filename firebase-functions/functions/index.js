@@ -1,9 +1,24 @@
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
+const stripe = require('stripe')(functions.config().stripe.testkey)
 
 //This file is all of the server side work done on the project
 
 // // https://firebase.google.com/docs/functions/write-firebase-functions
+
+exports.paymentIntent = functions.https.onCall((data, context) => {
+    const stripe = require('stripe')('sk_test_v9k8fKhH1oq3R0EnF2vg8n7M00zReeGEZs');
+
+    (async () => {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: 1099,
+            currency: 'usd',
+        });
+        const clientSecret = paymentIntent.client_secret;
+        // Pass the client secret to the client
+        return {clientSecret: clientSecret};
+    })();
+});
 
 //Creates a list of times for the checked party.
 // Because it returns a sanitized list of just the times available, the security risk of not being authenticated is allowable in this scope
@@ -15,6 +30,10 @@ const functions = require('firebase-functions');
  *      partyDate:      Timestamp
  * return   :   available times - 2D array containing the ordered rooms to use, and available start and end times of each time
  */
+
+
+
+
 exports.checkPartyTime = functions.https.onCall((data, context) => {
     //Pull params into function
     const partyPackage = data.partyPackage;
