@@ -54,6 +54,11 @@ public class FinalDetailsActivity extends AppCompatActivity {
                 party.setDate(date);
                 party.setPartyPackage(partyPackage);
                 party.setRoom(rooms[0]);
+
+                if (rooms.length >= 1) party.setRoom2(rooms[1]);
+
+                if (rooms.length >= 2) party.setRoom3(rooms[2]);
+
                 database.collection("Parties").add(party);
 
                 Toast.makeText(FinalDetailsActivity.this, "Done", Toast.LENGTH_LONG).show();
