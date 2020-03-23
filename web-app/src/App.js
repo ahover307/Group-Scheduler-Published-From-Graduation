@@ -2,7 +2,6 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import NavBarComponent from './components/layout/NavBarComponent'
 import MainScheduler from "./components/scheduler/MainScheduler";
-import MainSchedulerCollaps from "./components/scheduler/MainSchedulerCollaps";
 import Calendar from './components/calendar/Calendar';
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
 import SplashScreen from './SplashScreen';
@@ -22,8 +21,7 @@ function App() {
                 <Switch>
                     <Route exact path='/'> <SplashScreen/> </Route>
                     <Route path={'/description'}> <PartyDescriptionPage/> </Route>
-                    <Route path={'/scheduler'}> <MainScheduler/> </Route>
-                    <Route path={'/schedulercollaps'}> <MainSchedulerCollaps/></Route>
+                    <Route path={'/scheduler'}> <MainScheduler/></Route>
                     <Route path={'/calendar'}> <Calendar/> </Route>
                 </Switch>
 

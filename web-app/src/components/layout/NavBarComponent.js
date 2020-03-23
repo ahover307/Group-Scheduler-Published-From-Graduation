@@ -2,7 +2,7 @@ import React from 'react'
 import {Link, NavLink} from "react-router-dom";
 import ParamountLogo from '../../png/ParamountLogo.png'
 import '../../index.css'
-import MainSchedulerCollaps from "../scheduler/MainSchedulerCollaps";
+
 
 const NavBarComponent = () => {
     return (
@@ -15,7 +15,6 @@ const NavBarComponent = () => {
 
                 <ul className={'right'}>
                     <li><NavLink to={'/scheduler'}>Scheduler</NavLink></li>
-                    <li><NavLink to={'/schedulercollaps'}>SchedulerCollaps</NavLink></li>
                     <li><NavLink to={'/calendar'}>Calendar</NavLink></li>
                     <li><NavLink to={'/description'}>Descriptions</NavLink></li>
                 </ul>
