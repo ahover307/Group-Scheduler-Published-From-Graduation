@@ -27,19 +27,19 @@ exports.paymentIntent = functions.https.onCall((data, context) => {
  *      partyPackage:   int (code defined in reference file)
  *      dayOfWeek:      int (code defined in reference file)
  *      roomsRequested: int[] (codes defined in reference file)
- *      partyDate:      Timestamp
+ *      dateDay:        int
+ *      dateMonth:      int
+ *      dateYear:       int
  * return   :   available times - 2D array containing the ordered rooms to use, and available start and end times of each time
  */
-
-
-
-
 exports.checkPartyTime = functions.https.onCall((data, context) => {
     //Pull params into function
     const partyPackage = data.partyPackage;
     const dayOfWeek = data.dayOfWeek;
     const roomsRequested = data.roomsRequested;
-    const partyDate = data.partyDate;
+    const partyDateDay = data.dateDay;
+    const partyDateMonth = data.dateMonth;
+    const partyDateYear = data.dateYear;
 
     //Create reference into the firebase database.
     admin.initializeApp(functions.config().firebase);
@@ -68,10 +68,10 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
         }
 
         //Create reference to parties table
-        let partiesRef = db.collection('Parties').where('date', '==', partyDate);
+        let partiesRef = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
 
         //Create reference to the special events table
-        let specialEventsRef = db.collection('SpecialReservedTimes').where('date', '==', partyDate);
+        let specialEventsRef = db.collection('SpecialReservedTimes').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
 
         let openHoursRef = db.collection('OpenHours').where('dayOfWeek', '==', dayOfWeek);
 
@@ -209,12 +209,12 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
         }
 
         //Create reference to parties table
-        let partiesRef1 = db.collection('Parties').where('date', '==', partyDate);
-        let partiesRef2 = db.collection('Parties').where('date', '==', partyDate);
+        let partiesRef1 = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
+        let partiesRef2 = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
 
         //Create reference to the special events table
-        let specialEventsRef1 = db.collection('SpecialReservedTimes').where('date', '==', partyDate);
-        let specialEventsRef2 = db.collection('SpecialReservedTimes').where('date', '==', partyDate);
+        let specialEventsRef1 = db.collection('SpecialReservedTimes').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
+        let specialEventsRef2 = db.collection('SpecialReservedTimes').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
 
         let openHoursRef1 = db.collection('OpenHours').where('dayOfWeek', '==', dayOfWeek);
         let openHoursRef2 = db.collection('OpenHours').where('dayOfWeek', '==', dayOfWeek);
@@ -417,14 +417,14 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
         let requiredPartyLength3 = 8;
 
         //Create reference to parties table
-        let partiesRef1 = db.collection('Parties').where('date', '==', partyDate);
-        let partiesRef2 = db.collection('Parties').where('date', '==', partyDate);
-        let partiesRef3 = db.collection('Parties').where('date', '==', partyDate);
+        let partiesRef1 = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
+        let partiesRef2 = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
+        let partiesRef3 = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
 
         //Create reference to the special events table
-        let specialEventsRef1 = db.collection('SpecialReservedTimes').where('date', '==', partyDate);
-        let specialEventsRef2 = db.collection('SpecialReservedTimes').where('date', '==', partyDate);
-        let specialEventsRef3 = db.collection('SpecialReservedTimes').where('date', '==', partyDate);
+        let specialEventsRef1 = db.collection('SpecialReservedTimes').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
+        let specialEventsRef2 = db.collection('SpecialReservedTimes').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
+        let specialEventsRef3 = db.collection('SpecialReservedTimes').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
 
         let openHoursRef1 = db.collection('OpenHours').where('dayOfWeek', '==', dayOfWeek);
         let openHoursRef2 = db.collection('OpenHours').where('dayOfWeek', '==', dayOfWeek);
@@ -737,55 +737,4 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
 
     //Return list of available times.
     return {availableTimes: times};
-});
-
-
-exports.fillMainGymOpenHours = functions.https.onCall((data, context) => {
-    admin.initializeApp(functions.config().firebase);
-    const db = admin.firestore();
-
-    const openHoursRef = db.collection('OpenHours');
-
-    openHoursRef.doc('MainGymSunday').set({
-        room: 1,
-        dayOfWeek: 1,
-        start: 132,
-        end: 228
-    });
-    openHoursRef.doc('MainGymMonday').set({
-        room: 1,
-        dayOfWeek: 2,
-        start: 0,
-        end: 0
-    });
-    openHoursRef.doc('MainGymTuesday').set({
-        room: 1,
-        dayOfWeek: 3,
-        start: 0,
-        end: 0
-    });
-    openHoursRef.doc('MainGymWednesday').set({
-        room: 1,
-        dayOfWeek: 4,
-        start: 0,
-        end: 0
-    });
-    openHoursRef.doc('MainGymThursday').set({
-        room: 1,
-        dayOfWeek: 5,
-        start: 0,
-        end: 0
-    });
-    openHoursRef.doc('MainGymFriday').set({
-        room: 1,
-        dayOfWeek: 6,
-        start: 0,
-        end: 0
-    });
-    openHoursRef.doc('MainGymSaturday').set({
-        room: 1,
-        dayOfWeek: 7,
-        start: 156,
-        end: 252
-    });
 });

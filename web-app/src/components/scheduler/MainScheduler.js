@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import React, {Component} from "react";
 import TimeList from "./TimeList";
 import CreatePartyComponent from './CreatePartyComponent';
@@ -11,41 +10,32 @@ import connect from "react-redux/es/connect/connect";
 import * as firebase from "firebase";
 
 class MainScheduler extends Component {
-
-
     state = {
-
+        partyName: '',
+        participantsAge: 0,
         contactName: '',
         email: '',
-        hostName: '',
-        kmEnd: 0,
-        kmStart: 0,
-        mainGymEnd: 0,
-        mainGymStart: 0,
-        ninjaEnd: 0,
-        ninjaStart: 0,
-        paid: true,
-        participantsAge: 0,
-        partyEndTime: 0,
-        partyName: '',
-        partyPackage: 0,
-        roomsRequested: [],
-        roomTimes: [[]],
-        dayOfWeek: 0,
-        partyStartTime: 0,
-        paypalInfo: 0,
         phoneNumber: '',
-        preschoolEnd: 0,
-        preschoolStart: 0,
-        rwGymEnd: 0,
-        rwGymStart: 0
+        paid: true,
+        partyStartTime: 0,
+        partyEndTime: 0,
+        partyPackage: 0,
+        roomsRequested: [1],
+        roomTimes: [],
+        dayOfWeek: 1,
+        dateDay: 22,
+        dateMonth: 3,
+        dateYear: 2020
     };
 
     // Update state from PartyPackageSelector to MainScheduler
     callBackFunctionPartyPackage = (childData) => {
+        console.log('state from before this ran in the other function');
+        console.log(this.state);
         this.setState({
             partyPackage: childData
-        })
+        });
+        console.log(this.state);
     };
 
     // Update state from PartyAreaSelector to MainScheduler
@@ -76,18 +66,26 @@ class MainScheduler extends Component {
 
     componentDidMount() {
         M.AutoInit();
-        console.log('Auto init ran')
     }
 
     handleSubmit = (e) => {
-
         e.preventDefault();
-        this.props.createParty(this.state);
+        // this.props.createParty(this.state);
 
-        // const functions = firebase.functions;
-        // let letsCreateAParty = functions.httpsCallable('checkPartyTime');
-        // let timesAvailableArray = letsCreateAParty(this.state);
-        // console.log(timesAvailableArray);
+        console.log(this.state);
+        console.log('submit button ran');
+
+        const functions = firebase.functions().httpsCallable('checkPartyTime');
+        functions({
+            partyPackage: this.state.partyPackage,
+            dayOfWeek: this.state.dayOfWeek,
+            roomsRequested: this.state.roomsRequested,
+            dateDay: this.state.dateDay,
+            dateMonth: this.state.dateMonth,
+            dateYear: this.state.dateYear
+        }).then(function (result) {
+            console.log(result);
+        });
     };
 
 
@@ -136,10 +134,7 @@ class MainScheduler extends Component {
                     <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>
                 </div>
             </Collapsible>
-
         )
-
-
     }
 }
 

@@ -2,27 +2,31 @@ import React, {Component} from "react";
 
 class PartyAreaSelector extends Component {
     state = {
-        ninjaParty: 'checked',
-        partyArea1: -1,
-        partyArea2: -1,
-        partyArea3: -1,
-        partyPackage: 0
+        partyName: '',
+        participantsAge: 0,
+        contactName: '',
+        email: '',
+        phoneNumber: '',
+        paid: true,
+        partyStartTime: 0,
+        partyEndTime: 0,
+        partyPackage: 0,
+        roomsRequested: [],
+        roomTimes: [],
+        dayOfWeek: 0,
+        dateDay: 0,
+        dateMonth: 0,
+        dateYear: 0
     };
 
     // Do not change it to ===, for some reason it doesn't work
     areasNeeded = () => {
-        if (this.props.data == 0 || this.props.data == 1)
+        if (this.state.partyPackage === 0 || this.state.partyPackage === 1 || this.state.partyPackage === 5)
             return 1;
-        else if (this.props.data == 2)
+        else if (this.state.partyPackage === 2 || this.state.partyPackage === 6 || this.state.partyPackage === 7 || this.state.partyPackage === 8)
             return 2;
-        else if (this.props.data == 3)
+        else if (this.state.partyPackage === 3)
             return 3;
-        else if (this.props.data == 5)
-            return 1;
-        else if (this.props.data == 6 || this.props.data == 7 || this.props.data == 8)
-            return 2;
-        else if (this.props.data == 9)
-            return 1;
         else
             return -1;
     };
@@ -31,29 +35,20 @@ class PartyAreaSelector extends Component {
         if ('first' === e.target.name) {
             this.setState({partyArea1: e.target.value});
         }
-
         if ('second' === e.target.name) {
             this.setState({partyArea2: e.target.value});
         }
-
         if ('third' === e.target.name) {
             this.setState({partyArea3: e.target.value});
         }
-
-        console.log(this.state);
-        console.log(this.areasNeeded())
-    };
-
-    handleSubmit = (e) => {
-        console.log('Submit submitted');
     };
 
     render() {
         const partyTypes = [
             'Main Gym',
-            'Kidmaze',
-            'Preschool',
-            'Rock Wall'
+            'Kidmazium',
+            'Rock Wall',
+            'Preschool'
         ];
 
         const optionsList = [];
@@ -63,6 +58,11 @@ class PartyAreaSelector extends Component {
             )
         }
 
+        //If a Ninja Party the first party selection must be a ninja party
+        let ninjaOption = <option disabled={false} defaultValue={5} key={5} value={5}>{'Ninja'}</option>;
+        //Set a flag if this is a ninja party
+        const ninjaFlag = this.state.partyPackage <= 8 && this.state.partyPackage >= 5;
+
         return (
             <div className={'container'}>
                 <div className={'container'}>
@@ -71,10 +71,9 @@ class PartyAreaSelector extends Component {
                             <select name={'first'} className={'browser-default'} defaultValue={''}
                                     disabled={this.areasNeeded() < 1} onChange={this.handleChange}>
                                 <option value={''} disabled={true}>Choose First Party Area</option>
-                                {optionsList}
+                                {((ninjaFlag) ? ninjaOption : optionsList)}
                             </select>
                         </div>
-
                         <div className="input-field">
                             <select name={'second'} className={'browser-default'} defaultValue={''}
                                     disabled={this.areasNeeded() < 2} onChange={this.handleChange}>
@@ -92,7 +91,7 @@ class PartyAreaSelector extends Component {
                     </form>
                 </div>
             </div>
-        )
+        );
     };
 }
 
