@@ -21,7 +21,7 @@ class MainScheduler extends Component {
         participantsAge: 0,
         partyEndTime: 0,
         partyName: '',
-        partyPackage: 0,
+        partyPackage: -1,
         roomsRequested: [1],
         roomTimes: [],
         dayOfWeek: 1,

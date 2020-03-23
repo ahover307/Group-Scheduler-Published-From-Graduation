@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 class PartyPackageSelector extends Component {
     state = {
-        partyPackage: 0
+        partyPackage: -1
     };
 
     handleChange = (e) => {
