@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import React, {Component} from "react";
 import TimeList from "./TimeList";
 import CreatePartyComponent from './CreatePartyComponent';
@@ -10,15 +11,16 @@ import connect from "react-redux/es/connect/connect";
 import * as firebase from "firebase";
 
 class MainScheduler extends Component {
+
+
     state = {
-        partyName: '',
-        participantsAge: 0,
         contactName: '',
         email: '',
         phoneNumber: '',
         paid: true,
-        partyStartTime: 0,
+        participantsAge: 0,
         partyEndTime: 0,
+        partyName: '',
         partyPackage: 0,
         roomsRequested: [1],
         roomTimes: [],
@@ -39,6 +41,21 @@ class MainScheduler extends Component {
     };
 
     // Update state from PartyAreaSelector to MainScheduler
+    callBackFunctionPartyArea1 = (childData) => {
+        this.setState({
+            partyArea1: childData
+        })
+    };
+    callBackFunctionPartyArea2 = (childData) => {
+        this.setState({
+            partyArea2: childData
+        })
+    };
+    callBackFunctionPartyArea3 = (childData) => {
+        this.setState({
+            partyArea3: childData
+        })
+    };
 
 
     // Update state from CreatePartyComponent to MainScheduler
@@ -66,14 +83,13 @@ class MainScheduler extends Component {
 
     componentDidMount() {
         M.AutoInit();
+        console.log('Auto init ran')
     }
 
     handleSubmit = (e) => {
-        e.preventDefault();
-        // this.props.createParty(this.state);
 
-        console.log(this.state);
-        console.log('submit button ran');
+        e.preventDefault();
+        this.props.createParty(this.state);
 
         const functions = firebase.functions().httpsCallable('checkPartyTime');
         functions({
@@ -88,8 +104,6 @@ class MainScheduler extends Component {
         });
     };
 
-
-
     render() {
         return (
             <Collapsible popout>
@@ -100,7 +114,7 @@ class MainScheduler extends Component {
                     node="div"
                     className={'PartyPackage'}
                 >
-                    <PartyPackageSelector parentCallBackPartyPackage = {this.callBackFunctionPartyPackage}/>
+                    <PartyPackageSelector parentCallBackPartyPackage={this.callBackFunctionPartyPackage}/>
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
@@ -109,7 +123,10 @@ class MainScheduler extends Component {
                     node="div"
                     className={'PartyArea'}
                 >
-                    <PartyAreaSelector data = {this.state.partyPackage}/>
+                    <PartyAreaSelector partyPackage ={this.state.partyPackage}
+                                       parentCallBackPartyArea1={this.callBackFunctionPartyArea1}
+                                       parentCallBackPartyArea2={this.callBackFunctionPartyArea2}
+                                       parentCallBackPartyArea3={this.callBackFunctionPartyArea3}/>
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
@@ -117,8 +134,11 @@ class MainScheduler extends Component {
                     icon={<Icon>watch</Icon>}
                     node="div"
                     className={'TimeList'}
-                    >
-                    <TimeList/>
+                >
+                    <TimeList partyArea1={this.state.partyArea1}
+                              partyArea2={this.state.partyArea2}
+                              partyArea3={this.state.partyArea3}/>
+
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
@@ -127,14 +147,19 @@ class MainScheduler extends Component {
                     node="div"
                     className={'Info'}
                 >
-                    <CreatePartyComponent parentCallbackPartyName = {this.callbackFunctionPartyName} parentCallBackHostName = {this.callbackFunctionHostName}
-                    parentCallBackEmail = {this.callbackFunctionEmail} parentCallBackPhoneNumber = {this.callbackFunctionPhoneNumber}/>
+                    <CreatePartyComponent parentCallbackPartyName={this.callbackFunctionPartyName}
+                                          parentCallBackHostName={this.callbackFunctionHostName}
+                                          parentCallBackEmail={this.callbackFunctionEmail}
+                                          parentCallBackPhoneNumber={this.callbackFunctionPhoneNumber}/>
                 </CollapsibleItem>
                 <div className={'input-field'}>
                     <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>
                 </div>
             </Collapsible>
+
         )
+
+
     }
 }
 
