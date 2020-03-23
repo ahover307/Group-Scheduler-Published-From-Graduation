@@ -17,7 +17,6 @@ function App() {
         <div>
             <BrowserRouter>
                 <NavBarComponent/>
-
                 <Switch>
                     <Route exact path='/'> <SplashScreen/> </Route>
                     <Route path={'/description'}> <PartyDescriptionPage/> </Route>
