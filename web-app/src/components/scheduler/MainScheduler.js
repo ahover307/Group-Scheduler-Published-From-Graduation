@@ -14,7 +14,6 @@ class MainScheduler extends Component {
 
 
     state = {
-
         contactName: '',
         email: '',
         hostName: '',
@@ -89,8 +88,6 @@ class MainScheduler extends Component {
         // let timesAvailableArray = letsCreateAParty(this.state);
         // console.log(timesAvailableArray);
     };
-
-
 
     render() {
         return (

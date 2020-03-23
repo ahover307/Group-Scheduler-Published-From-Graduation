@@ -31,7 +31,6 @@ class CreatePartyComponent extends Component {
             <div className={"container"} style={{width: '60%'}}>
                 <form>
                     <h5> Schedule a room</h5>
-
                     <div className={'input-field'}>
                         <label htmlFor={'partyName'}>Name on Party:</label>
                         <input placeholder={'Party Child\'s Name'} type={'text'} id={'partyName'} className={'validate'}
