@@ -9,7 +9,7 @@ phone number
 party kids birthday   ( i forgot this in the form)
 party package using the ints i defined somewhere else.
     for example, a basic is a 1, single is a 2, double is a 3
-party area start and end time for each area. Nice thing about this type of database is it shouldnt matter if those are different fields in the same table
+party area, start and end time for each area. Nice thing about this type of database is it shouldnt matter if those are different fields in the same table
 party start and end times in total
 
 anything i forgot?

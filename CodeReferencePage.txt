@@ -1,0 +1,33 @@
+A Page that shows what each integer that we are saving maps too
+
+Party Package:
+0   :   Basic
+1   :   Single
+2   :   Double
+3   :   Triple
+
+5   :   Ninja Exclusive
+6   :   Ninja Experience
+7   :   Ninja Extra
+8   :   Ninja Extreme
+9   :   Sleepover
+
+
+
+Rooms:
+1   :   Main Gym
+2   :   Kidmaze
+3   :   Rockwall
+4   :   Preschool
+5   :   Ninja
+
+
+
+DayOfWeek:
+1   :   Sunday
+2   :   Monday
+3   :   Tuesday
+4   :   Wednesday
+5   :   Thursday
+6   :   Friday
+7   :   Saturday

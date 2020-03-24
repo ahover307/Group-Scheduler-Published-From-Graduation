@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
 
-public class RoomActivity extends AppCompatActivity {
+public class TwoRoomActivity extends AppCompatActivity {
 
     public String date;
     public String partyPackage;
@@ -15,12 +15,11 @@ public class RoomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room);
+        setContentView(R.layout.activity_two_room);
 
         Intent intent = getIntent();
-        date = intent.getStringExtra("date");
-        partyPackage = intent.getStringExtra("package");
-
+        String date = intent.getStringExtra("date");
+        String partyPackage = intent.getStringExtra("package");
     }
 
     public void submit(View view) {
@@ -28,7 +27,10 @@ public class RoomActivity extends AppCompatActivity {
 
         Spinner roomSpinner = findViewById(R.id.spinner_rooms);
         String room = roomSpinner.getSelectedItem().toString();
-        String[] rooms = {room};
+        Spinner roomSpinner2 = findViewById(R.id.spinner_rooms2);
+        String room2 = roomSpinner2.getSelectedItem().toString();
+
+        String[] rooms = {room, room2};
 
         intent.putExtra("date", date);
         intent.putExtra("package", partyPackage);
@@ -36,6 +38,4 @@ public class RoomActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
-
-
 }

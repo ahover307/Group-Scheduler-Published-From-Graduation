@@ -9,11 +9,32 @@ public class Party {
     private String partyPackage;
     private String room;
 
+    private String room2;
+    private String room3;
+
+    public String getRoom2() {
+        return room2;
+    }
+
+    void setRoom2(String room2) {
+        this.room2 = room2;
+    }
+
+    public String getRoom3() {
+        return room3;
+    }
+
+    void setRoom3(String room3) {
+        this.room3 = room3;
+    }
+
+
+
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    void setDate(String date) {
         this.date = date;
     }
 
@@ -21,7 +42,7 @@ public class Party {
         return partyPackage;
     }
 
-    public void setPartyPackage(String partyPackage) {
+    void setPartyPackage(String partyPackage) {
         this.partyPackage = partyPackage;
     }
 
@@ -29,7 +50,7 @@ public class Party {
         return room;
     }
 
-    public void setRoom(String room) {
+    void setRoom(String room) {
         this.room = room;
     }
 
@@ -37,7 +58,7 @@ public class Party {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -45,7 +66,7 @@ public class Party {
         return host;
     }
 
-    public void setHost(String host) {
+    void setHost(String host) {
         this.host = host;
     }
 
@@ -53,7 +74,7 @@ public class Party {
         return email;
     }
 
-    public void setEmail(String email) {
+    void setEmail(String email) {
         this.email = email;
     }
 
@@ -61,18 +82,18 @@ public class Party {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public Party(String name, String host, String email, String phoneNumber) {
-        this.name = name;
-        this.host = host;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
+//    public Party(String name, String host, String email, String phoneNumber) {
+//        this.name = name;
+//        this.host = host;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
+//    }
 
-    public Party() {
+    Party() {
 
     }
 }

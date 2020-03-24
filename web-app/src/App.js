@@ -17,11 +17,10 @@ function App() {
         <div>
             <BrowserRouter>
                 <NavBarComponent/>
-
                 <Switch>
                     <Route exact path='/'> <SplashScreen/> </Route>
                     <Route path={'/description'}> <PartyDescriptionPage/> </Route>
-                    <Route path={'/scheduler'}> <MainScheduler/> </Route>
+                    <Route path={'/scheduler'}> <MainScheduler/></Route>
                     <Route path={'/calendar'}> <Calendar/> </Route>
                 </Switch>
 

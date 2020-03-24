@@ -2,67 +2,50 @@ import React, {Component} from "react";
 
 class PartyAreaSelector extends Component {
     state = {
-        ninjaParty: 'checked',
-        partyArea1: -1,
-        partyArea2: -1,
-        partyArea3: -1,
-        partyPackage: 6
+        partyPackage: -1,
     };
 
+    // Do not change it to ===, for some reason it doesn't work
     areasNeeded = () => {
-        if (this.state.partyPackage === 0 || this.state.partyPackage === 1)
+        if (this.props.partyPackage == 0 || this.props.partyPackage == 1 || this.props.partyPackage == 5)
             return 1;
-        else if (this.state.partyPackage === 2)
+        else if (this.props.partyPackage == 2 || this.props.partyPackage == 6 || this.props.partyPackage == 7 || this.props.partyPackage == 8)
             return 2;
-        else if (this.state.partyPackage === 3)
+        else if (this.props.partyPackage == 3)
             return 3;
-        else if (this.state.partyPackage === 5)
-            return 1;
-        else if (this.state.partyPackage === 6 || this.state.partyPackage === 7 || this.state.partyPackage === 8)
-            return 2;
-        else if (this.state.partyPackage === 9)
-            return 1;
         else
             return -1;
     };
 
-
-    handleChange = (e) => {
-        if ('first' === e.target.name) {
-            this.setState({partyArea1: e.target.value});
-        }
-
-        if ('second' === e.target.name) {
-            this.setState({partyArea2: e.target.value});
-        }
-
-        if ('third' === e.target.name) {
-            this.setState({partyArea3: e.target.value});
-        }
-
-        console.log(this.state);
-        console.log(this.areasNeeded())
+    handleChangePartyArea1 = (e) => {
+        this.props.parentCallBackPartyArea1(e.target.value);
     };
-
-    handleSubmit = (e) => {
-        console.log('Submit submitted');
+    handleChangePartyArea2 = (e) => {
+        this.props.parentCallBackPartyArea2(e.target.value);
     };
-
+    handleChangePartyArea3 = (e) => {
+        this.props.parentCallBackPartyArea3(e.target.value);
+    };
 
     render() {
         const partyTypes = [
             'Main Gym',
-            'Kidmaze',
-            'Preschool',
-            'Rock Wall'
+            'Kidmazium',
+            'Rock Wall',
+            'Preschool'
         ];
-        const optionsList = [];
 
+        const optionsList = [];
         for (const [index, value] of partyTypes.entries()) {
             optionsList.push(
                 <option key={index} value={index}>{value}</option>
             )
         }
+
+        //If a Ninja Party the first party selection must be a ninja party
+        let ninjaOption = <option disabled={false} defaultValue={5} key={5} value={5}>{'Ninja'}</option>;
+        //Set a flag if this is a ninja party
+        const ninjaFlag = this.props.partyPackage <= 8 && this.props.partyPackage >= 5;
 
         return (
             <div className={'container'}>
@@ -70,23 +53,21 @@ class PartyAreaSelector extends Component {
                     <form action={'#'} onSubmit={this.handleSubmit}>
                         <div className={'input-field'}>
                             <select name={'first'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 1} onChange={this.handleChange}>
+                                    disabled={this.areasNeeded() < 1} onChange={this.handleChangePartyArea1}>
                                 <option value={''} disabled={true}>Choose First Party Area</option>
-                                {optionsList}
+                                {((ninjaFlag) ? ninjaOption : optionsList)}
                             </select>
                         </div>
-
                         <div className="input-field">
                             <select name={'second'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 2} onChange={this.handleChange}>
+                                    disabled={this.areasNeeded() < 2} onChange={this.handleChangePartyArea2}>
                                 <option value={''} disabled>Choose Second Party Area</option>
                                 {optionsList}
                             </select>
                         </div>
-
                         <div className="input-field">
                             <select name={'third'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 3} onChange={this.handleChange}>
+                                    disabled={this.areasNeeded() < 3} onChange={this.handleChangePartyArea3}>
                                 <option value={''} disabled>Choose Third Party Area</option>
                                 {optionsList}
                             </select>
@@ -94,7 +75,7 @@ class PartyAreaSelector extends Component {
                     </form>
                 </div>
             </div>
-        )
+        );
     };
 }
 

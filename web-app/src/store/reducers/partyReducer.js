@@ -1,17 +1,19 @@
 const initState = {
     parties: [
         {
-            partyName: 'Alex Hover',
-            partyKidBirthday: '12/11/1997',
-            hostName: 'Trevor Zack',
-            email: 'ahover307@gmail.com',
-            phone: '12345',
-            paid: true,
-            startTime: '3/8/2020 2:00',
-            endTime: '3/8/2020 4:00',
-            partyPackage: 1,
-            mainGymStart: '2:00',
-            mainGymEnd: '3:20'
+            partyName: '',
+            participantsAge: 0,
+            contactName: '',
+            email: '',
+            phoneNumber: '',
+            payPalInfo: 0,
+            partyDate: '',
+            partyStartTime: 0,
+            partyEndTime: 0,
+            partyPackage: 0,
+            roomsRequested: [],
+            roomTimes: [[]],
+            dayOfWeek: 0
         }
     ]
 };

@@ -6,9 +6,9 @@ export const createParty = (party) => {
             ...party,
             paid: true
         }).then(() => {
-            dispatch({ type: 'CREATE_PARTY_SUCCESS' });
+            dispatch({type: 'CREATE_PARTY_SUCCESS'});
         }).catch(err => {
-            dispatch({ type: 'CREATE_PARTY_ERROR' }, err);
+            dispatch({type: 'CREATE_PARTY_ERROR'}, err);
         });
     }
 };

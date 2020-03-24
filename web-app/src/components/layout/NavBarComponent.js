@@ -1,12 +1,14 @@
 import React from 'react'
 import {Link, NavLink} from "react-router-dom";
 import ParamountLogo from '../../png/ParamountLogo.png'
+import '../../index.css'
+
 
 const NavBarComponent = () => {
     return (
         //TODO This will need adjusted when we add state data
         //Todo add adjustment for making it mobile responsive
-        <nav className={"nav-wrapper purple"}>
+        <nav className={'colorMe'}>
             <div className="container">
                 <Link to={'/'} className={'brand-logo'}><img src={ParamountLogo} alt={"Paramount Sports"}
                                                              width={130} height={'auto'}/> </Link>
