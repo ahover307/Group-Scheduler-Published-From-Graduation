@@ -13,7 +13,7 @@ const NinjaPartyDescription = () => {
             <div className={'PartySubtitle'}>
                 1.5 hour party - $225
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 ​​ ​30 mins main gym or Kidmazium, 30 mins ninja warrior course, 30 mins party room.
                 <br/>
@@ -31,7 +31,7 @@ const NinjaPartyDescription = () => {
             <div className={'PartySubtitle'}>
                 1.5 hour party - $250
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 50 mins ninja warrior course, 40 mins party room.
                 <br/>
@@ -49,7 +49,7 @@ const NinjaPartyDescription = () => {
             <div className={'PartySubtitle'}>
                 2 hour party - $285​
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 40 mins main gym or Kidmazium, 40 mins ninja warrior course, 40 mins party room.
                 <br/>
@@ -67,7 +67,7 @@ const NinjaPartyDescription = () => {
             <div className={'PartySubtitle'}>
                 2.5 hour party - $325
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 60 mins main gym or Kidmazium, 50 mins ninja warrior course, 40 mins party room.
                 <br/>

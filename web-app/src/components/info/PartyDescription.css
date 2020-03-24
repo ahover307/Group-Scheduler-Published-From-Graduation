@@ -1,19 +1,22 @@
 .PartyTitle {
     text-align: center;
-    font-size: large;
+    font-size: x-large;
     font-style: oblique;
     color: purple;
 }
 
 .PartySubtitle {
     text-align: center;
-    font-size: medium;
+    font-size: large;
     color: rebeccapurple;
 }
 
 .PartyDescription {
     text-align: center;
-    font-size: smaller;
+    font-size: medium;
     color: black;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
 }
 

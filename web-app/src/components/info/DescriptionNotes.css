@@ -1,14 +1,44 @@
 
-strong {
-    text-align: right;
-}
-
 div.cent {
     text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
+    width: initial;
+    background-color: lightgray;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 h3 {
-    margin-left: 10px;
+    margin-left: 40px;
     margin-right: 10px;
+}
+
+strong {
+    font-size: larger;
+}
+
+p {
+    font-size: large;
+}
+
+h4 {
+    margin-left: 40px;
+    margin-right: 10px;
+}
+
+li.colitm {
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: lightgray;
+    text-align: left;
+    width: initial;
+}
+
+h6 {
+    font-weight: bold;
+}
+
+ul {
+    /*width: initial;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: lightgray;*/
 }

@@ -10,7 +10,7 @@ const PartyDescription = () => {
             <div className={'PartySubtitle'}>
                 1.5 hour party - $175
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 Sixty minutes in any ONE play area, followed by thirty minutes in a party room
                 <br/>
@@ -30,7 +30,7 @@ const PartyDescription = () => {
             <div className={'PartySubtitle'}>
                 2 hour party - $200
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 Eighty minutes in any ONE play area followed by forty minutes in a party room
                 <br/>
@@ -50,7 +50,7 @@ const PartyDescription = () => {
             <div className={'PartySubtitle'}>
                 2 hour party - $250
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 Forty minutes in any ONE play area, followed by 40 minutes in a SECOND play area, followed by 40 minutes
                 in a party room
@@ -71,7 +71,7 @@ const PartyDescription = () => {
             <div className={'PartySubtitle'}>
                 2.5 hour party - $290
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 Forty minutes in ONE play area, 40 minutes in a SECOND party area followed by 40 minutes in a THIRD
                 area, finishing with 30 minutes in a party room.
@@ -94,7 +94,7 @@ const PartyDescription = () => {
             <div className={'PartySubtitle'}>
                 9:00pm - 7:00am - $575
             </div>
-            <br/>
+
             <div className={'PartyDescription'}>
                 A fun-filled night with unlimited use of Kidmazium and the Main gym.
                 <br/>
