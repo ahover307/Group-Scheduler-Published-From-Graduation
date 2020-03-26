@@ -13,6 +13,7 @@ exports.paymentIntent = functions.https.onCall(async(data, context) => {
     const paymentIntent = await stripe.paymentIntents.create({
         amount: 1099,
         currency: 'usd',
+        payment_method_types: ['card'],
     });
 
     const clientSecret = paymentIntent.client_secret;
