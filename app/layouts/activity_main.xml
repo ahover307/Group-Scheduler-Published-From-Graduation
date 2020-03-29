@@ -9,7 +9,7 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity"
     android:background="@color/colorPrimary">
 
@@ -123,6 +123,7 @@
         android:background="@color/colorAccent"
         android:text="@string/button_ninja"
         android:textColor="@color/colorPrimary"
+        android:onClick="ninjaButton"
         app:layout_constraintEnd_toStartOf="@+id/button_gymnastics"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -183,6 +184,7 @@
         android:width="86dp"
         android:height="86dp"
         android:background="@color/colorAccent"
+        android:onClick="testCheckout"
         android:text="@string/button_taeKwonDo"
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="@+id/button_activities"
