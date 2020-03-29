@@ -5,12 +5,31 @@ public class Party {
     private String host;
     private String email;
     private String phoneNumber;
-    private String date;
+    private int day;
+    private int month;
+    private int year;
+    private int dayOfWeek;
     private String partyPackage;
     private String room;
 
     private String room2;
     private String room3;
+
+    public int getDay() { return day; }
+
+    void setDay(int day) { this.day = day; }
+
+    public int getMonth() { return month; }
+
+    void setMonth(int month) { this.month = month; }
+
+    public int getYear() { return year; }
+
+    void setYear(int year) { this.year = year; }
+
+    public int getDayOfWeek() { return dayOfWeek; }
+
+    void setDayOfWeek(int dayOfWeek) { this.dayOfWeek = dayOfWeek; }
 
     public String getRoom2() {
         return room2;
@@ -28,15 +47,6 @@ public class Party {
         this.room3 = room3;
     }
 
-
-
-    public String getDate() {
-        return date;
-    }
-
-    void setDate(String date) {
-        this.date = date;
-    }
 
     public String getPartyPackage() {
         return partyPackage;
