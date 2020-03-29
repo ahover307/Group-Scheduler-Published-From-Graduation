@@ -17,6 +17,8 @@ import java.util.Date;
 
 public class PackageActivity extends AppCompatActivity {
 
+    private int day, month, year, dayOfWeek;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,15 +26,13 @@ public class PackageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        int day = intent.getIntExtra("day", 1);
-        int month = intent.getIntExtra("month", 1);
-        int year = intent.getIntExtra("year", 1);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
+        day = intent.getIntExtra("day", -1); // Changed to -1 instead of 1 for better debugging
+        month = intent.getIntExtra("month", -1);
+        year = intent.getIntExtra("year", -1);
+        dayOfWeek = intent.getIntExtra("dayOfWeek", -1);
 
         EditText textDate = findViewById(R.id.text_date);
-        textDate.setText(calendar.getTime().toString());
+        textDate.setText(month + "/" + day + "/" + year);
     }
 
     public void Submit(View view) {
@@ -46,10 +46,12 @@ public class PackageActivity extends AppCompatActivity {
         else
             intent = new Intent(this, RoomActivity.class);
 
-        EditText textDate = findViewById(R.id.text_date);
-        String date = textDate.getText().toString();
 
-        intent.putExtra("date", date);
+
+        intent.putExtra("day", day);
+        intent.putExtra("month", month);
+        intent.putExtra("year", year);
+        intent.putExtra("dayOfWeek", dayOfWeek);
         intent.putExtra("package", partyPackage);
 
         startActivity(intent);
