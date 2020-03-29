@@ -9,25 +9,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FinalDetailsActivity extends AppCompatActivity {
-    Button save;
-    FirebaseFirestore database;
-    EditText party_last, contact_last, email, phoneNumber;
-    Party party;
-    String date, partyPackage;
-    String[] rooms;
+    private Button save;
+    private FirebaseFirestore database;
+    private EditText party_last, contact_last, email, phoneNumber;
+    private Party party;
+    private int day, month, year, dayOfWeek;
+    private String partyPackage;
+    private String[] rooms;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        date = intent.getStringExtra("date");
+        day = intent.getIntExtra("day", -1);
+        month = intent.getIntExtra("month", -1);
+        year = intent.getIntExtra("year", -1);
+        dayOfWeek = intent.getIntExtra("dayOfWeek",-1);
         partyPackage = intent.getStringExtra("package");
         rooms = intent.getStringArrayExtra("rooms");
         super.onCreate(savedInstanceState);
@@ -51,13 +52,16 @@ public class FinalDetailsActivity extends AppCompatActivity {
                 party.setHost(party_last.getText().toString());
                 party.setName(contact_last.getText().toString());
                 party.setPhoneNumber(phoneNumber.getText().toString());
-                party.setDate(date);
+                party.setDay(day);
+                party.setMonth(month);
+                party.setYear(year);
+                party.setDayOfWeek(dayOfWeek);
                 party.setPartyPackage(partyPackage);
                 party.setRoom(rooms[0]);
 
-                if (rooms.length >= 1) party.setRoom2(rooms[1]);
+                if (rooms.length > 1) party.setRoom2(rooms[1]);
 
-                if (rooms.length >= 2) party.setRoom3(rooms[2]);
+                if (rooms.length > 2) party.setRoom3(rooms[2]);
 
                 database.collection("Parties").add(party);
 
@@ -70,5 +74,6 @@ public class FinalDetailsActivity extends AppCompatActivity {
 
 
     }
+
 
 }
