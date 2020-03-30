@@ -2,12 +2,15 @@ const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 const stripe = require('stripe')(functions.config().stripe.testkey)
 
+admin.initializeApp(functions.config().firebase);
+const db = admin.firestore();
+
 //This file is all of the server side work done on the project
 
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 
-exports.paymentIntent = functions.https.onCall(async(data, context) => {
+exports.paymentIntent = functions.https.onCall(async (data, context) => {
     const stripe = require('stripe')('sk_test_v9k8fKhH1oq3R0EnF2vg8n7M00zReeGEZs');
 
     const paymentIntent = await stripe.paymentIntents.create({
@@ -36,19 +39,17 @@ exports.paymentIntent = functions.https.onCall(async(data, context) => {
  */
 exports.checkPartyTime = functions.https.onCall((data, context) => {
     //Pull params into function
-    const partyPackage = data.partyPackage;
-    const dayOfWeek = data.dayOfWeek;
-    const roomsRequested = data.roomsRequested;
-    const partyDateDay = data.dateDay;
-    const partyDateMonth = data.dateMonth;
-    const partyDateYear = data.dateYear;
-
-    //Create reference into the firebase database.
-    admin.initializeApp(functions.config().firebase);
-    const db = admin.firestore();
+    const partyPackage = parseInt(data.partyPackage);
+    const dayOfWeek = parseInt(data.dayOfWeek);
+    let roomsRequested = [];
+    const partyDateDay = parseInt(data.dateDay);
+    const partyDateMonth = parseInt(data.dateMonth);
+    const partyDateYear = parseInt(data.dateYear);
 
     //Array to return
     let times = [[]];
+
+    data.roomsRequested.forEach(element => roomsRequested.push(parseInt(element)));
 
     //If it has a single room to handle
     if (partyPackage === 0 || partyPackage === 1 || partyPackage === 5) {
@@ -182,6 +183,17 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
                 times.push([[roomsRequested[0]], [i, i + requiredPartyLength]]);
             }
         }
+        //Return list of available times.
+        return {
+            availableTimes: times,
+            partyLength: requiredPartyLength,
+            open: openHours,
+            close: closeHours,
+            filled: filledTimes,
+            specialTimes: specialTimes,
+            available: availableTimes,
+            roomsRequested: roomsRequested
+        };
     }
     //If it has two rooms to handle
     else if (partyPackage === 2 || partyPackage === 6 || partyPackage === 7 || partyPackage === 8) {
@@ -410,6 +422,23 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
                 times.push([[roomsRequested[1], roomsRequested[0]], [i, i + requiredPartyLength2], [requiredPartyLength2 + i, i + requiredPartyLength1 + requiredPartyLength2]])
             }
         }
+        //Return list of available times.
+        return {
+            availableTimes: times,
+            partyLength1: requiredPartyLength1,
+            partyLength2: requiredPartyLength2,
+            open1: openHours1,
+            open2: openHours2,
+            close1: closeHours1,
+            close2: closeHours2,
+            filled1: filledTimes1,
+            filled2: filledTimes2,
+            specialTimes1: specialTimes1,
+            specialTimes2: specialTimes2,
+            available1: availableTimes1,
+            available2: availableTimes2,
+            roomsRequested: roomsRequested
+        };
     }
     //If it has a three rooms to handle
     else if (partyPackage === 3) {
@@ -735,8 +764,52 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
                 times.push([[roomsRequested[2], roomsRequested[1], roomsRequested[0]], [i, i + requiredPartyLength3], [i + requiredPartyLength3, i + requiredPartyLength3 + requiredPartyLength2], [i + requiredPartyLength3 + requiredPartyLength2, i + requiredPartyLength1 + requiredPartyLength2 + requiredPartyLength3]]);
             }
         }
+        //Return list of available times.
+        return {
+            availableTimes: times,
+            partyLength1: requiredPartyLength1,
+            partyLength2: requiredPartyLength2,
+            partyLength3: requiredPartyLength3,
+            open1: openHours1,
+            open2: openHours2,
+            open3: openHours3,
+            close1: closeHours1,
+            close2: closeHours2,
+            close3: closeHours3,
+            filled1: filledTimes1,
+            filled2: filledTimes2,
+            filled3: filledTimes3,
+            specialTimes1: specialTimes1,
+            specialTimes2: specialTimes2,
+            specialTimes3: specialTimes3,
+            available1: availableTimes1,
+            available2: availableTimes2,
+            available3: availableTimes3,
+            roomsRequested: roomsRequested
+        };
     }
 
     //Return list of available times.
-    return {availableTimes: times};
+    return {
+        error: error
+    };
+});
+
+//Either update or write a single open hour document
+/*
+ * Required params:
+ *      docName:    String - document name in the db
+ *      dayOfWeek:  Int - code for which day of the week
+ *      room:       int - code for room
+ *      start:      int - index for start of open hour
+ *      end:        int - index for end of opening
+ */
+//TODO Authentication based on context
+exports.fillOpenHours = functions.https.onCall((data, context) => {
+    return db.collection('OpenHours').doc(data.docName).set({
+        dayOfWeek: data.dayOfWeek,
+        room: data.room,
+        start: data.start,
+        end: data.end
+    });
 });

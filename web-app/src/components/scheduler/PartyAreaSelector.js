@@ -38,7 +38,7 @@ class PartyAreaSelector extends Component {
         const optionsList = [];
         for (const [index, value] of partyTypes.entries()) {
             optionsList.push(
-                <option key={index} value={index}>{value}</option>
+                <option key={index + 1} value={index + 1}>{value}</option>
             )
         }
 
