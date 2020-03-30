@@ -14,8 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.firebase.functions.HttpsCallableResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -34,6 +38,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -50,23 +55,38 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private String paymentIntentClientSecret;
     private Stripe stripe;
-    private FirebaseFunctions firebaseFunctions;
+    private FirebaseFunctions mFunctions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        firebaseFunctions = FirebaseFunctions.getInstance();
+        mFunctions = FirebaseFunctions.getInstance();
 
-        try {
-            startCheckout();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        startCheckout();
     }
 
-    private void startCheckout() throws JSONException {
-        paymentIntentClientSecret = getPaymentIntent();
+    private void startCheckout() {
+        String email = "nguyenryan31@gmail.com";
+        int price = 2099;
+        paymentIntent(email, price)
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Exception e = task.getException();
+                            if (e instanceof FirebaseFunctionsException) {
+                                FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+                                FirebaseFunctionsException.Code code = ffe.getCode();
+                                Object details = ffe.getDetails();
+                            }
+
+                        }
+                        paymentIntentClientSecret = task.getResult();
+                    }
+                });
+
 
         Button payButton = findViewById(R.id.payButton);
         payButton.setOnClickListener((View view) -> {
@@ -75,10 +95,9 @@ public class CheckoutActivity extends AppCompatActivity {
             if (params != null) {
                 ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams
                         .createWithPaymentMethodCreateParams(params, paymentIntentClientSecret);
-                final Context context = getApplicationContext();
-                stripe = new Stripe(
-                        context,
-                        PaymentConfiguration.getInstance(context).getPublishableKey()
+
+                stripe = new Stripe(getApplicationContext(),
+                        "pk_test_rKltl8cKNz9NLrOL7w1KT22800Yi2Zh7n9"
                 );
                 stripe.confirmPayment(this, confirmParams);
             }
@@ -98,11 +117,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     (DialogInterface dialog, int index) -> {
                         CardInputWidget cardInputWidget = findViewById(R.id.cardInputWidget);
                         cardInputWidget.clear();
-                        try {
-                            startCheckout();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        startCheckout();
                     });
         } else {
             builder.setPositiveButton("Ok", null);
@@ -111,25 +126,22 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     //paymentIntent
-    private String getPaymentIntent() {
-        final String[] json = new String[1];
+    private Task<String> paymentIntent(String email, int price) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        data.put("price", price);
 
-        firebaseFunctions
+        return mFunctions
                 .getHttpsCallable("paymentIntent")
-                .call()
-                .addOnSuccessListener(this, new OnSuccessListener<HttpsCallableResult>() {
+                .call(data)
+                .continueWith(new Continuation<HttpsCallableResult, String>() {
                     @Override
-                    public void onSuccess(HttpsCallableResult httpsCallableResult) {
-                        try {
-                            Gson g = new Gson();
-                            json[0] = g.toJson(httpsCallableResult.getData());
-                        } catch (Exception e){
-                            Log.d("Error", e.toString());
-                        }
-
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        String result = (String) task.getResult().getData();
+                        return result;
                     }
                 });
-        return json[0];
+
     }
 
     @Override
