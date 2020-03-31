@@ -4,6 +4,7 @@ div.main {
     text-align: center;
     width: initial;
     margin: 20px;
+    margin-inside: 10px;
 }
 
 span {

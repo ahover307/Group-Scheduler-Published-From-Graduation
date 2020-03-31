@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import DescriptionNotes from "./DescriptionNotes";
 import PartyDescription from "./PartyDescription";
 import NinjaPartyDescription from "./NinjaPartyDescription";
+import OtherNotes from "./OtherNotes";
 
 
 class PartyDescriptionPage extends Component {
@@ -13,13 +14,17 @@ class PartyDescriptionPage extends Component {
                     <DescriptionNotes/>
                 </div>
 
-                <div className={'row'}>
+                <div className={'row'} >
                     <div className={'col s12 m6'}>
                         <PartyDescription/>
                     </div>
                     <div className={'col s12 m5 offset-m1'}>
                         <NinjaPartyDescription/>
                     </div>
+                </div>
+                <br/><br/>
+                <div className={'row'}>
+                    <OtherNotes/>
                 </div>
             </div>
         );

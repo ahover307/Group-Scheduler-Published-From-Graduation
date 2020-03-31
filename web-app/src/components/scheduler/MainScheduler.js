@@ -9,6 +9,8 @@ import {createParty} from "../../store/actions/partyActions";
 import connect from "react-redux/es/connect/connect";
 import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
+import {NavLink} from "react-router-dom";
+import Redirect from "react-router-dom/es/Redirect";
 
 
 class MainScheduler extends Component {
@@ -370,6 +372,10 @@ class MainScheduler extends Component {
             .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
     }
 
+    state = {
+        toConfirm: false,
+    }
+
     handleSubmit = async (e) => {
 
         e.preventDefault();
@@ -381,6 +387,12 @@ class MainScheduler extends Component {
             to_name: this.state.partyName,
             to_email: this.state.email
         });
+
+        this.setState(() => ({      //Trevor added this to redirect to confirmation page
+            toConfirm: true
+        }))
+        //this.props.history.push('./confirmation');
+
 
         // const functions = firebase.functions().httpsCallable('checkPartyTime');
         // functions({
@@ -396,6 +408,9 @@ class MainScheduler extends Component {
     };
 
     render() {
+        if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
+            return <Redirect to='/confirmation' />
+        }
         return (
             <Collapsible popout>
                 <CollapsibleItem
