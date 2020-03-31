@@ -345,6 +345,14 @@ class MainScheduler extends Component {
     };
 
 
+    pullOpenHours = () => {
+        const functions = firebase.functions().httpsCallable('pullOpenHours');
+        functions({}).then(function (result) {
+            console.log(result);
+        });
+    };
+
+
     componentDidMount() {
         M.AutoInit();
     }
@@ -432,6 +440,9 @@ class MainScheduler extends Component {
                 </div>
                 <div className={'input-field'}>
                     <button className={'btn purple'} onClick={this.fillOpenRW}>Rockwall</button>
+                </div>
+                <div className={'input-field'}>
+                    <button className={'btn purple'} onClick={this.pullOpenHours}>pullOpen</button>
                 </div>
             </Collapsible>
 
