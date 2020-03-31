@@ -8,9 +8,10 @@ import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
 import {createParty} from "../../store/actions/partyActions";
 import connect from "react-redux/es/connect/connect";
 import * as firebase from "firebase";
+import emailjs from 'emailjs-com'
+
 
 class MainScheduler extends Component {
-
 
     state = {
         contactName: '',
@@ -28,6 +29,7 @@ class MainScheduler extends Component {
         dateMonth: 3,
         dateYear: 2020
     };
+
 
     // Update state from PartyPackageSelector to MainScheduler
     callBackFunctionPartyPackage = (childData) => {
@@ -357,22 +359,40 @@ class MainScheduler extends Component {
         M.AutoInit();
     }
 
-    handleSubmit = (e) => {
+    sendFeedback (templateId, variables) {
+        emailjs.send(
+            'gmail', templateId,
+            variables,"user_5Iox4i8HmOcOQCgLT1kCH"
+        ).then(res => {
+            console.log('Email successfully sent!')
+        })
+            // Handle errors here however you like, or use a React error boundary
+            .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
+    }
+
+    handleSubmit = async (e) => {
 
         e.preventDefault();
         this.props.createParty(this.state);
+        const templateId = 'template_KxFFbbaf' ;
 
-        const functions = firebase.functions().httpsCallable('checkPartyTime');
-        functions({
-            partyPackage: this.state.partyPackage,
-            dayOfWeek: this.state.dayOfWeek,
-            roomsRequested: this.state.roomsRequested,
-            dateDay: this.state.dateDay,
-            dateMonth: this.state.dateMonth,
-            dateYear: this.state.dateYear
-        }).then(function (result) {
-            console.log(result);
+        this.sendFeedback(templateId, {
+            message_html:"Thanks for booking with us!",
+            to_name: this.state.partyName,
+            to_email: this.state.email
         });
+
+        // const functions = firebase.functions().httpsCallable('checkPartyTime');
+        // functions({
+        //     partyPackage: this.state.partyPackage,
+        //     dayOfWeek: this.state.dayOfWeek,
+        //     roomsRequested: this.state.roomsRequested,
+        //     dateDay: this.state.dateDay,
+        //     dateMonth: this.state.dateMonth,
+        //     dateYear: this.state.dateYear
+        // }).then(function (result) {
+        //     console.log(result);
+        // });
     };
 
     render() {
@@ -394,7 +414,7 @@ class MainScheduler extends Component {
                     node="div"
                     className={'PartyArea'}
                 >
-                    <PartyAreaSelector partyPackage ={this.state.partyPackage}
+                    <PartyAreaSelector partyPackage={this.state.partyPackage}
                                        parentCallBackPartyArea1={this.callBackFunctionPartyArea1}
                                        parentCallBackPartyArea2={this.callBackFunctionPartyArea2}
                                        parentCallBackPartyArea3={this.callBackFunctionPartyArea3}/>

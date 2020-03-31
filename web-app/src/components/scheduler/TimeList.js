@@ -18,7 +18,6 @@ class TimeList extends Component {
         dateMonth: 0,
         dateYear: 0
     };
-
     // ##### READ THIS #####
     // this.props.partyAreaN returns a value between 0 and 3 (0 = Main Gym, 1 = KidMaze, 2 = Rock Wall, 3 = Preschool)
     // Replace N with 1, 2 or 3
