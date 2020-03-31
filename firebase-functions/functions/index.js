@@ -88,14 +88,11 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
 
         //Make the call to the DB looking for the open hours in that room
         let getDoc = openHoursRef.get()
-            .then(doc => {
-                if (doc.exists) {
-                    //Return the open and close hours of this day
-                    return [doc.data().start, doc.data().end];
-                } else {
-                    //If it could not find a page with open hours for the given day of the week return an error
-                    throw new functions.https.HttpsError('no-open-hours', 'Building not open on this day');
-                }
+            .then(snapshot => {
+                let temp = [];
+                temp.push(snapshot[0].doc.data().start);
+                temp.push(snapshot[0].doc.data().end);
+                return temp;
             }).catch(err => {
                 // Error with the database
                 throw new functions.https.HttpsError('database-failure', 'Could not find open hours: ' + err);
@@ -192,7 +189,9 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
             filled: filledTimes,
             specialTimes: specialTimes,
             available: availableTimes,
-            roomsRequested: roomsRequested
+            roomsRequested: roomsRequested,
+            getdoc: getDoc
+
         };
     }
     //If it has two rooms to handle
@@ -812,4 +811,21 @@ exports.fillOpenHours = functions.https.onCall((data, context) => {
         start: data.start,
         end: data.end
     });
+});
+
+exports.pullOpenHours = functions.https.onCall((data, context) => {
+    let openHours = db.collection('OpenHours');
+    let test = openHours.get()
+        .then(snapshot => {
+            let temp = [];
+            snapshot.forEach(doc => {
+                // console.log(doc.id, '=>', doc.data());
+                temp.push(doc.data().start);
+            });
+            return temp;
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
+    return test;
 });
