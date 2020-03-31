@@ -10,8 +10,11 @@ import thunk from 'redux-thunk'
 import {reduxFirestore, getFirestore} from 'redux-firestore'
 import {reactReduxFirebase, getFirebase} from 'react-redux-firebase'
 import fbConfig from './config/config.js'
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import CheckoutForm from './CheckoutForm';
 
-
+const stripePromise = loadStripe("pk_test_rKltl8cKNz9NLrOL7w1KT22800Yi2Zh7n9");
 
 const store = createStore(rootReducer,
     compose(
@@ -20,6 +23,15 @@ const store = createStore(rootReducer,
         reduxFirestore(fbConfig) // redux bindings for firestore
     )
 );
+
+
+function App() {
+    return (
+        <Elements stripe={stripePromise}>
+            <CheckoutForm />
+        </Elements>
+    );
+};
 
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
 
