@@ -17,6 +17,7 @@ const NavBarComponent = () => {
                     <li><NavLink to={'/scheduler'}>Scheduler</NavLink></li>
                     <li><NavLink to={'/calendar'}>Calendar</NavLink></li>
                     <li><NavLink to={'/description'}>Descriptions</NavLink></li>
+                    <li><NavLink to={'/confirmation'}>Confirmation</NavLink></li>
                 </ul>
             </div>
         </nav>

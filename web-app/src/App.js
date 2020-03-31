@@ -4,10 +4,12 @@ import NavBarComponent from './components/layout/NavBarComponent'
 import MainScheduler from "./components/scheduler/MainScheduler";
 import Calendar from './components/calendar/Calendar';
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
+import Confirmation from "./components/confirmation/Confirmation";
 import SplashScreen from './SplashScreen';
 
 
 import './App.css';
+
 
 //todo submit to the confirmation called
 //todo go to payment before confirming
@@ -22,6 +24,7 @@ function App() {
                     <Route path={'/description'}> <PartyDescriptionPage/> </Route>
                     <Route path={'/scheduler'}> <MainScheduler/></Route>
                     <Route path={'/calendar'}> <Calendar/> </Route>
+                    <Route path={'/confirmation'}> <Confirmation/> </Route>
                 </Switch>
 
             </BrowserRouter>
