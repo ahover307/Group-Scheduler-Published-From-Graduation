@@ -140,12 +140,11 @@ exports.checkPartyTimeOne = functions.https.onCall((data, context) => {
             availableTimes.push(false);
         }
 
+        //TODO all of these arrays are actually promises. not arrays.
+        // figure out how to do async code and make it wait for the response before continuing
+
         //Mark each hour that the room is open
         //There may be multiple open hours for the room
-        let openArray = [];
-        openHours.forEach(element => openArray.push(element));
-        let open = openArray.length;
-
         for (loop = 0; loop < (openHours.length / 2); loop += 2) {
             availableTimes.push(false);
             for (i = openHours[loop]; i < openHours[loop + 1]; i++) {
@@ -188,9 +187,6 @@ exports.checkPartyTimeOne = functions.https.onCall((data, context) => {
                 times.push(loop);
                 times.push(loop + requiredPartyLength);
             }
-
-
-            return openArray;
         }
     }
 
