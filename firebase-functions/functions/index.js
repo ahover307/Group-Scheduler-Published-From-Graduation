@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
-const stripe = require('stripe')(functions.config().stripe.testkey)
+const stripe = require('stripe')(functions.config().stripe.testkey);
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -37,19 +37,18 @@ exports.paymentIntent = functions.https.onCall(async (data, context) => {
  *      dateYear:       int
  * return   :   available times - 2D array containing the ordered rooms to use, and available start and end times of each time
  */
-exports.checkPartyTime = functions.https.onCall((data, context) => {
+exports.checkPartyTimeOne = functions.https.onCall((data, context) => {
     //Pull params into function
     const partyPackage = parseInt(data.partyPackage);
     const dayOfWeek = parseInt(data.dayOfWeek);
     let roomsRequested = [];
+    data.roomsRequested.forEach(element => roomsRequested.push(parseInt(element)));
     const partyDateDay = parseInt(data.dateDay);
     const partyDateMonth = parseInt(data.dateMonth);
     const partyDateYear = parseInt(data.dateYear);
 
     //Array to return
     let times = [[]];
-
-    data.roomsRequested.forEach(element => roomsRequested.push(parseInt(element)));
 
     //If it has a single room to handle
     if (partyPackage === 0 || partyPackage === 1 || partyPackage === 5) {
@@ -87,19 +86,20 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
         specialEventsRef = specialEventsRef.where('area', '==', roomsRequested[0]);
 
         //Make the call to the DB looking for the open hours in that room
-        let getDoc = openHoursRef.get()
+        //The odd hours are the open, close hours are closed. The should be paired up matched, but not necessarily in order outside of that
+        let openHours = openHoursRef.get()
             .then(snapshot => {
                 let temp = [];
-                temp.push(snapshot[0].doc.data().start);
-                temp.push(snapshot[0].doc.data().end);
+                snapshot.forEach(doc => {
+                    temp.push(doc.data().start);
+                    temp.push(doc.data().end);
+                });
                 return temp;
             }).catch(err => {
                 // Error with the database
                 throw new functions.https.HttpsError('database-failure', 'Could not find open hours: ' + err);
             });
-        //Create variables to hold the open hours
-        const openHours = getDoc[0];
-        const closeHours = getDoc[1];
+
 
         //Query the database. Save one list for area requested.
         let filledTimes = partiesRef.get().then((snapshot) => {
@@ -107,8 +107,9 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
             let temp = [];
             //Put each into a list that we will keep
             snapshot.forEach(doc => {
-                let index = doc.data().getKey('roomsRequested').getIndex(roomsRequested[0]);
-                temp.push([doc.data().getKey('roomTimes')[index][0], doc.data().getKey('roomTimes')[index][1]])
+                let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+                temp.push(doc.data().roomTimes[index]);
+                temp.push(doc.data().roomTimes[index + 1]);
             });
 
             return temp;
@@ -121,7 +122,8 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
             let temp = [];
 
             data.forEach(doc => {
-                temp.push([doc.data().getKey('start'), doc.data().getKey('end')]);
+                temp.push(doc.data().start);
+                temp.push(doc.data().end);
             });
 
             return temp;
@@ -132,44 +134,49 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
 
         //Array of available times for party room - Must check rules for these times
         let availableTimes = [];
+        let loop;
+        let i;
         for (let i = 0; i < 288; i++) {
             availableTimes.push(false);
         }
 
         //Mark each hour that the room is open
-        for (let i = openHours; i < closeHours; i++) {
-            availableTimes[i] = true;
+        //There may be multiple open hours for the room
+        let openArray = [];
+        openHours.forEach(element => openArray.push(element));
+        let open = openArray.length;
+
+        for (loop = 0; loop < (openHours.length / 2); loop += 2) {
+            availableTimes.push(false);
+            for (i = openHours[loop]; i < openHours[loop + 1]; i++) {
+                availableTimes.push(true);
+                availableTimes[i] = true;
+            }
         }
 
         //Mark off all special reserved times
-        for (let i = 0; i < specialTimes.length; i++) {
-            let start = specialTimes[i][0];
-            let finish = specialTimes[i][1];
-
-            for (let j = start; j < finish; j++) {
-                availableTimes[j] = false;
+        for (loop = 0; loop < (specialTimes.length / 2); loop += 2) {
+            for (i = specialTimes[loop]; i < specialTimes[loop + 1]; i++) {
+                availableTimes[i] = false;
             }
         }
 
         //Mark off the other parties from the reserved times
-        for (let i = 0; i < filledTimes.length; i++) {
-            let start = filledTimes[i][0];
-            let finish = filledTimes[i][1];
-
-            for (let j = start; j < finish; j++) {
-                availableTimes[j] = false;
+        for (loop = 0; loop < (filledTimes.length / 2); loop += 2) {
+            for (i = filledTimes[loop]; i < filledTimes[loop + 1]; i++) {
+                availableTimes[i] = false;
             }
         }
 
         //check rules on each time and store each positive result
         //Available time needs to be long enough
         //Rooms need to be consecutive in either order
-        for (let i = 0; i < availableTimes.length; i++) {
+        for (loop = 0; loop < availableTimes.length; loop++) {
             let timeIsGood = true;
 
             //Look ahead and check if the party room will be long enough. If there is not enough time, mark it as false
-            for (let j = 0; j < requiredPartyLength; j++) {
-                if (!availableTimes[i + j]) {
+            for (i = 0; i < requiredPartyLength; i++) {
+                if (!availableTimes[loop + i]) {
                     timeIsGood = false;
                     break;
                 }
@@ -177,25 +184,35 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
 
             //If the time stays good in that window, keep that window. Keep all of the available times.
             if (timeIsGood) {
-                times.push([[roomsRequested[0]], [i, i + requiredPartyLength]]);
+                times.push(roomsRequested[0]);
+                times.push(loop);
+                times.push(loop + requiredPartyLength);
             }
-        }
-        //Return list of available times.
-        return {
-            availableTimes: times,
-            partyLength: requiredPartyLength,
-            open: openHours,
-            close: closeHours,
-            filled: filledTimes,
-            specialTimes: specialTimes,
-            available: availableTimes,
-            roomsRequested: roomsRequested,
-            getdoc: getDoc
 
-        };
+
+            return openArray;
+        }
     }
+
+    //Return list of available times.
+    return times;
+});
+
+exports.checkPartyTimeTwo = functions.https.onCall((data, context) => {
+    //Pull params into function
+    const partyPackage = parseInt(data.partyPackage);
+    const dayOfWeek = parseInt(data.dayOfWeek);
+    let roomsRequested = [];
+    data.roomsRequested.forEach(element => roomsRequested.push(parseInt(element)));
+    const partyDateDay = parseInt(data.dateDay);
+    const partyDateMonth = parseInt(data.dateMonth);
+    const partyDateYear = parseInt(data.dateYear);
+
+    //Array to return
+    let times = [[]];
+
     //If it has two rooms to handle
-    else if (partyPackage === 2 || partyPackage === 6 || partyPackage === 7 || partyPackage === 8) {
+    if (partyPackage === 2 || partyPackage === 6 || partyPackage === 7 || partyPackage === 8) {
         //Length of play each party offers
         let requiredPartyLength1;
         let requiredPartyLength2;
@@ -439,8 +456,26 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
             roomsRequested: roomsRequested
         };
     }
+
+    //Return list of available times.
+    return times;
+});
+
+//Function to check in case of 3 rooms
+exports.checkPartyTimeThree = functions.https.onCall((data, context) => {
+    //Pull params into function
+    const partyPackage = parseInt(data.partyPackage);
+    const dayOfWeek = parseInt(data.dayOfWeek);
+    let roomsRequested = [];
+    data.roomsRequested.forEach(element => roomsRequested.push(parseInt(element)));
+    const partyDateDay = parseInt(data.dateDay);
+    const partyDateMonth = parseInt(data.dateMonth);
+    const partyDateYear = parseInt(data.dateYear);
+
+    //Array to return
+    let times = [[]];
     //If it has a three rooms to handle
-    else if (partyPackage === 3) {
+    if (partyPackage === 3) {
         //Length of play each party offers
         let requiredPartyLength1 = 8;
         let requiredPartyLength2 = 8;
@@ -789,9 +824,7 @@ exports.checkPartyTime = functions.https.onCall((data, context) => {
     }
 
     //Return list of available times.
-    return {
-        error: error
-    };
+    return times;
 });
 
 //Either update or write a single open hour document
@@ -814,18 +847,48 @@ exports.fillOpenHours = functions.https.onCall((data, context) => {
 });
 
 exports.pullOpenHours = functions.https.onCall((data, context) => {
-    let openHours = db.collection('OpenHours');
-    let test = openHours.get()
+    let day = 1;
+    let openHoursasdf = db.collection('OpenHours').where('room', '==', day);
+    openHoursasdf = openHoursasdf.where('dayOfWeek', '==', day);
+    let test = openHoursasdf.get()
         .then(snapshot => {
             let temp = [];
             snapshot.forEach(doc => {
                 // console.log(doc.id, '=>', doc.data());
-                temp.push(doc.data().start);
+                temp.push(doc.data().end);
             });
             return temp;
         })
         .catch(err => {
             console.log('Error getting documents', err);
         });
-    return test;
+
+    let openHoursRef = db.collection('OpenHours').where('dayOfWeek', '==', 1);
+
+    //Based on the room we are looking for, a few different things need to happen.
+    // 1. find the open hours of that room
+    openHoursRef = openHoursRef.where('room', '==', 1);
+
+    //Make the call to the DB looking for the open hours in that room
+    let getDoc = openHoursRef.get()
+        .then(snapshot => {
+            let temp = [];
+            snapshot.forEach(doc => {
+                // console.log(doc.id, '=>', doc.data());
+                temp.push(doc.data().end);
+            });
+            return temp;
+        }).catch(err => {
+            // Error with the database
+            throw new functions.https.HttpsError('database-failure', 'Could not find open hours: ' + err);
+        });
+    //Create variables to hold the open hours
+    const openHours = getDoc[0];
+    const closeHours = getDoc[1];
+    return {
+        open: openHours,
+        close: closeHours,
+        getDoc: getDoc,
+        test: test
+    }
 });

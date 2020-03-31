@@ -9,7 +9,6 @@ import {createParty} from "../../store/actions/partyActions";
 import connect from "react-redux/es/connect/connect";
 import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
-import {NavLink} from "react-router-dom";
 import Redirect from "react-router-dom/es/Redirect";
 
 
@@ -29,7 +28,8 @@ class MainScheduler extends Component {
         dayOfWeek: 1,
         dateDay: 22,
         dateMonth: 3,
-        dateYear: 2020
+        dateYear: 2020,
+        toConfirm: false,
     };
 
 
@@ -372,14 +372,8 @@ class MainScheduler extends Component {
             .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
     }
 
-    state = {
-        toConfirm: false,
-    }
-
     handleSubmit = async (e) => {
-
         e.preventDefault();
-        this.props.createParty(this.state);
         const templateId = 'template_KxFFbbaf' ;
 
         this.sendFeedback(templateId, {
@@ -392,24 +386,26 @@ class MainScheduler extends Component {
             toConfirm: true
         }))
         //this.props.history.push('./confirmation');
-
-
-        // const functions = firebase.functions().httpsCallable('checkPartyTime');
-        // functions({
-        //     partyPackage: this.state.partyPackage,
-        //     dayOfWeek: this.state.dayOfWeek,
-        //     roomsRequested: this.state.roomsRequested,
-        //     dateDay: this.state.dateDay,
-        //     dateMonth: this.state.dateMonth,
-        //     dateYear: this.state.dateYear
-        // }).then(function (result) {
-        //     console.log(result);
-        // });
     };
+
+    testFunction = () => {
+        const functions = firebase.functions().httpsCallable('checkPartyTimeOne');
+        functions({
+            partyPackage: this.state.partyPackage,
+            dayOfWeek: this.state.dayOfWeek,
+            roomsRequested: this.state.roomsRequested,
+            dateDay: this.state.dateDay,
+            dateMonth: this.state.dateMonth,
+            dateYear: this.state.dateYear
+        }).then(function (result) {
+            console.log(result);
+        });
+    }
+
 
     render() {
         if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
-            return <Redirect to='/confirmation' />
+            return <Redirect to='/confirmation'/>
         }
         return (
             <Collapsible popout>
@@ -478,6 +474,9 @@ class MainScheduler extends Component {
                 </div>
                 <div className={'input-field'}>
                     <button className={'btn purple'} onClick={this.pullOpenHours}>pullOpen</button>
+                </div>
+                <div className={'input-field'}>
+                    <button className={'btn purple'} onClick={this.testFunction}>Test Function Button</button>
                 </div>
             </Collapsible>
 

@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {createStore, applyMiddleware, compose} from "redux";
+import {applyMiddleware, compose, createStore} from "redux";
 import rootReducer from "./store/reducers/rootReducer";
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
-import {reduxFirestore, getFirestore} from 'redux-firestore'
-import {reactReduxFirebase, getFirebase} from 'react-redux-firebase'
+import {getFirestore, reduxFirestore} from 'redux-firestore'
+import {getFirebase, reactReduxFirebase} from 'react-redux-firebase'
 import fbConfig from './config/config.js'
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
-import CheckoutForm from './CheckoutForm';
+// import {Elements} from '@stripe/react-stripe-js';
+// import {loadStripe} from '@stripe/stripe-js';
+// import CheckoutForm from './CheckoutForm';
 
-const stripePromise = loadStripe("pk_test_rKltl8cKNz9NLrOL7w1KT22800Yi2Zh7n9");
+// const stripePromise = loadStripe("pk_test_rKltl8cKNz9NLrOL7w1KT22800Yi2Zh7n9");
 
 const store = createStore(rootReducer,
     compose(
@@ -25,13 +25,13 @@ const store = createStore(rootReducer,
 );
 
 
-function App() {
-    return (
-        <Elements stripe={stripePromise}>
-            <CheckoutForm />
-        </Elements>
-    );
-};
+// function App() {
+//     return (
+//         <Elements stripe={stripePromise}>
+//             <CheckoutForm />
+//         </Elements>
+//     );
+// };
 
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
 
