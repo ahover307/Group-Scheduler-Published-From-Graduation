@@ -27,12 +27,20 @@ class TimeList extends Component {
 
 
     render() {
+        console.log("this was just rendered now")
+
         return (
-            <div>
-                <p>Time Slots</p>
-            </div>
+            <form>
+                <div className={'container'}>
+                    <label>
+                        <input name={'partyType'} id={'0'} type={'radio'} onChange={this.handleChange}/>
+                        <span>time span placeholder</span>
+                    </label>
+                </div>
+            </form>
         );
     };
 }
+
 
 export default TimeList;

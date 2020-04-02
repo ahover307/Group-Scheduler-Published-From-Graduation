@@ -6,6 +6,7 @@ class PartyAreaSelector extends Component {
     };
 
     // Do not change it to ===, for some reason it doesn't work
+    // TODO Find out why this does not work
     areasNeeded = () => {
         if (this.props.partyPackage == 0 || this.props.partyPackage == 1 || this.props.partyPackage == 5)
             return 1;

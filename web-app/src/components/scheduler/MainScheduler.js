@@ -119,6 +119,7 @@ class MainScheduler extends Component {
     };
 
     testFunction = () => {
+        console.log("calling function");
         const functions = firebase.functions().httpsCallable('checkPartyTimeOne');
         functions({
             partyPackage: this.state.partyPackage,
@@ -144,7 +145,7 @@ class MainScheduler extends Component {
             return <Redirect to='/confirmation'/>
         }
         return (
-            <Collapsible popout>
+            <Collapsible accordion={false}>
                 <CollapsibleItem
                     expanded={true}
                     header="Select Party Package"
@@ -168,7 +169,7 @@ class MainScheduler extends Component {
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
-                    header="Select a Time Slot"
+                    header="Select Time Slot"
                     icon={<Icon>watch</Icon>}
                     node="div"
                     className={'TimeList'}
@@ -194,29 +195,11 @@ class MainScheduler extends Component {
                     <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>
                 </div>
                 <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.fillOpenMain}>Main Gym Open Hours</button>
-                </div>
-                <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.fillOpenKM}>KM Open Hours</button>
-                </div>
-                <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.fillOpenNinja}>Ninja</button>
-                </div>
-                <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.fillOpenPreschool}>Preschool</button>
-                </div>
-                <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.fillOpenRW}>Rockwall</button>
-                </div>
-                <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.pullOpenHours}>pullOpen</button>
-                </div>
-                <div className={'input-field'}>
                     <button className={'btn purple'} onClick={this.testFunction}>Test Function Button</button>
                 </div>
             </Collapsible>
 
-        )
+        );
 
 
     }

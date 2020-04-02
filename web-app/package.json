@@ -52,6 +52,6 @@
     ]
   },
   "devDependencies": {
-    "react-materialize": "^3.5.9"
+    "react-materialize": "^3.8.0"
   }
 }
