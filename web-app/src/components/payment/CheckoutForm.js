@@ -1,5 +1,5 @@
 import React from 'react';
-import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
+import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js';
 
 import CardSection from './CardSection';
 

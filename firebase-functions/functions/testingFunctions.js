@@ -41,17 +41,17 @@ exports.pullOpenHours = functions.https.onCall(async (data, context) => {
     //
     // return test;
 
-    let partiesRef = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
-    partiesRef = partiesRef.where('roomsRequested', 'array-contains', roomsRequested[0]);
-    let filledTimes = await partiesRef.get().then((snapshot) => {
-        let temp = [];
-        snapshot.forEach(doc => {
-            let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
-            temp.push(doc.data().roomTimes[index]);
-            temp.push(doc.data().roomTimes[index + 1]);
-        });
-        return temp;
-    }).catch((err) => {
-        throw new functions.https.HttpsError('parties-reference-break', 'Failed looking for the previous party times: ' + err);
-    });
+    // let partiesRef = db.collection('Parties').where('dateDay', '==', partyDateDay).where('dateMonth', '==', partyDateMonth).where('dateYear', '==', partyDateYear);
+    // partiesRef = partiesRef.where('roomsRequested', 'array-contains', roomsRequested[0]);
+    // let filledTimes = await partiesRef.get().then((snapshot) => {
+    //     let temp = [];
+    //     snapshot.forEach(doc => {
+    //         let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+    //         temp.push(doc.data().roomTimes[index]);
+    //         temp.push(doc.data().roomTimes[index + 1]);
+    //     });
+    //     return temp;
+    // }).catch((err) => {
+    //     throw new functions.https.HttpsError('parties-reference-break', 'Failed looking for the previous party times: ' + err);
+    // });
 });

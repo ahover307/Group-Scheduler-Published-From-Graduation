@@ -27,7 +27,7 @@ exports.checkPartyTimeOne = functions.https.onCall(async (data, context) => {
     const partyDateYear = parseInt(data.dateYear);
 
     //Array to return
-    let times = [[]];
+    let times = [];
 
     //If it has a single room to handle
     if (partyPackage === 0 || partyPackage === 1 || partyPackage === 5) {
@@ -82,7 +82,7 @@ exports.checkPartyTimeOne = functions.https.onCall(async (data, context) => {
         let filledTimes = await partiesRef.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -249,7 +249,7 @@ exports.checkPartyTimeTwo = functions.https.onCall(async (data, context) => {
         let filledTimes1 = await partiesRef1.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -260,7 +260,7 @@ exports.checkPartyTimeTwo = functions.https.onCall(async (data, context) => {
         let filledTimes2 = await partiesRef2.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -394,7 +394,7 @@ exports.checkPartyTimeThree = functions.https.onCall(async (data, context) => {
     const partyDateYear = parseInt(data.dateYear);
 
     //Array to return
-    let times = [[]];
+    let times = [];
     //If it has a three rooms to handle
     if (partyPackage === 3) {
         //Length of play each party offers
@@ -470,7 +470,7 @@ exports.checkPartyTimeThree = functions.https.onCall(async (data, context) => {
         let filledTimes1 = await partiesRef1.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -481,7 +481,7 @@ exports.checkPartyTimeThree = functions.https.onCall(async (data, context) => {
         let filledTimes2 = await partiesRef2.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -492,7 +492,7 @@ exports.checkPartyTimeThree = functions.https.onCall(async (data, context) => {
         let filledTimes3 = await partiesRef2.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.getIndex(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });

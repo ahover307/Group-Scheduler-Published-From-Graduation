@@ -11,7 +11,7 @@ class PartyPackageSelector extends Component {
 
     render() {
         return (
-            <form aria-required={'true'}>
+            <form>
                 <div className={'container'}>
                     <label>
                         <input name={'partyType'} id={'0'} type={'radio'} onChange={this.handleChange}/>
