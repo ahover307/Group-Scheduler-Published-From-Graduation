@@ -18,11 +18,15 @@ class PartyAreaSelector extends Component {
             return -1;
     };
 
+
+
     handleChangePartyArea1 = (e) => {
         this.props.parentCallBackPartyArea1(e.target.value);
+
     };
     handleChangePartyArea2 = (e) => {
         this.props.parentCallBackPartyArea2(e.target.value);
+
     };
     handleChangePartyArea3 = (e) => {
         this.props.parentCallBackPartyArea3(e.target.value);

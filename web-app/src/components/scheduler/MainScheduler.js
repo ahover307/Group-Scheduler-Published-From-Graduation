@@ -12,6 +12,8 @@ import emailjs from 'emailjs-com'
 import {Redirect} from "react-router-dom";
 
 
+
+
 class MainScheduler extends Component {
 
     state = {
@@ -40,23 +42,70 @@ class MainScheduler extends Component {
         });
     };
 
+    updatePartyPackageString = (e) => {
+        if (e== 0) {
+           return "Basic"
+        }
+        else if (e== 1) {
+            return "Single"
+        }
+        else if (e== 2) {
+            return "Double"
+        }
+        else if (e== 3) {
+            return "Triple"
+        }
+        else if (e== 4) {
+            return "Sleepover"
+        }
+        else if (e== 5) {
+            return "Ninja Experience"
+        }
+        else if (e== 6) {
+            return "Ninja Exclusive"
+        }
+        else if (e== 7) {
+            return "Ninja Extra"
+        }
+        else if (e== 8) {
+            return "Ninja Extreme"
+        }
+};
+
     // Update state from PartyAreaSelector to MainScheduler
     callBackFunctionPartyArea1 = (childData) => {
         this.setState({
             partyArea1: childData
         })
     };
+
+
     callBackFunctionPartyArea2 = (childData) => {
         this.setState({
             partyArea2: childData
         })
     };
+
     callBackFunctionPartyArea3 = (childData) => {
         this.setState({
             partyArea3: childData
         })
     };
 
+    updatePartyAreaString = (e) =>{
+        if (e == 1) {
+            return "Main Gym"
+        }
+        else if (e == 2) {
+            return "Kidmazium"
+        }
+        else if (e == 3) {
+            return "Rock Wall"
+        }
+        else if (e == 4) {
+            return "Preschool"
+        }
+    }
 
     // Update state from CreatePartyComponent to MainScheduler
     callbackFunctionPartyName = (childData) => {
@@ -104,11 +153,20 @@ class MainScheduler extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const templateId = 'template_KxFFbbaf';
-
+        const templateId = 'confirmationemail';
+        const partyArea1String = this.updatePartyAreaString(this.state.partyArea1);
+        console.log(this.state.partyArea1);
+        console.log(partyArea1String);
+        const partyArea2String = this.updatePartyAreaString(this.state.partyArea2);
+        const partyArea3String = this.updatePartyAreaString(this.state.partyArea3);
         this.sendFeedback(templateId, {
-            message_html: "Thanks for booking with us!",
-            to_name: this.state.partyName,
+            party_name: this.state.partyName,
+            party_package: this.updatePartyPackageString(this.state.partyPackage),
+            party_area1: partyArea1String ,
+            party_area2: partyArea2String,
+            party_area3: partyArea3String,
+            party_host: this.state.hostName,
+            phone_number: this.state.phoneNumber,
             to_email: this.state.email
         });
 
@@ -116,6 +174,8 @@ class MainScheduler extends Component {
             toConfirm: true
         }))
         //this.props.history.push('./confirmation');
+
+        //this.props.createParty(this.state); <-- Don't delete this
     };
 
     testFunction = () => {
@@ -137,6 +197,8 @@ class MainScheduler extends Component {
             console.log(e.details);
             console.log(e.name);
         });
+
+
     };
 
 
