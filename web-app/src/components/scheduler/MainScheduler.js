@@ -267,7 +267,9 @@ class MainScheduler extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
+
+
+const mapDispatchToProps = (dispatch) => {
     return {
         createParty: (party) => dispatch(createParty(party))
     }

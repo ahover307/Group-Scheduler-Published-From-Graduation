@@ -5,6 +5,7 @@ import MainScheduler from "./components/scheduler/MainScheduler";
 import Calendar from './components/calendar/Calendar';
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
 import Confirmation from "./components/confirmation/Confirmation";
+import SignIn from "./components/staff/SignIn"
 import SplashScreen from './SplashScreen';
 
 
@@ -25,6 +26,8 @@ function App() {
                     <Route path={'/scheduler'}> <MainScheduler/></Route>
                     <Route path={'/calendar'}> <Calendar/> </Route>
                     <Route path={'/confirmation'}> <Confirmation/> </Route>
+                    <Route path={'/confirmation'}> <Confirmation/> </Route>
+                    <Route path={'/login'}><SignIn/></Route>
                 </Switch>
 
             </BrowserRouter>
