@@ -24,6 +24,7 @@ const NavBarComponent = (props) => {
                     <li><NavLink to={'/calendar'}>Calendar</NavLink></li>
                     <li><NavLink to={'/description'}>Descriptions</NavLink></li>
                     <li><NavLink to={'/confirmation'}>Confirmation</NavLink></li>
+                    <li><NavLink to={'/card'}> Payment form </NavLink></li>
                     { links }
                 </ul>
             </div>
