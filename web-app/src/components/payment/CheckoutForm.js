@@ -2,6 +2,7 @@ import React from 'react';
 import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js';
 
 import CardSection from './CardSection';
+import * as firebase from "firebase";
 
 class CheckoutForm extends React.Component {
     handleSubmit = async (event) => {
@@ -9,7 +10,17 @@ class CheckoutForm extends React.Component {
         // which would refresh the page.
         event.preventDefault();
 
-        const {stripe, elements} = this.props
+        const {stripe, elements} = this.props;
+        var clientSecret;
+
+        var paymentIntent = firebase.functions().httpsCallable('paymentIntent');
+        paymentIntent({price: 1099, email: 'jjarj83@gmail.com'}).then(function (result) {
+            clientSecret = result.data.text;
+        }).catch(function (error) {
+            var code = error.code;
+            var message = error.message;
+            var details = error.details;
+        });
 
         if (!stripe || !elements) {
             // Stripe.js has not yet loaded.
@@ -17,7 +28,7 @@ class CheckoutForm extends React.Component {
             return;
         }
 
-        const result = await stripe.confirmCardPayment('{CLIENT_SECRET}', {
+        const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
                 billing_details: {
