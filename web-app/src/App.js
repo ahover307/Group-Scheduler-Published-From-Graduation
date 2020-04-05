@@ -5,12 +5,11 @@ import MainScheduler from "./components/scheduler/MainScheduler";
 import Calendar from './components/calendar/Calendar';
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
 import Confirmation from "./components/confirmation/Confirmation";
-import SignIn from "./components/staff/SignIn"
+import SignIn from "./components/staff/SignIn";
+import Dashboard from "./components/staff/Dashboard";
 import SplashScreen from './SplashScreen';
-import ReactDOM from 'react-dom';
 import CheckoutForm from './components/payment/CheckoutForm';
 import './App.css';
-import {document} from "firebase-functions/lib/providers/firestore";
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 
@@ -37,6 +36,7 @@ function App() {
                     <Route path={'/card'}>
                         <Elements stripe={stripePromise}><CheckoutForm/></Elements>
                     </Route>
+                    <Route path={'/dashboard'}><Dashboard/></Route>
                 </Switch>
 
                 </BrowserRouter>
