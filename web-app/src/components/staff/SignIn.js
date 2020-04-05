@@ -1,14 +1,16 @@
 import React, {Component} from 'react'
 import "materialize-css"
 import {connect} from "react-redux"
-import {signIn} from  '../../store/actions/authActions'
+import {signIn} from '../../store/actions/authActions'
+import {Redirect} from "react-router-dom";
 
 class SignIn extends Component {
 
     state = {
         email: '',
         password: ''
-    }
+    };
+
 
     handleChange = (e) => {
         this.setState({
@@ -18,11 +20,11 @@ class SignIn extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.signIn(this.state)
+        this.props.signIn(this.state);
     };
 
     render() {
-        const { authError } = this.props;
+        const {authError} = this.props;
         return (
 
             <div style={{textAlign: 'center'}}>
@@ -58,11 +60,11 @@ class SignIn extends Component {
                             <br/>
                             <div className="row">
                                 <button type="submit" name="btn_login"
-                                        className="col s12 btn btn-large waves-effect "
-                                        style={{background: "#653487"}}>Login
+                                        className="col s12 btn btn-large colorMe"
+                                >Login
                                 </button>
                             </div>
-                            { authError ? <p style={{color: 'red'}}> {authError}</p> : null}
+                            {authError ? <p style={{color: 'red'}}> {authError}</p> : null}
                         </form>
                     </div>
                 </div>
@@ -73,7 +75,7 @@ class SignIn extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        authError : state.auth.authError
+        authError: state.auth.authError
     }
 }
 const MapDispatchToProps = (dispatch) => {
