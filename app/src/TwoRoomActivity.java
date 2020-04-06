@@ -9,8 +9,7 @@ import android.widget.Spinner;
 
 public class TwoRoomActivity extends AppCompatActivity {
 
-    private int day, month, year, dayOfWeek;
-    private String partyPackage;
+    private int day, month, year, dayOfWeek, partyPackage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +21,7 @@ public class TwoRoomActivity extends AppCompatActivity {
         month = intent.getIntExtra("month", -1);
         year = intent.getIntExtra("year", -1);
         dayOfWeek = intent.getIntExtra("dayOfWeek",-1);
-        partyPackage = intent.getStringExtra("package");
+        partyPackage = intent.getIntExtra("package", -1);
     }
 
     public void submit(View view) {
