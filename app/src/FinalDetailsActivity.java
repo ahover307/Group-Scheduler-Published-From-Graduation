@@ -11,14 +11,16 @@ import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FinalDetailsActivity extends AppCompatActivity {
     private Button save;
     private FirebaseFirestore database;
     private EditText party_last, contact_last, email, phoneNumber;
     private Party party;
-    private int day, month, year, dayOfWeek;
-    private String partyPackage;
-    private String[] rooms;
+    private int day, month, year, dayOfWeek, partyPackage;
+    private List<Integer> rooms;
 
 
 
@@ -29,8 +31,8 @@ public class FinalDetailsActivity extends AppCompatActivity {
         month = intent.getIntExtra("month", -1);
         year = intent.getIntExtra("year", -1);
         dayOfWeek = intent.getIntExtra("dayOfWeek",-1);
-        partyPackage = intent.getStringExtra("package");
-        rooms = intent.getStringArrayExtra("rooms");
+        partyPackage = intent.getIntExtra("package", -1);
+        rooms = intent.getIntegerArrayListExtra("rooms");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_details);
 
@@ -57,11 +59,7 @@ public class FinalDetailsActivity extends AppCompatActivity {
                 party.setYear(year);
                 party.setDayOfWeek(dayOfWeek);
                 party.setPartyPackage(partyPackage);
-                party.setRoom(rooms[0]);
-
-                if (rooms.length > 1) party.setRoom2(rooms[1]);
-
-                if (rooms.length > 2) party.setRoom3(rooms[2]);
+                party.setRoomsRequested(rooms);
 
                 database.collection("Parties").add(party);
 
@@ -74,6 +72,5 @@ public class FinalDetailsActivity extends AppCompatActivity {
 
 
     }
-
 
 }
