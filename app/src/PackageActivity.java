@@ -37,11 +37,23 @@ public class PackageActivity extends AppCompatActivity {
 
     public void Submit(View view) {
         Spinner packageSpinner = findViewById(R.id.spinner_packages);
-        String partyPackage = packageSpinner.getSelectedItem().toString();
+        String partyPackageString = packageSpinner.getSelectedItem().toString();
+        int partyPackage = -1;
+        switch (partyPackageString) {
+            case "Basic": partyPackage = 0; break;
+            case "Single Play": partyPackage = 1; break;
+            case "Double Play": partyPackage = 2; break;
+            case "Triple Play": partyPackage = 3; break;
+            case "Ninja Warrior Exclusive": partyPackage = 5; break;
+            case "Ninja Warrior Experience": partyPackage = 6; break;
+            case "Ninja Warrior Extra": partyPackage = 7; break;
+            case "Ninja Warrior Extreme": partyPackage = 8; break;
+            case "Sleepover": partyPackage = 9; break;
+        }
         Intent intent;
-        if (partyPackage.equals("Double Play"))
+        if (partyPackageString.equals("Double Play"))
             intent = new Intent(this, TwoRoomActivity.class);
-        else if (partyPackage.equals("Triple Play"))
+        else if (partyPackageString.equals("Triple Play"))
             intent = new Intent(this, ThreeRoomActivity.class);
         else
             intent = new Intent(this, RoomActivity.class);
