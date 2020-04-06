@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.functions.FirebaseFunctions;
 import com.google.firebase.functions.FirebaseFunctionsException;
 import com.google.firebase.functions.HttpsCallableResult;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,13 +58,31 @@ public class CheckoutActivity extends AppCompatActivity {
     private String paymentIntentClientSecret;
     private Stripe stripe;
     private FirebaseFunctions mFunctions;
+    private FirebaseFirestore database;
+    private Party party;
+    private int partyPackage, day, month, year, dayOfWeek;
+    private String contact, partyName, email, phone;
+    private List<Integer> rooms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+
+        day = intent.getIntExtra("day", -1);
+        month = intent.getIntExtra("month", -1);
+        year = intent.getIntExtra("year", -1);
+        dayOfWeek = intent.getIntExtra("dayOfWeek",-1);
+        partyPackage = intent.getIntExtra("package", -1);
+        rooms = intent.getIntegerArrayListExtra("rooms");
+        contact = intent.getStringExtra("contact");
+        partyName = intent.getStringExtra("party");
+        email = intent.getStringExtra("email");
+        phone = intent.getStringExtra("phone");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
-        mFunctions = FirebaseFunctions.getInstance();
 
+        mFunctions = FirebaseFunctions.getInstance();
 
         startCheckout();
     }
@@ -215,7 +235,8 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
-    private static final class PaymentResultCallback
+    //private static final class PaymentResultCallback
+    private final class PaymentResultCallback
             implements ApiResultCallback<PaymentIntentResult> {
         @NonNull private final WeakReference<CheckoutActivity> activityRef;
 
@@ -234,12 +255,10 @@ public class CheckoutActivity extends AppCompatActivity {
             PaymentIntent.Status status = paymentIntent.getStatus();
             if (status == PaymentIntent.Status.Succeeded) {
                 // Payment completed successfully
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                activity.displayAlert(
-                        "Payment completed",
-                        gson.toJson(paymentIntent),
-                        true
-                );
+                saveToDatabase();
+
+
+
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
                 // Payment failed – allow retrying using a different payment method
                 activity.displayAlert(
@@ -261,5 +280,24 @@ public class CheckoutActivity extends AppCompatActivity {
             activity.displayAlert("Error", e.toString(), false);
         }
     }
+
+    public void saveToDatabase() {
+        party = new Party();
+        database = FirebaseFirestore.getInstance();
+
+        party.setEmail(email);
+        party.setHost(partyName);
+        party.setName(contact);
+        party.setPhoneNumber(phone);
+        party.setDay(day);
+        party.setMonth(month);
+        party.setYear(year);
+        party.setDayOfWeek(dayOfWeek);
+        party.setPartyPackage(partyPackage);
+        party.setRoomsRequested(rooms);
+
+        database.collection("Parties").add(party);
+    }
+
 
 }
