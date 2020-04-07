@@ -7,8 +7,8 @@
 */
 
 .StripeElement {
-    height: 40px;
-    padding: 10px 12px;
+    height: 45px;
+    padding: 10px 16px;
     width: 100%;
     color: #32325d;
     background-color: white;
@@ -30,4 +30,14 @@
 
 .StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
+}
+
+.default{
+    margin-left: 10px;
+    font-size: medium;
+}
+
+.butdef{
+    margin-left: 10px;
+    font-size:large;
 }
