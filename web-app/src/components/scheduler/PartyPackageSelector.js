@@ -38,20 +38,20 @@ class PartyPackageSelector extends Component {
                 </div>
                 <div className={'container'}>
                     <label>
-                        <input name={'partyType'} id={'4'} type={'radio'} onChange={this.handleChange}/>
+                        <input name={'partyType'} id={'9'} type={'radio'} onChange={this.handleChange}/>
                         <span>Sleepover</span>
                     </label>
                 </div>
                 <div className={'container'}>
                     <label>
                         <input name={'partyType'} id={'5'} type={'radio'} onChange={this.handleChange}/>
-                        <span>Ninja Experience</span>
+                        <span>Ninja Exclusive</span>
                     </label>
                 </div>
                 <div className={'container'}>
                     <label>
                         <input name={'partyType'} id={'6'} type={'radio'} onChange={this.handleChange}/>
-                        <span>Ninja Exclusive</span>
+                        <span>Ninja Experience</span>
                     </label>
                 </div>
                 <div className={'container'}>

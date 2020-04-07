@@ -5,8 +5,6 @@ class PartyAreaSelector extends Component {
         partyPackage: -1,
     };
 
-    // Do not change it to ===, for some reason it doesn't work
-    // TODO Find out why this does not work
     areasNeeded = () => {
         if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
             return 1;
@@ -17,8 +15,6 @@ class PartyAreaSelector extends Component {
         else
             return -1;
     };
-
-
 
     handleChangePartyArea1 = (e) => {
         this.props.parentCallBackPartyArea1(e.target.value);
