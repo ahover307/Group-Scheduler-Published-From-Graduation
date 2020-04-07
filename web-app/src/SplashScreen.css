@@ -1,1 +1,8 @@
-.App-header {background-color: #653487;}
+.App-header {
+    background-color: #653487;
+    margin: 0px;
+}
+
+.tagg{
+    font-size: x-large;
+}
