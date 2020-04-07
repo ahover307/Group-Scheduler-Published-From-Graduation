@@ -260,7 +260,7 @@ exports.checkPartyTimeTwo = functions.https.onCall(async (data, context) => {
         let filledTimes2 = await partiesRef2.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[1]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -300,36 +300,36 @@ exports.checkPartyTimeTwo = functions.https.onCall(async (data, context) => {
         }
 
         //Mark each hour that the room is open
-        for (let loop = 0; loop < (openHours1.length / 2); loop += 2) {
+        for (let loop = 0; loop < openHours1.length; loop += 2) {
             for (let i = openHours1[loop]; i < openHours1[loop + 1]; i++) {
                 availableTimes1[i] = true;
             }
         }
-        for (let loop = 0; loop < (openHours2.length / 2); loop += 2) {
+        for (let loop = 0; loop < openHours2.length; loop += 2) {
             for (let i = openHours2[loop]; i < openHours2[loop + 1]; i++) {
                 availableTimes2[i] = true;
             }
         }
 
         //Mark off all special reserved times
-        for (let loop = 0; loop < (specialTimes1.length / 2); loop += 2) {
+        for (let loop = 0; loop < specialTimes1.length; loop += 2) {
             for (let i = specialTimes1[loop]; i < specialTimes1[loop + 1]; i++) {
                 availableTimes1[i] = false;
             }
         }
-        for (let loop = 0; loop < (specialTimes2.length / 2); loop += 2) {
+        for (let loop = 0; loop < specialTimes2.length; loop += 2) {
             for (let i = specialTimes2[loop]; i < specialTimes2[loop + 1]; i++) {
                 availableTimes2[i] = false;
             }
         }
 
         //Mark off the other parties from the reserved times
-        for (let loop = 0; loop < (filledTimes1.length / 2); loop += 2) {
+        for (let loop = 0; loop < filledTimes1.length; loop += 2) {
             for (let i = filledTimes1[loop]; i < filledTimes1[loop + 1]; i++) {
                 availableTimes1[i] = false;
             }
         }
-        for (let loop = 0; loop < (filledTimes2.length / 2); loop += 2) {
+        for (let loop = 0; loop < filledTimes2.length; loop += 2) {
             for (let i = filledTimes2[loop]; i < filledTimes2[loop + 1]; i++) {
                 availableTimes2[i] = false;
             }
@@ -481,7 +481,7 @@ exports.checkPartyTimeThree = functions.https.onCall(async (data, context) => {
         let filledTimes2 = await partiesRef2.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[1]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -489,10 +489,10 @@ exports.checkPartyTimeThree = functions.https.onCall(async (data, context) => {
         }).catch((err) => {
             throw new functions.https.HttpsError('parties-reference-break', 'Failed looking for the previous party times: ' + err);
         });
-        let filledTimes3 = await partiesRef2.get().then((snapshot) => {
+        let filledTimes3 = await partiesRef3.get().then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomsRequested[2]);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -544,51 +544,51 @@ exports.checkPartyTimeThree = functions.https.onCall(async (data, context) => {
         }
 
         //Mark each hour that the room is open
-        for (let loop = 0; loop < (openHours1.length / 2); loop += 2) {
+        for (let loop = 0; loop < openHours1.length; loop += 2) {
             for (let i = openHours1[loop]; i < openHours1[loop + 1]; i++) {
                 availableTimes1[i] = true;
             }
         }
-        for (let loop = 0; loop < (openHours2.length / 2); loop += 2) {
+        for (let loop = 0; loop < openHours2.length; loop += 2) {
             for (let i = openHours2[loop]; i < openHours2[loop + 1]; i++) {
                 availableTimes2[i] = true;
             }
         }
-        for (let loop = 0; loop < (openHours3.length / 2); loop += 2) {
+        for (let loop = 0; loop < openHours3.length; loop += 2) {
             for (let i = openHours3[loop]; i < openHours3[loop + 1]; i++) {
                 availableTimes3[i] = true;
             }
         }
 
         //Mark off all special reserved times
-        for (let loop = 0; loop < (specialTimes1.length / 2); loop += 2) {
+        for (let loop = 0; loop < specialTimes1.length; loop += 2) {
             for (let i = specialTimes1[loop]; i < specialTimes1[loop + 1]; i++) {
                 availableTimes1[i] = false;
             }
         }
-        for (let loop = 0; loop < (specialTimes2.length / 2); loop += 2) {
+        for (let loop = 0; loop < specialTimes2.length; loop += 2) {
             for (let i = specialTimes2[loop]; i < specialTimes2[loop + 1]; i++) {
                 availableTimes2[i] = false;
             }
         }
-        for (let loop = 0; loop < (specialTimes3.length / 2); loop += 2) {
+        for (let loop = 0; loop < specialTimes3.length; loop += 2) {
             for (let i = specialTimes3[loop]; i < specialTimes3[loop + 1]; i++) {
                 availableTimes3[i] = false;
             }
         }
 
         //Mark off the other parties from the reserved times
-        for (let loop = 0; loop < (filledTimes1.length / 2); loop += 2) {
+        for (let loop = 0; loop < filledTimes1.length; loop += 2) {
             for (let i = filledTimes1[loop]; i < filledTimes1[loop + 1]; i++) {
                 availableTimes1[i] = false;
             }
         }
-        for (let loop = 0; loop < (filledTimes2.length / 2); loop += 2) {
+        for (let loop = 0; loop < filledTimes2.length; loop += 2) {
             for (let i = filledTimes2[loop]; i < filledTimes2[loop + 1]; i++) {
                 availableTimes2[i] = false;
             }
         }
-        for (let loop = 0; loop < (filledTimes3.length / 2); loop += 2) {
+        for (let loop = 0; loop < filledTimes3.length; loop += 2) {
             for (let i = filledTimes3[loop]; i < filledTimes3[loop + 1]; i++) {
                 availableTimes3[i] = false;
             }
