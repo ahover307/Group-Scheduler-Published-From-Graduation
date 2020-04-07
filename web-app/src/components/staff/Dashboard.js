@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Row, Col, Icon, Card} from 'react-materialize'
+import {Card, Col, Icon, Row} from 'react-materialize'
 
 class Dashboard extends Component {
 

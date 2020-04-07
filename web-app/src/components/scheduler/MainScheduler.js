@@ -7,15 +7,11 @@ import M from "materialize-css";
 import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
 import {createParty} from "../../store/actions/partyActions";
 import connect from "react-redux/es/connect/connect";
-import * as firebase from "firebase";
+// import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
 import {Redirect} from "react-router-dom";
 
-
-
-
 class MainScheduler extends Component {
-
     state = {
         contactName: '',
         email: '',
@@ -34,6 +30,9 @@ class MainScheduler extends Component {
         toConfirm: false,
     };
 
+    componentDidMount() {
+        M.AutoInit();
+    }
 
     // Update state from PartyPackageSelector to MainScheduler
     callBackFunctionPartyPackage = (childData) => {
@@ -43,34 +42,31 @@ class MainScheduler extends Component {
     };
 
     updatePartyPackageString = (e) => {
-        if (e== 0) {
-           return "Basic"
+        switch (e) {
+            case 0:
+                return "Basic";
+            case 1:
+                return "Single";
+            case 2:
+                return "Double";
+            case 3:
+                return "Triple";
+            case 4:
+                return "ERROR";
+            case 5:
+                return "Ninja Exclusive";
+            case 6:
+                return "Ninja Experience";
+            case 7:
+                return "Ninja Extra";
+            case 8:
+                return "Ninja Extreme";
+            case 9:
+                return "Sleepover";
+            default:
+                return "ERROR";
         }
-        else if (e== 1) {
-            return "Single"
-        }
-        else if (e== 2) {
-            return "Double"
-        }
-        else if (e== 3) {
-            return "Triple"
-        }
-        else if (e== 4) {
-            return "Sleepover"
-        }
-        else if (e== 5) {
-            return "Ninja Experience"
-        }
-        else if (e== 6) {
-            return "Ninja Exclusive"
-        }
-        else if (e== 7) {
-            return "Ninja Extra"
-        }
-        else if (e== 8) {
-            return "Ninja Extreme"
-        }
-};
+    };
 
     // Update state from PartyAreaSelector to MainScheduler
     callBackFunctionPartyArea1 = (childData) => {
@@ -78,7 +74,6 @@ class MainScheduler extends Component {
             partyArea1: childData
         })
     };
-
 
     callBackFunctionPartyArea2 = (childData) => {
         this.setState({
@@ -92,20 +87,17 @@ class MainScheduler extends Component {
         })
     };
 
-    updatePartyAreaString = (e) =>{
-        if (e == 1) {
+    updatePartyAreaString = (e) => {
+        if (e === 1) {
             return "Main Gym"
-        }
-        else if (e == 2) {
+        } else if (e === 2) {
             return "Kidmazium"
-        }
-        else if (e == 3) {
+        } else if (e === 3) {
             return "Rock Wall"
-        }
-        else if (e == 4) {
+        } else if (e === 4) {
             return "Preschool"
         }
-    }
+    };
 
     // Update state from CreatePartyComponent to MainScheduler
     callbackFunctionPartyName = (childData) => {
@@ -113,32 +105,24 @@ class MainScheduler extends Component {
             partyName: childData,
         })
     };
+
     callbackFunctionHostName = (childData) => {
         this.setState({
             hostName: childData,
         })
     };
+
     callbackFunctionEmail = (childData) => {
         this.setState({
             email: childData,
         })
     };
+
     callbackFunctionPhoneNumber = (childData) => {
         this.setState({
             phoneNumber: childData,
         })
     };
-
-    pullOpenHours = () => {
-        const functions = firebase.functions().httpsCallable('pullOpenHours');
-        functions({}).then(function (result) {
-            console.log(result);
-        });
-    };
-
-    componentDidMount() {
-        M.AutoInit();
-    }
 
     sendFeedback(templateId, variables) {
         emailjs.send(
@@ -162,7 +146,7 @@ class MainScheduler extends Component {
         this.sendFeedback(templateId, {
             party_name: this.state.partyName,
             party_package: this.updatePartyPackageString(this.state.partyPackage),
-            party_area1: partyArea1String ,
+            party_area1: partyArea1String,
             party_area2: partyArea2String,
             party_area3: partyArea3String,
             party_host: this.state.hostName,
@@ -175,32 +159,8 @@ class MainScheduler extends Component {
         }))
         //this.props.history.push('./confirmation');
 
-        //this.props.createParty(this.state); <-- Don't delete this
+        //this.props.createParty(this.state); <-- Don't delete this    <-- why not
     };
-
-    testFunction = () => {
-        console.log("calling function");
-        const functions = firebase.functions().httpsCallable('checkPartyTimeOne');
-        functions({
-            partyPackage: this.state.partyPackage,
-            dayOfWeek: this.state.dayOfWeek,
-            roomsRequested: this.state.roomsRequested,
-            dateDay: this.state.dateDay,
-            dateMonth: this.state.dateMonth,
-            dateYear: this.state.dateYear
-        }).then(function (result) {
-            console.log(result);
-        }).catch(function (e) {
-            console.log(e);
-            console.log(e.code);
-            console.log(e.message);
-            console.log(e.details);
-            console.log(e.name);
-        });
-
-
-    };
-
 
     render() {
         if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
@@ -260,14 +220,9 @@ class MainScheduler extends Component {
                     <button className={'btn purple'} onClick={this.testFunction}>Test Function Button</button>
                 </div>
             </Collapsible>
-
         );
-
-
     }
 }
-
-
 
 const mapDispatchToProps = (dispatch) => {
     return {

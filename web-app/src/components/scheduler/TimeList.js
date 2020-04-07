@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import * as firebase from "firebase";
 
 class TimeList extends Component {
     state = {
@@ -24,6 +25,26 @@ class TimeList extends Component {
     // Use this.props.partyArea1 to access the value of the first party area
     // Use this.props.partyArea2 to access the value of the second party area
     // Use this.props.partyArea3 to access the value of the third party area
+
+    findTimes = () => {
+        const functions = firebase.functions().httpsCallable('checkPartyTimeOne');
+        return functions({
+            partyPackage: this.state.partyPackage,
+            dayOfWeek: this.state.dayOfWeek,
+            roomsRequested: this.state.roomsRequested,
+            dateDay: this.state.dateDay,
+            dateMonth: this.state.dateMonth,
+            dateYear: this.state.dateYear
+        }).then(function (result) {
+            return result;
+        }).catch(function (e) {
+            console.log(e);
+            console.log(e.code);
+            console.log(e.message);
+            console.log(e.details);
+            console.log(e.name);
+        });
+    }
 
 
     render() {

@@ -8,11 +8,11 @@ class PartyAreaSelector extends Component {
     // Do not change it to ===, for some reason it doesn't work
     // TODO Find out why this does not work
     areasNeeded = () => {
-        if (this.props.partyPackage == 0 || this.props.partyPackage == 1 || this.props.partyPackage == 5)
+        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
             return 1;
-        else if (this.props.partyPackage == 2 || this.props.partyPackage == 6 || this.props.partyPackage == 7 || this.props.partyPackage == 8)
+        else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
             return 2;
-        else if (this.props.partyPackage == 3)
+        else if (parseInt(this.props.partyPackage) === 3)
             return 3;
         else
             return -1;

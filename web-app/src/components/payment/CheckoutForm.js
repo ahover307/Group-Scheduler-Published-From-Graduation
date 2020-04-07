@@ -17,9 +17,9 @@ class CheckoutForm extends React.Component {
         paymentIntent({price: 1099, email: 'jjarj83@gmail.com'}).then(function (result) {
             clientSecret = result.data.text;
         }).catch(function (error) {
-            var code = error.code;
-            var message = error.message;
-            var details = error.details;
+            console.log(error.code);
+            console.log(error.message);
+            console.log(error.details);
         });
 
         if (!stripe || !elements) {
