@@ -366,14 +366,20 @@ exports.checkPartyTimeTwo = functions.https.onCall(async (data, context) => {
 
             //If the time stays good in that window, keep that window. Keep all of the available times.
             if (timeIsGood1) {
-                times.push(roomsRequested[0], roomsRequested[1]);
-                times.push(loop, loop + requiredPartyLength1);
-                times.push(requiredPartyLength1 + loop, loop + requiredPartyLength1 + requiredPartyLength2);
+                times.push(roomsRequested[0]);
+                times.push(roomsRequested[1]);
+                times.push(loop);
+                times.push(loop + requiredPartyLength1);
+                times.push(requiredPartyLength1 + loop);
+                times.push(loop + requiredPartyLength1 + requiredPartyLength2);
             }
             if (timeIsGood2) {
-                times.push(roomsRequested[1], roomsRequested[0]);
-                times.push(i, i + requiredPartyLength2);
-                times.push(requiredPartyLength2 + i, i + requiredPartyLength1 + requiredPartyLength2);
+                times.push(roomsRequested[1]);
+                times.push(roomsRequested[0]);
+                times.push(loop);
+                times.push(loop + requiredPartyLength2);
+                times.push(requiredPartyLength2 + loop);
+                times.push(loop + requiredPartyLength1 + requiredPartyLength2);
             }
         }
     }
