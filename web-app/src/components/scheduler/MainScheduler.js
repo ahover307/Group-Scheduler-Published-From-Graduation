@@ -10,6 +10,7 @@ import connect from "react-redux/es/connect/connect";
 // import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
 import {Redirect} from "react-router-dom";
+import {updatePartyAreaString, updatePartyPackageString} from "../globalFunctions";
 
 class MainScheduler extends Component {
     state = {
@@ -41,33 +42,6 @@ class MainScheduler extends Component {
         });
     };
 
-    updatePartyPackageString = (e) => {
-        switch (e) {
-            case 0:
-                return "Basic";
-            case 1:
-                return "Single";
-            case 2:
-                return "Double";
-            case 3:
-                return "Triple";
-            case 4:
-                return "ERROR";
-            case 5:
-                return "Ninja Exclusive";
-            case 6:
-                return "Ninja Experience";
-            case 7:
-                return "Ninja Extra";
-            case 8:
-                return "Ninja Extreme";
-            case 9:
-                return "Sleepover";
-            default:
-                return "ERROR";
-        }
-    };
-
     // Update state from PartyAreaSelector to MainScheduler
     callBackFunctionPartyArea1 = (childData) => {
         this.setState({
@@ -87,18 +61,6 @@ class MainScheduler extends Component {
         })
     };
 
-    updatePartyAreaString = (e) => {
-        if (e === 1) {
-            return "Main Gym"
-        } else if (e === 2) {
-            return "Kidmazium"
-        } else if (e === 3) {
-            return "Rock Wall"
-        } else if (e === 4) {
-            return "Preschool"
-        }
-    };
-
     // Update state from CreatePartyComponent to MainScheduler
     callbackFunctionPartyName = (childData) => {
         this.setState({
@@ -116,6 +78,10 @@ class MainScheduler extends Component {
         this.setState({
             email: childData,
         })
+    };
+
+    parentCallBackTimeSelected = (timeSelectedArray) => {
+        //TODO Fill in the info from the stuff pulled from the component.
     };
 
     callbackFunctionPhoneNumber = (childData) => {
@@ -138,14 +104,14 @@ class MainScheduler extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const templateId = 'confirmationemail';
-        const partyArea1String = this.updatePartyAreaString(this.state.partyArea1);
+        const partyArea1String = updatePartyAreaString(this.state.partyArea1);
         console.log(this.state.partyArea1);
         console.log(partyArea1String);
-        const partyArea2String = this.updatePartyAreaString(this.state.partyArea2);
-        const partyArea3String = this.updatePartyAreaString(this.state.partyArea3);
+        const partyArea2String = updatePartyAreaString(this.state.partyArea2);
+        const partyArea3String = updatePartyAreaString(this.state.partyArea3);
         this.sendFeedback(templateId, {
             party_name: this.state.partyName,
-            party_package: this.updatePartyPackageString(this.state.partyPackage),
+            party_package: updatePartyPackageString(this.state.partyPackage),
             party_area1: partyArea1String,
             party_area2: partyArea2String,
             party_area3: partyArea3String,
@@ -196,9 +162,13 @@ class MainScheduler extends Component {
                     node="div"
                     className={'TimeList'}
                 >
-                    <TimeList partyArea1={this.state.partyArea1}
-                              partyArea2={this.state.partyArea2}
-                              partyArea3={this.state.partyArea3}/>
+                    <TimeList partyPackage={this.state.partyPackage}
+                              dayOfWeek={this.state.dayOfWeek}
+                              dateDay={this.state.dateDay}
+                              dateMonth={this.state.dateMonth}
+                              dateYear={this.state.dateYear}
+                              roomsRequested={this.state.roomsRequested}
+                              parentCallBackTimeSelected={this.parentCallBackTimeSelected}/>
 
                 </CollapsibleItem>
                 <CollapsibleItem
