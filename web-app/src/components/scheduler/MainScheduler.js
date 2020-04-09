@@ -81,7 +81,24 @@ class MainScheduler extends Component {
     };
 
     parentCallBackTimeSelected = (timeSelectedArray) => {
-        //TODO Fill in the info from the stuff pulled from the component.
+        //the argument passed should be a sub array, parse this to fill in the state that is passed
+        //The indices are different on the array depending on how many rooms are requested
+        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5) {
+            this.setState({
+                roomsRequested: timeSelectedArray.slice(0, 1),
+                roomTimes: timeSelectedArray.slice(1, 3)
+            });
+        } else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8) {
+            this.setState({
+                roomsRequested: timeSelectedArray.slice(0, 2),
+                roomTimes: timeSelectedArray.slice(2, 6)
+            });
+        } else if (parseInt(this.props.partyPackage) === 3) {
+            this.setState({
+                roomsRequested: timeSelectedArray.slice(0, 3),
+                roomTimes: timeSelectedArray.slice(3, 8)
+            });
+        }
     };
 
     callbackFunctionPhoneNumber = (childData) => {

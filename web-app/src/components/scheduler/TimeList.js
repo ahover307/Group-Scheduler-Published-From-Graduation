@@ -52,19 +52,26 @@ class TimeList extends Component {
 
         if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
             returnString += updatePartyAreaString(timeListSubset[0]) + ": " + translateTimeFromIndexToString(timeListSubset[1]) + " - " + translateTimeFromIndexToString(timeListSubset[2]);
-        if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8) {
+        if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
             returnString += '\n' + updatePartyAreaString(timeListSubset[3]) + ": " + translateTimeFromIndexToString(timeListSubset[4]) + " - " + translateTimeFromIndexToString(timeListSubset[5]);
-        }
-        if (parseInt(this.props.partyPackage) === 3) {
+        if (parseInt(this.props.partyPackage) === 3)
             returnString += '\n' + updatePartyAreaString(timeListSubset[6]) + ": " + translateTimeFromIndexToString(timeListSubset[7]) + " - " + translateTimeFromIndexToString(timeListSubset[8]);
-        }
 
         return returnString;
     };
 
     handleChange = (e) => {
-        //TODO Grab the subarrays
-        this.props.parentCallBackTimeSelected(e.target.id);
+        let id = e.target.id;
+        let subArray = [];
+
+        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
+            subArray = this.state.timeList.slice(id, id + 3);
+        if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
+            subArray = this.state.timeList.slice(id, id + 6);
+        if (parseInt(this.props.partyPackage) === 3)
+            subArray = this.state.timeList.slice(id, id + 8);
+
+        this.props.parentCallBackTimeSelected(subArray);
     };
 
     populateRadioButtons = async () => {
@@ -111,13 +118,13 @@ class TimeList extends Component {
 
         return (
             <div>
-                <form>
-                    {this.state.radioButtonList}
-                </form>
                 <div className={'input-field'}>
                     <button className={'btn purple'} onClick={this.populateRadioButtons}>Refresh the times shown
                     </button>
                 </div>
+                <form>
+                    {this.state.radioButtonList}
+                </form>
             </div>
         )
     }
