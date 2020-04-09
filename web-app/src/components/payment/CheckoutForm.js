@@ -5,22 +5,30 @@ import CardSection from './CardSection';
 import * as firebase from "firebase";
 
 class CheckoutForm extends React.Component {
+
+    paymentIntent = async () => {
+        let paymentFunction = firebase.functions().httpsCallable('paymentIntent');
+        return (await paymentFunction({
+            price: 1099,
+            email: 'ahover307@gmail.com '
+        }).then(function (result) {
+            return result;
+        }).catch(function (e) {
+            console.log(e);
+        })).data;
+    };
+
+
     handleSubmit = async (event) => {
         // We don't want to let default form submission happen here,
         // which would refresh the page.
         event.preventDefault();
 
         const {stripe, elements} = this.props;
-        var clientSecret;
 
-        var paymentIntent = firebase.functions().httpsCallable('paymentIntent');
-        paymentIntent({price: 1099, email: 'jjarj83@gmail.com'}).then(function (result) {
-            clientSecret = result.data.text;
-        }).catch(function (error) {
-            console.log(error.code);
-            console.log(error.message);
-            console.log(error.details);
-        });
+        let clientSecret = (await this.paymentIntent().then((snapshot) => {
+            return snapshot;
+        }));
 
         if (!stripe || !elements) {
             // Stripe.js has not yet loaded.
@@ -32,7 +40,7 @@ class CheckoutForm extends React.Component {
             payment_method: {
                 card: elements.getElement(CardElement),
                 billing_details: {
-                    name: 'Jenny Rosen',
+                    name: 'Alex Hover',
                 },
             }
         });
@@ -43,11 +51,7 @@ class CheckoutForm extends React.Component {
         } else {
             // The payment has been processed!
             if (result.paymentIntent.status === 'succeeded') {
-                // Show a success message to your customer
-                // There's a risk of the customer closing the window before callback
-                // execution. Set up a webhook or plugin to listen for the
-                // payment_intent.succeeded event that handles any business critical
-                // post-payment actions.
+                //this is where post success processes should be put
             }
         }
     };
