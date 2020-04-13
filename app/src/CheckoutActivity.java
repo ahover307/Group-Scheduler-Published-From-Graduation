@@ -104,6 +104,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
                         }
                         paymentIntentClientSecret = task.getResult();
+                        System.out.println(paymentIntentClientSecret);
                     }
                 });
 
