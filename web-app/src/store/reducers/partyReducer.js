@@ -18,7 +18,6 @@ const initState = {
     ]
 };
 
-//todo Do something with this
 const partyReducer = (state = initState, action) => {
     switch (action.type) {
         case 'CREATE_PARTY_SUCCESS':

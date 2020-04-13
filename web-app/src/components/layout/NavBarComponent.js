@@ -11,8 +11,10 @@ const NavBarComponent = (props) => {
     const links = auth.uid ? <SignedInLinks/> : <SignedOutLinks/>
 
     return (
-        //TODO This will need adjusted when we add state data
-        //Todo add adjustment for making it mobile responsive
+        //We dont need a navbar for the final product, but leave the navbar there so the logo and link to the homepage is live.
+        // That is all we need. The rest will be in page links and then a single page apps.
+        //For now leave these here, for testing,
+        // But that means we dont need to waste time making it mobile responsive
 
         <nav className={'colorMe'}>
             <div className="container">

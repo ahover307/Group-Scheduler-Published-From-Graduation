@@ -1,6 +1,5 @@
 const initState = {};
 
-//todo Do something with this
 const authReducer = (state = initState, action) => {
     switch (action.type) {
         case 'LOGIN_ERROR':

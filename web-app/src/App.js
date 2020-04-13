@@ -30,7 +30,6 @@ function App() {
                     <Route path={'/scheduler'}> <MainScheduler/></Route>
                     <Route path={'/calendar'}> <Calendar/> </Route>
                     <Route path={'/confirmation'}> <Confirmation/> </Route>
-                    <Route path={'/confirmation'}> <Confirmation/> </Route>
                     <Route path={'/login'}><SignIn/></Route>
                     <Route path={'/card'}>
                         <Elements stripe={stripePromise}><CheckoutForm/></Elements>

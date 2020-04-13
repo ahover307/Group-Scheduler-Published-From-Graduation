@@ -12,7 +12,6 @@ const db = admin.firestore();
  *      start:      int - index for start of open hour
  *      end:        int - index for end of opening
  */
-//TODO Authentication based on context
 exports.fillOpenHours = functions.https.onCall((data, context) => {
     return db.collection('OpenHours').doc(data.docName).set({
         dayOfWeek: data.dayOfWeek,
