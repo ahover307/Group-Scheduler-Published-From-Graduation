@@ -1,14 +1,14 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import NavBarComponent from './components/layout/NavBarComponent'
-import MainScheduler from "./components/scheduler/MainScheduler";
-import Calendar from './components/scheduler/Calendar';
+import MainScheduler from "./components/parentSchedulingProcess/scheduler/MainScheduler";
+import Calendar from './components/parentSchedulingProcess/scheduler/Calendar';
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
 import Confirmation from "./components/confirmation/Confirmation";
 import SignIn from "./components/staff/SignIn";
 import Dashboard from "./components/staff/Dashboard";
 import SplashScreen from './SplashScreen';
-import CheckoutForm from './components/payment/CheckoutForm';
+import CheckoutForm from './components/parentSchedulingProcess/payment/CheckoutForm';
 import './App.css';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';

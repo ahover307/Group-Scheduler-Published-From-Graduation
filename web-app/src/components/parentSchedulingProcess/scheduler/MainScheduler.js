@@ -5,12 +5,12 @@ import PartyPackageSelector from "./PartyPackageSelector";
 import PartyAreaSelector from "./PartyAreaSelector";
 import M from "materialize-css";
 import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
-import {createParty} from "../../store/actions/partyActions";
+import {createParty} from "../../../store/actions/partyActions";
 import connect from "react-redux/es/connect/connect";
 // import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
 import {Redirect} from "react-router-dom";
-import {updatePartyAreaString, updatePartyPackageString} from "../globalFunctions";
+import {updatePartyAreaString, updatePartyPackageString} from "../../globalFunctions";
 import Calendar from "./Calendar";
 
 class MainScheduler extends Component {
@@ -20,7 +20,6 @@ class MainScheduler extends Component {
         phoneNumber: '',
         paid: true,
         participantsAge: 0,
-        partyEndTime: 0,
         partyName: '',
         partyPackage: -1,
         roomsRequested: [1],

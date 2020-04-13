@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import * as firebase from "firebase";
-import {translateTimeFromIndexToString, updatePartyAreaString} from "../globalFunctions";
+import {translateTimeFromIndexToString, updatePartyAreaString} from "../../globalFunctions";
 
 class TimeList extends Component {
     state = {
