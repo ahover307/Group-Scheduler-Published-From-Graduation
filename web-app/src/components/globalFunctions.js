@@ -3,12 +3,17 @@ export function translateTimeFromIndexToString(timeIndex) {
     timeIndex = parseInt(timeIndex);
 
     //Find the minutes and hours of each time through the power of math.
-    let hour = (Math.floor(timeIndex / 12) % 13);
+    let hour = (Math.floor(timeIndex / 12) % 12);
     let minute = ((timeIndex % 12) * 5);
 
     //Made the offset since it should return a minute hand with a 10s place, even if the tens place is a 0
     if (minute < 10) {
         minute = "0" + minute;
+    }
+
+    //Reset to 12 hour time.
+    if (hour === 0) {
+        hour = 12;
     }
 
     return (hour + ":" + minute);
