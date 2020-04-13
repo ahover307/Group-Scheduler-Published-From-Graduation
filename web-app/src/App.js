@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import NavBarComponent from './components/layout/NavBarComponent'
 import MainScheduler from "./components/scheduler/MainScheduler";
-import Calendar from './components/calendar/Calendar';
+import Calendar from './components/scheduler/Calendar';
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
 import Confirmation from "./components/confirmation/Confirmation";
 import SignIn from "./components/staff/SignIn";
@@ -12,7 +12,6 @@ import CheckoutForm from './components/payment/CheckoutForm';
 import './App.css';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
-
 
 
 //todo submit to the confirmation called

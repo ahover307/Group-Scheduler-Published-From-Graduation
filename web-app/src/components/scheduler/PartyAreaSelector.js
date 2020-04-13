@@ -1,9 +1,6 @@
 import React, {Component} from "react";
 
 class PartyAreaSelector extends Component {
-    state = {
-        partyPackage: -1,
-    };
 
     areasNeeded = () => {
         if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
@@ -18,11 +15,9 @@ class PartyAreaSelector extends Component {
 
     handleChangePartyArea1 = (e) => {
         this.props.parentCallBackPartyArea1(e.target.value);
-
     };
     handleChangePartyArea2 = (e) => {
         this.props.parentCallBackPartyArea2(e.target.value);
-
     };
     handleChangePartyArea3 = (e) => {
         this.props.parentCallBackPartyArea3(e.target.value);
@@ -51,7 +46,7 @@ class PartyAreaSelector extends Component {
         return (
             <div className={'container'}>
                 <div className={'container'}>
-                    <form action={'#'} onSubmit={this.handleSubmit}>
+                    <form>
                         <div className={'input-field'}>
                             <select name={'first'} className={'browser-default'} defaultValue={''}
                                     disabled={this.areasNeeded() < 1} onChange={this.handleChangePartyArea1}>
