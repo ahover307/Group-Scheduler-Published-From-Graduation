@@ -112,6 +112,8 @@ class TimeList extends Component {
 
         this.setState({radioButtonList: tempListOfRadioButtons});
         this.setState({timeList: tempTimeList});
+
+        console.log(tempTimeList)
     };
 
     render() {

@@ -11,6 +11,7 @@ import connect from "react-redux/es/connect/connect";
 import emailjs from 'emailjs-com'
 import {Redirect} from "react-router-dom";
 import {updatePartyAreaString, updatePartyPackageString} from "../globalFunctions";
+import Calendar from "./Calendar";
 
 class MainScheduler extends Component {
     state = {
@@ -29,6 +30,26 @@ class MainScheduler extends Component {
         dateMonth: 3,
         dateYear: 2020,
         toConfirm: false,
+    };
+
+    callBackFunctionDate = (childData) => {
+        console.log(childData);
+        this.setState({dateDay: childData});
+    };
+
+    callBackFunctionMonth = (childData) => {
+        console.log(childData);
+        this.setState({dateMonth: childData});
+    };
+
+    callBackFunctionYear = (childData) => {
+        console.log(childData);
+        this.setState({dateYear: childData});
+    };
+
+    callBackFunctionDay = (childData) => {
+        console.log(childData);
+        this.setState({dayOfWeek: childData});
     };
 
     componentDidMount() {
@@ -149,10 +170,24 @@ class MainScheduler extends Component {
         if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
             return <Redirect to='/confirmation'/>
         }
+
         return (
             <Collapsible accordion={false}>
                 <CollapsibleItem
                     expanded={true}
+                    header="Select Date"
+                    icon={<Icon>calendar</Icon>}
+                    node="div"
+                >
+                    <Calendar
+                        parentCallBackDate={this.callBackFunctionDate}
+                        parentCallBackMonth={this.callBackFunctionMonth}
+                        parentCallBackYear={this.callBackFunctionYear}
+                        parentCallBackDay={this.callBackFunctionDay}
+                    />
+                </CollapsibleItem>
+                <CollapsibleItem
+                    expanded={false}
                     header="Select Party Package"
                     icon={<Icon>check</Icon>}
                     node="div"

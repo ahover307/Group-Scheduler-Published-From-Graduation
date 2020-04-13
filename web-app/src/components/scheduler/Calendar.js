@@ -3,28 +3,22 @@ import Calendar from "react-calendar";
 import './Calendar.css';
 
 class calendar extends Component {
-    state = {
-        date: new Date(),
-    };
-
     onClickDay = date => {
-        // <MainScheduler date={date}/>
+        this.props.parentCallBackDate(date.getDate());
+        this.props.parentCallBackMonth(date.getMonth());
+        this.props.parentCallBackYear(date.getFullYear());
+        this.props.parentCallBackDay(date.getDay() + 1);
     };
 
-//https://www.npmjs.com/package/react-calendar
-    //todo make calendar on click go to the scheduler page for that date
-    //todo get the date going.
+    //https://www.npmjs.com/package/react-calendar
     render() {
         return (
-            <div class = "cent">
+            <div className={'cent'}>
                 <div className={'container center'}>
                     <Calendar
                         calendarType={"US"}
                         onClickDay={this.onClickDay}
-                        value={this.state.date}
                     />
-                    <p>In future versions, upon clicking on a date this should take you directly to the scheduler page
-                        for that date.</p>
                 </div>
             </div>
         )
