@@ -3,8 +3,12 @@ import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js';
 
 import CardSection from './CardSection';
 import * as firebase from "firebase";
+import {Redirect} from "react-router-dom";
 
 class CheckoutForm extends React.Component {
+    state = {
+        toConfirm: false,
+    };
 
     paymentIntent = async () => {
         let paymentFunction = firebase.functions().httpsCallable('paymentIntent');
@@ -39,9 +43,6 @@ class CheckoutForm extends React.Component {
         const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: elements.getElement(CardElement),
-                billing_details: {
-                    name: 'Alex Hover',
-                },
             }
         });
 
@@ -51,12 +52,18 @@ class CheckoutForm extends React.Component {
         } else {
             // The payment has been processed!
             if (result.paymentIntent.status === 'succeeded') {
-                //this is where post success processes should be put
+                this.setState(() => ({
+                    toConfirm: true
+                }))
             }
         }
     };
 
     render() {
+        if (this.state.toConfirm === true) {
+            return <Redirect to='/confirmation'/>
+        }
+
         return (
             <form onSubmit={this.handleSubmit}>
                 <CardSection />
