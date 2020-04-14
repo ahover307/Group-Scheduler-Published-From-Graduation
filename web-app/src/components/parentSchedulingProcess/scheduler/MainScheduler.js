@@ -20,6 +20,7 @@ class MainScheduler extends Component {
         phoneNumber: '',
         paid: true,
         participantsAge: 0,
+        partyEndTime: 0,
         partyName: '',
         partyPackage: -1,
         roomsRequested: [1],

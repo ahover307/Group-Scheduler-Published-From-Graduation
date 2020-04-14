@@ -12,6 +12,7 @@ import CheckoutForm from './components/parentSchedulingProcess/payment/CheckoutF
 import './App.css';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+import SearchForm from "./components/staff/SearchForm";
 
 
 //todo submit to the confirmation called
@@ -35,6 +36,7 @@ function App() {
                         <Elements stripe={stripePromise}><CheckoutForm/></Elements>
                     </Route>
                     <Route path={'/dashboard'}><Dashboard/></Route>
+                    <Route path={'/staff/form'}> <SearchForm/></Route>
                 </Switch>
 
                 </BrowserRouter>

@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {Card, Col, Icon, Row} from 'react-materialize'
+import {NavLink} from "react-router-dom";
+
+
 
 class Dashboard extends Component {
 
@@ -86,9 +89,9 @@ class Dashboard extends Component {
                     >
                         <Card
                             actions={[
-                                <a key="1" href="#">Search</a>,
-                                <a key="2" href="#">Edit</a>,
-                                <a key="3" href="#">Delete</a>
+                                <NavLink to={'/staff/form'}> Search </NavLink>,
+                                <NavLink to={'/staff/form'}> Edit </NavLink>,
+                                <NavLink to={'/staff/form'}> Delete </NavLink>
                             ]}
                             className="colorMe center-align"
                             closeIcon={<Icon>close</Icon>}
@@ -106,9 +109,7 @@ class Dashboard extends Component {
                     <Col m={6} s={12}>
                         <Card
                             actions={[
-                                <a key="1" href="#">Create</a>,
-
-
+                                <NavLink to={'/staff/custom_party'}>Create</NavLink>
                             ]}
                             className="colorMe center-align"
                             closeIcon={<Icon>close</Icon>}

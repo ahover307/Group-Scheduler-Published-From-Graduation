@@ -2,12 +2,16 @@ import React, {Component} from 'react'
 import "materialize-css"
 import {connect} from "react-redux"
 import {signIn} from '../../store/actions/authActions'
+import {Redirect} from "react-router-dom";
 
+// user: molteluca@gmail.com
+// psw: test2020
 class SignIn extends Component {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        login: false,
     };
 
 
@@ -17,12 +21,21 @@ class SignIn extends Component {
         })
     };
 
-    handleSubmit = (e) => {
+
+
+    handleSubmit  = async (e) => {
         e.preventDefault();
+        this.setState({
+            login: true
+        });
         this.props.signIn(this.state);
+
     };
 
     render() {
+        if (this.state.login === true) {
+           return <Redirect to={'/dashboard'}/>
+        }
         const {authError} = this.props;
         return (
 
