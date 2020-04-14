@@ -646,7 +646,7 @@ export async function kickstartGenerateTimesFunction(data) {
     return times;
 }
 
-export function givenTimeIsInList(partyPackage, roomsRequested, roomTimes, testTimes) {
+export function givenTimeIsInList(data) {
     //As the checking loops progress, the indices will become mis-aligned. There will be points in the iteration that the index is off count
     //However this is ok, as it is impossible for the if statements to accept the messed up index.
     //This saves the code from becoming complicated as it will do nothing but loop once and increase the index until it is on track again.
