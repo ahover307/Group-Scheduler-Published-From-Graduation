@@ -6,10 +6,8 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     android:fillViewport="true">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         tools:context=".FinalDetailsActivity">
@@ -27,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/logo"
+            android:id="@+id/ninja_logo"
             android:layout_width="133dp"
             android:layout_height="47dp"
             android:layout_marginBottom="4dp"
@@ -35,22 +33,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@mipmap/paramount_logo" />
-
-        <EditText
-            android:id="@+id/edit_contact_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:width="164dp"
-            android:ems="10"
-            android:hint="@string/edit_contact_first"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/edit_contact_last"
-            app:layout_constraintTop_toBottomOf="@+id/edit_host_first" />
 
         <EditText
             android:id="@+id/edit_contact_last"
@@ -61,9 +43,9 @@
             android:width="164dp"
             android:ems="10"
             android:hint="@string/edit_contact_last"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/edit_contact_first"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_host_last" />
 
@@ -76,37 +58,23 @@
             android:width="164dp"
             android:ems="10"
             android:hint="@string/edit_host_last"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toStartOf="@+id/edit_host_first"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-        <EditText
-            android:id="@+id/edit_host_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="16dp"
-            android:width="164dp"
-            android:ems="10"
-            android:hint="@string/edit_host_first"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/edit_host_last"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <EditText
             android:id="@+id/edit_contact_email"
             android:layout_width="166dp"
             android:layout_height="46dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="@string/edit_contact_email"
+            android:importantForAutofill="no"
             android:inputType="textEmailAddress"
-            app:layout_constraintStart_toStartOf="@+id/edit_contact_last"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_contact_last" />
 
         <EditText
@@ -114,12 +82,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"
             android:width="86dp"
             android:ems="10"
             android:hint="@string/edit_contact_phone"
+            android:importantForAutofill="no"
             android:inputType="phone"
             app:layout_constraintBaseline_toBaselineOf="@+id/edit_contact_email"
-            app:layout_constraintEnd_toEndOf="@+id/edit_contact_first"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit_contact_email" />
 
         <Button
@@ -135,5 +105,28 @@
             app:layout_constraintEnd_toEndOf="@+id/edit_contact_phone"
             app:layout_constraintTop_toBottomOf="@+id/edit_contact_phone"
             app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/total_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="64dp"
+            android:text="@string/total_string"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_contact_email" />
+
+        <EditText
+            android:id="@+id/price_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:clickable="false"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            app:layout_constraintBaseline_toBaselineOf="@+id/total_Text"
+            app:layout_constraintStart_toEndOf="@+id/total_Text" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </HorizontalScrollView>
