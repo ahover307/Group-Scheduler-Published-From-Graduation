@@ -17,7 +17,7 @@ import java.util.List;
 
 public class FinalDetailsActivity extends AppCompatActivity {
     private EditText party_last, contact_last, email, phoneNumber;
-    private int day, month, year, dayOfWeek, partyPackage;
+    private int day, month, year, dayOfWeek, partyPackage, price;
     private List<Integer> rooms;
 
 
@@ -31,8 +31,27 @@ public class FinalDetailsActivity extends AppCompatActivity {
         dayOfWeek = intent.getIntExtra("dayOfWeek",-1);
         partyPackage = intent.getIntExtra("package", -1);
         rooms = intent.getIntegerArrayListExtra("rooms");
+
+        String total;
+
+        switch (partyPackage) {
+            case 0: price = 1099; total = "$10.99"; break;
+            case 1: price = 1099; total = "$10.99"; break;
+            case 2: price = 1099; total = "$10.99"; break;
+            case 3: price = 1099; total = "$10.99"; break;
+            case 5: price = 1099; total = "$10.99"; break;
+            case 6: price = 1099; total = "$10.99"; break;
+            case 7: price = 1099; total = "$10.99"; break;
+            case 8: price = 1099; total = "$10.99"; break;
+            case 9: price = 1099; total = "$10.99"; break;
+            default: price = 1099; total = "$10.99"; break;
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_details);
+
+        EditText totalText = findViewById(R.id.price_Text);
+        totalText.setText(total);
 
         contact_last = findViewById(R.id.edit_contact_last);
 
@@ -66,6 +85,7 @@ public class FinalDetailsActivity extends AppCompatActivity {
         intent.putExtra("partyName", partyName);
         intent.putExtra("email", emailS);
         intent.putExtra("phone", phone);
+        intent.putExtra("price", price);
 
         startActivity(intent);
     }

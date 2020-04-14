@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -53,14 +54,14 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class CheckoutActivity extends AppCompatActivity {
+public class CheckoutActivity extends AppCompatActivity implements ConfirmationDialog.DialogListener {
 
     private String paymentIntentClientSecret;
     private Stripe stripe;
     private FirebaseFunctions mFunctions;
     private FirebaseFirestore database;
     private Party party;
-    private int partyPackage, day, month, year, dayOfWeek;
+    private int partyPackage, day, month, year, dayOfWeek, price;
     private String contact, partyName, email, phone;
     private List<Integer> rooms;
 
@@ -75,9 +76,10 @@ public class CheckoutActivity extends AppCompatActivity {
         partyPackage = intent.getIntExtra("package", -1);
         rooms = intent.getIntegerArrayListExtra("rooms");
         contact = intent.getStringExtra("contact");
-        partyName = intent.getStringExtra("party");
+        partyName = intent.getStringExtra("partyName");
         email = intent.getStringExtra("email");
         phone = intent.getStringExtra("phone");
+        price = intent.getIntExtra("price", 0);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
@@ -88,8 +90,6 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void startCheckout() {
-        String email = "nguyenryan31@gmail.com";
-        int price = 2099;
         paymentIntent(email, price)
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -104,7 +104,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
                         }
                         paymentIntentClientSecret = task.getResult();
-                        System.out.println(paymentIntentClientSecret);
+
                     }
                 });
 
@@ -257,7 +257,8 @@ public class CheckoutActivity extends AppCompatActivity {
             if (status == PaymentIntent.Status.Succeeded) {
                 // Payment completed successfully
                 saveToDatabase();
-
+                ConfirmationDialog confirmationDialog = new ConfirmationDialog();
+                confirmationDialog.show(getSupportFragmentManager(), "confirmationDialog");
 
 
             } else if (status == PaymentIntent.Status.RequiresPaymentMethod) {
@@ -298,6 +299,11 @@ public class CheckoutActivity extends AppCompatActivity {
         party.setRoomsRequested(rooms);
 
         database.collection("Parties").add(party);
+    }
+
+    public void onDialogPositiveClick (DialogFragment dialog) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 
