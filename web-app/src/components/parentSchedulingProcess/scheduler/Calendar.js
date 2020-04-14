@@ -4,10 +4,12 @@ import './Calendar.css';
 
 class calendar extends Component {
     onClickDay = date => {
-        this.props.parentCallBackDate(date.getDate());
-        this.props.parentCallBackMonth(date.getMonth());
-        this.props.parentCallBackYear(date.getFullYear());
-        this.props.parentCallBackDay(date.getDay() + 1);
+        this.props.parentCallBackDate({
+            date: date.getDate(),
+            month: date.getMonth(),
+            year: date.getFullYear(),
+            day: date.getDay() + 1
+        });
     };
 
     //https://www.npmjs.com/package/react-calendar

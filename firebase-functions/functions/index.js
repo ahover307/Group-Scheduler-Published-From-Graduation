@@ -1,6 +1,6 @@
-const partyTimes = require('./partyTimes');
-const paymentFunctions = require('./paymentFunctions');
-const tests = require('./testingFunctions');
+const partyTimes = require('./SchedulerFunctions');
+const paymentFunctions = require('./PaymentFunctions');
+const tests = require('./TestingFunctions');
 
 //This file is all of the server side work done on the project
 
