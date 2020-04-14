@@ -14,6 +14,10 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import SearchForm from "./components/staff/SearchForm";
 
+import Toolbar from './components/Toolbar/Toolbar'; //Imports for Trevor's Nearly Functional Navbar Replacement
+import SideDrawer from "./components/SideDrawer/SideDrawer";
+import Backdrop from './components/Backdrop/Backdrop'
+
 
 //todo submit to the confirmation called
 //todo go to payment before confirming
@@ -21,6 +25,14 @@ import SearchForm from "./components/staff/SearchForm";
 const stripePromise = loadStripe("pk_test_rKltl8cKNz9NLrOL7w1KT22800Yi2Zh7n9");
 function App() {
     return (
+
+        //Trevor's Nearly Functional Navbar Replacement
+       /* <div style={{height: '100%'}}>
+            <Toolbar />
+            <SideDrawer />
+            <Backdrop />
+        </div>*/
+
 
             <div>
             <BrowserRouter>
