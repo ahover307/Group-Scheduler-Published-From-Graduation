@@ -38,12 +38,18 @@ class TimeList extends Component {
     createString = (timeListSubset) => {
         let returnString = "";
 
-        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
+        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5) {
             returnString += updatePartyAreaString(timeListSubset[0]) + ": " + translateTimeFromIndexToString(timeListSubset[1]) + " - " + translateTimeFromIndexToString(timeListSubset[2]);
-        if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
-            returnString += '\n' + updatePartyAreaString(timeListSubset[3]) + ": " + translateTimeFromIndexToString(timeListSubset[4]) + " - " + translateTimeFromIndexToString(timeListSubset[5]);
-        if (parseInt(this.props.partyPackage) === 3)
-            returnString += '\n' + updatePartyAreaString(timeListSubset[6]) + ": " + translateTimeFromIndexToString(timeListSubset[7]) + " - " + translateTimeFromIndexToString(timeListSubset[8]);
+        }
+        if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8) {
+            returnString += updatePartyAreaString(timeListSubset[0]) + ": " + translateTimeFromIndexToString(timeListSubset[2]) + " - " + translateTimeFromIndexToString(timeListSubset[3])
+            returnString += '\n' + updatePartyAreaString(timeListSubset[1]) + ": " + translateTimeFromIndexToString(timeListSubset[3]) + " - " + translateTimeFromIndexToString(timeListSubset[4]);
+        }
+        if (parseInt(this.props.partyPackage) === 3) {
+            returnString += updatePartyAreaString(timeListSubset[0]) + ": " + translateTimeFromIndexToString(timeListSubset[3]) + " - " + translateTimeFromIndexToString(timeListSubset[4]);
+            returnString += '\n' + updatePartyAreaString(timeListSubset[1]) + ": " + translateTimeFromIndexToString(timeListSubset[4]) + " - " + translateTimeFromIndexToString(timeListSubset[5]);
+            returnString += '\n' + updatePartyAreaString(timeListSubset[2]) + ": " + translateTimeFromIndexToString(timeListSubset[5]) + " - " + translateTimeFromIndexToString(timeListSubset[6]);
+        }
 
         return returnString;
     };
@@ -80,9 +86,9 @@ class TimeList extends Component {
             if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
                 indexOffset = 2;
             else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
-                indexOffset = 5;
+                indexOffset = 4;
             else if (parseInt(this.props.partyPackage) === 3)
-                indexOffset = 7;
+                indexOffset = 6;
 
             //Create string of what the option is
             let stringDescription = this.createString(tempTimeList.slice(i, i + indexOffset + 1));

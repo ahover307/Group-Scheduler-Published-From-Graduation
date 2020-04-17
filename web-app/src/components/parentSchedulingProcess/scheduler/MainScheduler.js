@@ -86,8 +86,8 @@ class MainScheduler extends Component {
                 break;
             case 'area3':
                 tempArray.push(this.state.roomsRequested[0]);
+                tempArray.push(this.state.roomsRequested[1]);
                 tempArray.push(childData.area);
-                tempArray.push(this.state.roomsRequested[2]);
                 break;
             default:
                 console.log(childData.selector);

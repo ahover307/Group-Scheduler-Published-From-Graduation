@@ -210,16 +210,13 @@ function createFilledTimeReference(data) {
 
 function checkRulesOneRoom(data) {
     let times = [];
-    let availableTimes = data.availableTimes;
-    let requiredPartyLength = data.requiredPartyLength;
-    let roomRequested = data.roomRequested;
 
-    for (let loop = 0; loop < availableTimes.length; loop++) {
+    for (let loop = 0; loop < data.availableTimes.length; loop++) {
         let timeIsGood = true;
 
         //Look ahead and check if the party room will be long enough. If there is not enough time, mark it as false
-        for (let i = 0; i < requiredPartyLength; i++) {
-            if (!availableTimes[loop + i]) {
+        for (let i = 0; i < data.requiredPartyLength; i++) {
+            if (!data.availableTimes[loop + i]) {
                 timeIsGood = false;
                 break;
             }
@@ -227,9 +224,9 @@ function checkRulesOneRoom(data) {
 
         //If the time stays good in that window, keep that window. Keep all of the available times.
         if (timeIsGood) {
-            times.push(roomRequested);
+            times.push(data.roomRequested);
             times.push(loop);
-            times.push(loop + requiredPartyLength);
+            times.push(loop + data.requiredPartyLength);
         }
     }
     return times;
@@ -246,21 +243,17 @@ function checkRulesTwoRooms(data) {
         for (let j = 0; j < data.requiredPartyLength1; j++) {
             if (!data.availableTimes1[loop + j]) {
                 timeIsGood1 = false;
-                break;
             }
-            if (!data.availableTimes2[loop + j + data.requiredPartyLength2]) {
+            if (!data.availableTimes1[loop + data.requiredPartyLength2 + j]) {
                 timeIsGood2 = false;
-                break;
             }
         }
         for (let k = 0; k < data.requiredPartyLength2; k++) {
-            if (!data.availableTimes1[loop + data.requiredPartyLength1 + k]) {
+            if (!data.availableTimes2[loop + data.requiredPartyLength1 + k]) {
                 timeIsGood1 = false;
-                break;
             }
             if (!data.availableTimes2[loop + k]) {
                 timeIsGood2 = false;
-                break;
             }
         }
 
@@ -270,15 +263,13 @@ function checkRulesTwoRooms(data) {
             times.push(data.room2);
             times.push(loop);
             times.push(loop + data.requiredPartyLength1);
-            times.push(data.requiredPartyLength1 + loop);
             times.push(loop + data.requiredPartyLength1 + data.requiredPartyLength2);
         }
         if (timeIsGood2) {
-            times.push(data.room1);
             times.push(data.room2);
+            times.push(data.room1);
             times.push(loop);
             times.push(loop + data.requiredPartyLength2);
-            times.push(data.requiredPartyLength2 + loop);
             times.push(loop + data.requiredPartyLength1 + data.requiredPartyLength2);
         }
     }
@@ -297,60 +288,48 @@ function checkRulesThreeRooms(data) {
             if (!data.availableTimes1[loop + j]) {
                 timeIsGood[0] = false;
                 timeIsGood[1] = false;
-                break;
             }
             if (!data.availableTimes1[loop + j + data.requiredPartyLength2]) {
                 timeIsGood[2] = false;
-                break;
             }
             if (!data.availableTimes1[loop + j + data.requiredPartyLength3]) {
                 timeIsGood[4] = false;
-                break;
             }
             if (!data.availableTimes1[loop + j + data.requiredPartyLength2 + data.requiredPartyLength3]) {
                 timeIsGood[3] = false;
                 timeIsGood[5] = false;
-                break;
             }
         }
         for (let j = 0; j < data.requiredPartyLength2; j++) {
             if (!data.availableTimes2[loop + j]) {
                 timeIsGood[2] = false;
                 timeIsGood[3] = false;
-                break;
             }
             if (!data.availableTimes2[loop + j + data.requiredPartyLength1]) {
                 timeIsGood[0] = false;
-                break;
             }
             if (!data.availableTimes2[loop + j + data.requiredPartyLength3]) {
                 timeIsGood[5] = false;
-                break;
             }
             if (!data.availableTimes2[loop + j + data.requiredPartyLength2 + data.requiredPartyLength3]) {
                 timeIsGood[1] = false;
                 timeIsGood[4] = false;
-                break;
             }
         }
         for (let j = 0; j < data.requiredPartyLength3; j++) {
             if (!data.availableTimes3[loop + j]) {
                 timeIsGood[4] = false;
                 timeIsGood[5] = false;
-                break;
             }
             if (!data.availableTimes3[loop + j + data.requiredPartyLength1]) {
                 timeIsGood[1] = false;
-                break;
             }
             if (!data.availableTimes3[loop + j + data.requiredPartyLength2]) {
                 timeIsGood[3] = false;
-                break;
             }
             if (!data.availableTimes3[loop + j + data.requiredPartyLength2 + data.requiredPartyLength3]) {
                 timeIsGood[0] = false;
                 timeIsGood[2] = false;
-                break;
             }
         }
 
@@ -361,7 +340,6 @@ function checkRulesThreeRooms(data) {
             times.push(data.room3);
             times.push(loop);
             times.push(loop + data.requiredPartyLength1);
-            times.push(loop + data.requiredPartyLength1 + data.requiredPartyLength2);
             times.push(loop + data.requiredPartyLength1 + data.requiredPartyLength2);
             times.push(loop + data.requiredPartyLength1 + data.requiredPartyLength2 + data.requiredPartyLength3);
         }
