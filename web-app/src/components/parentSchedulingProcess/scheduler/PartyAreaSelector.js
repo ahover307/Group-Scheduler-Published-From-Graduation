@@ -1,6 +1,12 @@
 import React, {Component} from "react";
 
 class PartyAreaSelector extends Component {
+    state = {
+        area1: 0,
+        area2: 0,
+        area3: 0,
+        update: false
+    };
 
     areasNeeded = () => {
         if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
@@ -13,16 +19,14 @@ class PartyAreaSelector extends Component {
             return -1;
     };
 
-    handleChangePartyArea1 = (e) => {
-        this.props.parentCallBackPartyArea1(e.target.value);
-    };
-    handleChangePartyArea2 = (e) => {
-        this.props.parentCallBackPartyArea2(e.target.value);
-    };
-    handleChangePartyArea3 = (e) => {
-        this.props.parentCallBackPartyArea3(e.target.value);
+    handleChange = (e) => {
+        this.props.parentCallBackPartyArea({
+            selector: e.target.id,
+            area: parseInt(e.target.value)
+        });
     };
 
+    //Remove an area once it is selected once.
     render() {
         const partyTypes = [
             'Main Gym',
@@ -34,7 +38,7 @@ class PartyAreaSelector extends Component {
         const optionsList = [];
         for (const [index, value] of partyTypes.entries()) {
             optionsList.push(
-                <option key={index + 1} value={index + 1}>{value}</option>
+                <option key={index} value={index + 1}>{value}</option>
             )
         }
 
@@ -49,21 +53,21 @@ class PartyAreaSelector extends Component {
                     <form>
                         <div className={'input-field'}>
                             <select name={'first'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 1} onChange={this.handleChangePartyArea1}>
+                                    disabled={this.areasNeeded() < 1} id={'area1'} onChange={this.handleChange}>
                                 <option value={''} disabled={true}>Choose First Party Area</option>
                                 {((ninjaFlag) ? ninjaOption : optionsList)}
                             </select>
                         </div>
                         <div className="input-field">
                             <select name={'second'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 2} onChange={this.handleChangePartyArea2}>
+                                    disabled={this.areasNeeded() < 2} id={'area2'} onChange={this.handleChange}>
                                 <option value={''} disabled>Choose Second Party Area</option>
                                 {optionsList}
                             </select>
                         </div>
                         <div className="input-field">
                             <select name={'third'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 3} onChange={this.handleChangePartyArea3}>
+                                    disabled={this.areasNeeded() < 3} id={'area3'} onChange={this.handleChange}>
                                 <option value={''} disabled>Choose Third Party Area</option>
                                 {optionsList}
                             </select>

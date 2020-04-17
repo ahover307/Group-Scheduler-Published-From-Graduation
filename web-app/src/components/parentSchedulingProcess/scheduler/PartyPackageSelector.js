@@ -1,12 +1,8 @@
 import React, {Component} from "react";
 
 class PartyPackageSelector extends Component {
-    state = {
-        partyPackage: -1
-    };
-
     handleChange = (e) => {
-        this.props.parentCallBackPartyPackage(e.target.id)
+        this.props.parentCallBackPartyPackage(parseInt(e.target.id));
     };
 
     render() {

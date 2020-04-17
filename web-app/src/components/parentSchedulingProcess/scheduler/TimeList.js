@@ -15,21 +15,9 @@ class TimeList extends Component {
     // Use this.props.partyArea3 to access the value of the third party area
 
     findTimes = async () => {
-        let schedulingFunction;
-        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
-            schedulingFunction = firebase.functions().httpsCallable('checkPartyTimeOne');
-        else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
-            schedulingFunction = firebase.functions().httpsCallable('checkPartyTimeTwo');
-        else if (parseInt(this.props.partyPackage) === 3)
-            schedulingFunction = firebase.functions().httpsCallable('checkPartyTimeThree');
-        else
-            schedulingFunction = null;
+        console.log(this.props);
 
-        if (schedulingFunction === null) {
-            return -1;
-        }
-
-        return (await schedulingFunction({
+        return (await firebase.functions().httpsCallable('checkPartyTime')({
             partyPackage: this.props.partyPackage,
             dayOfWeek: this.props.dayOfWeek,
             roomsRequested: this.props.roomsRequested,

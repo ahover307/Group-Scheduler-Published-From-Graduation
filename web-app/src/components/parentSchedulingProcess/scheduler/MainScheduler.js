@@ -12,6 +12,7 @@ import emailjs from 'emailjs-com'
 import {Redirect} from "react-router-dom";
 import {updatePartyAreaString, updatePartyPackageString} from "../../globalFunctions";
 import Calendar from "./Calendar";
+import * as firebase from "firebase";
 
 class MainScheduler extends Component {
     state = {
@@ -22,19 +23,24 @@ class MainScheduler extends Component {
         participantsAge: 0,
         partyEndTime: 0,
         partyName: '',
-        partyPackage: -1,
-        roomsRequested: [1],
+        partyPackage: 0,
+        roomsRequested: [0],
         roomTimes: [],
         dayOfWeek: 1,
-        dateDay: 22,
-        dateMonth: 3,
-        dateYear: 2020,
+        dateDay: 0,
+        dateMonth: 0,
+        dateYear: 0,
         toConfirm: false,
     };
 
     callBackFunctionDate = (childData) => {
         console.log(childData);
-        this.setState({dateDay: childData});
+        this.setState({
+            dateDay: childData.date,
+            dateMonth: childData.month,
+            dateYear: childData.year,
+            dayOfWeek: childData.day
+        });
     };
 
     callBackFunctionMonth = (childData) => {
@@ -64,22 +70,36 @@ class MainScheduler extends Component {
     };
 
     // Update state from PartyAreaSelector to MainScheduler
-    callBackFunctionPartyArea1 = (childData) => {
-        this.setState({
-            partyArea1: childData
-        })
-    };
+    callBackFunctionPartyArea = (childData) => {
+        let tempArray = [];
 
-    callBackFunctionPartyArea2 = (childData) => {
-        this.setState({
-            partyArea2: childData
-        })
-    };
+        switch (childData.selector) {
+            case 'area1':
+                tempArray.push(childData.area);
+                tempArray.push(this.state.roomsRequested[1]);
+                tempArray.push(this.state.roomsRequested[2]);
+                break;
+            case 'area2':
+                tempArray.push(this.state.roomsRequested[0]);
+                tempArray.push(childData.area);
+                tempArray.push(this.state.roomsRequested[2]);
+                break;
+            case 'area3':
+                tempArray.push(this.state.roomsRequested[0]);
+                tempArray.push(childData.area);
+                tempArray.push(this.state.roomsRequested[2]);
+                break;
+            default:
+                console.log(childData.selector);
+                console.log(childData.area);
+                break;
+        }
 
-    callBackFunctionPartyArea3 = (childData) => {
+        console.log(tempArray);
+
         this.setState({
-            partyArea3: childData
-        })
+            roomsRequested: tempArray
+        });
     };
 
     // Update state from CreatePartyComponent to MainScheduler
@@ -142,10 +162,10 @@ class MainScheduler extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         const templateId = 'confirmationemail';
-        const partyArea1String = updatePartyAreaString(this.state.partyArea1);
+        const partyArea1String = updatePartyAreaString(this.state.partyArea1); //   <--- We are not using this state anymore
         console.log(this.state.partyArea1);
         console.log(partyArea1String);
-        const partyArea2String = updatePartyAreaString(this.state.partyArea2);
+        const partyArea2String = updatePartyAreaString(this.state.partyArea2);  // <-- It is an array, rooms requested now, to match the array roomTimes
         const partyArea3String = updatePartyAreaString(this.state.partyArea3);
         this.sendFeedback(templateId, {
             party_name: this.state.partyName,
@@ -166,6 +186,22 @@ class MainScheduler extends Component {
         //this.props.createParty(this.state); <-- Don't delete this    <-- why not
     };
 
+    testFunction = async () => {
+
+        let schedulingFunction = firebase.functions().httpsCallable('checkPartyTime');
+
+        console.log((await schedulingFunction({day: 1, room: 1})
+            .then(function (result) {
+                return result;
+            }).catch(function (e) {
+                console.log(e);
+                console.log(e.code);
+                console.log(e.message);
+                console.log(e.details);
+                console.log(e.name);
+            })));
+    }
+
     render() {
         if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
             return <Redirect to='/confirmation'/>
@@ -181,9 +217,6 @@ class MainScheduler extends Component {
                 >
                     <Calendar
                         parentCallBackDate={this.callBackFunctionDate}
-                        parentCallBackMonth={this.callBackFunctionMonth}
-                        parentCallBackYear={this.callBackFunctionYear}
-                        parentCallBackDay={this.callBackFunctionDay}
                     />
                 </CollapsibleItem>
                 <CollapsibleItem
@@ -203,9 +236,7 @@ class MainScheduler extends Component {
                     className={'PartyArea'}
                 >
                     <PartyAreaSelector partyPackage={this.state.partyPackage}
-                                       parentCallBackPartyArea1={this.callBackFunctionPartyArea1}
-                                       parentCallBackPartyArea2={this.callBackFunctionPartyArea2}
-                                       parentCallBackPartyArea3={this.callBackFunctionPartyArea3}/>
+                                       parentCallBackPartyArea={this.callBackFunctionPartyArea}/>
                 </CollapsibleItem>
                 <CollapsibleItem
                     expanded={false}
