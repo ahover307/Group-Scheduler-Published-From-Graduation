@@ -1,6 +1,6 @@
-const partyTimes = require('./SchedulerFunctions');
-const paymentFunctions = require('./PaymentFunctions');
-const tests = require('./TestingFunctions');
+const partyTimes = require('./schedulerFunctions');
+const paymentFunctions = require('./paymentFunctions');
+const tests = require('./testingFunctions');
 
 //This file is all of the server side work done on the project
 
@@ -8,9 +8,9 @@ const tests = require('./TestingFunctions');
 
 exports.paymentIntent = paymentFunctions.paymentIntent;
 
-exports.checkPartyTimeOne = partyTimes.checkPartyTimeOne;
-exports.checkPartyTimeTwo = partyTimes.checkPartyTimeTwo;
-exports.checkPartyTimeThree = partyTimes.checkPartyTimeThree;
+exports.checkPartyTime = partyTimes.checkPartyTimes;
+
+exports.testDataTypes = tests.testDataTypes;
 
 exports.fillOpenHours = tests.fillOpenHours;
 exports.pullOpenHours = tests.pullOpenHours;

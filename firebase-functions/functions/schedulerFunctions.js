@@ -1,8 +1,111 @@
 const admin = require('firebase-admin');
 const functions = require('firebase-functions');
+admin.initializeApp(functions.config().firebase);
+
 const db = admin.firestore();
 
-export async function simpleDBCheck(dbReference) {
+//Creates a list of times for the checked party.
+// Because it returns a sanitized list of just the times available, the security risk of not being authenticated is allowable in this scope
+/*
+ * Required params:
+ *      partyPackage:   int (code defined in reference file)
+ *      dayOfWeek:      int (code defined in reference file)
+ *      roomsRequested: int[] (codes defined in reference file)
+ *      dateDay:        int
+ *      dateMonth:      int
+ *      dateYear:       int
+ * return   :   available times - 2D array containing the ordered rooms to use, and available start and end times of each time
+ */
+exports.checkPartyTimes = functions.https.onCall(async (data) => {
+    return await kickstartGenerateTimesFunction({
+        partyPackage: parseInt(data.partyPackage),
+        dayOfWeek: parseInt(data.dayOfWeek),
+        roomsRequested: data.roomsRequested,
+        dateDay: parseInt(data.dateDay),
+        dateMonth: parseInt(data.dateMonth),
+        dateYear: parseInt(data.dateYear)
+    });
+});
+
+//Creates a list of times for the checked party.
+// Because it returns a sanitized list of just the times available, the security risk of not being authenticated is allowable in this scope
+/*
+ * Required params:
+ *      partyPackage:   int (code defined in reference file)
+ *      dayOfWeek:      int (code defined in reference file)
+ *      roomsRequested: int[] (codes defined in reference file)
+ *      dateDay:        int
+ *      dateMonth:      int
+ *      dateYear:       int
+ * return   :   available times - 2D array containing the ordered rooms to use, and available start and end times of each time
+ */
+exports.confirmTimeandCommitToDB = functions.https.onCall(async (data, context) => {
+    //Data we need to pull to do this - We will need the entire state as all of it will be being pushed to the database.
+    let contactName = toString(data.contactName);
+    let email = toString(data.email);
+    let phoneNumber = toString(data.phoneNumber);
+    let wasPaid = parseInt(data.paid);
+    let participantsAge = parseInt(data.participantsAge);
+    let partyName = toString(data.partyName);
+    let partyPackage = parseInt(data.partyPackage);
+    let roomsRequested = data.roomsRequested;
+    // data.roomsRequested.forEach(element => roomsRequested.push(parseInt(element)));
+    let roomTimes = data.roomTimes;
+    // data.roomsRequested.forEach(element => roomTimes.push(parseInt(element)));
+    let dayOfWeek = parseInt(data.dayOfWeek);
+    let dateDay = parseInt(data.dateDay);
+    let dateMonth = parseInt(data.dateMonth);
+    let dateYear = parseInt(data.dateYear);
+
+    let successful = false;
+    //First confirm that the time is available, im not worried about this being an async call
+    // and then inconsistencies from the gap of time that gives due to the volume of the website.
+    //The odds of a collision are incredibly low, and can be found by periodic checks of the database
+
+    let timeList = await kickstartGenerateTimesFunction({
+        partyPackage: partyPackage,
+        dayOfWeek: dayOfWeek,
+        roomsRequested: roomsRequested,
+        dateDay: dateDay,
+        dateMonth: dateMonth,
+        dateYear: dateYear
+    });
+
+    if (givenTimeIsInList({
+        partyPackage: partyPackage,
+        roomsRequested: roomsRequested,
+        roomTimes: roomTimes,
+        testTimes: timeList
+    })) {
+        //Once it is confirmed that it still fits, commit this to the DB
+        successful = await db.collection("parties").doc().set({
+            contactName: contactName,
+            email: email,
+            phoneNumber: phoneNumber,
+            paid: wasPaid,
+            participantsAge: participantsAge,
+            partyName: partyName,
+            partyPackage: partyPackage,
+            roomsRequested: roomsRequested,
+            roomTimes: roomTimes,
+            dayOfWeek: dayOfWeek,
+            dateDay: dateDay,
+            dateMonth: dateMonth,
+            dateYear: dateYear,
+        })
+            .then(() => {
+                return true;
+            })
+            .catch((error) => {
+                throw new functions.https.HttpsError('database-failure', 'Could not write to DB: ' + error);
+            });
+    }
+
+    //Then return, if it was confirmed available and commit to the DB, or if it was not available.
+    return successful;
+});
+
+async function simpleDBCheck(dbReference) {
     return await dbReference.get().then((snapshot) => {
         let temp = [];
         snapshot.forEach(doc => {
@@ -16,24 +119,25 @@ export async function simpleDBCheck(dbReference) {
     });
 }
 
-export async function roomDBCheck(referenceAndRoom) {
+async function roomDBCheck(referenceAndRoom) {
     let roomReference = referenceAndRoom.roomReference;
     let roomRequested = referenceAndRoom.roomRequested;
 
-    return await roomReference.get().then((snapshot) => {
-        let temp = [];
-        snapshot.forEach(doc => {
-            let index = doc.data().roomsRequested.indexOf(roomsRequested[0]);
-            temp.push(doc.data().roomTimes[index]);
-            temp.push(doc.data().roomTimes[index + 1]);
+    return await roomReference.get()
+        .then((snapshot) => {
+            let temp = [];
+            snapshot.forEach(doc => {
+                let index = doc.data().roomsRequested.indexOf(roomRequested[0]);
+                temp.push(doc.data().roomTimes[index]);
+                temp.push(doc.data().roomTimes[index + 1]);
+            });
+            return temp;
+        }).catch((err) => {
+            throw new functions.https.HttpsError('parties-reference-break', 'Failed looking for the previous party times: ' + err);
         });
-        return temp;
-    }).catch((err) => {
-        throw new functions.https.HttpsError('parties-reference-break', 'Failed looking for the previous party times: ' + err);
-    });
 }
 
-export function fillAvailableTimeArray(otherArrays) {
+function fillAvailableTimeArray(otherArrays) {
     let openHours = otherArrays.openHours;
     let specialTimes = otherArrays.specialTimes;
     let filledTimes = otherArrays.filledTimes;
@@ -69,7 +173,7 @@ export function fillAvailableTimeArray(otherArrays) {
     return availableTimes;
 }
 
-export function createOpenTimeReference(data) {
+function createOpenTimeReference(data) {
     const day = data.day;
     const roomRequested = data.roomRequested;
 
@@ -78,7 +182,7 @@ export function createOpenTimeReference(data) {
         .where('room', '==', roomRequested);
 }
 
-export function createSpecialTimeReference(data) {
+function createSpecialTimeReference(data) {
     const day = data.day;
     const month = data.month;
     const year = data.year;
@@ -91,7 +195,7 @@ export function createSpecialTimeReference(data) {
         .where('area', '==', roomRequested);
 }
 
-export function createFilledTimeReference(data) {
+function createFilledTimeReference(data) {
     const day = data.day;
     const month = data.month;
     const year = data.year;
@@ -104,7 +208,7 @@ export function createFilledTimeReference(data) {
         .where('roomsRequested', 'array-contains', roomRequested);
 }
 
-export function checkRulesOneRoom(data) {
+function checkRulesOneRoom(data) {
     let times = [];
     let availableTimes = data.availableTimes;
     let requiredPartyLength = data.requiredPartyLength;
@@ -128,11 +232,10 @@ export function checkRulesOneRoom(data) {
             times.push(loop + requiredPartyLength);
         }
     }
-
     return times;
 }
 
-export function checkRulesTwoRooms(data) {
+function checkRulesTwoRooms(data) {
     let times = [];
 
     for (let loop = 0; loop < data.availableTimes1.length; loop++) {
@@ -183,7 +286,7 @@ export function checkRulesTwoRooms(data) {
     return times;
 }
 
-export function checkRulesThreeRooms(data) {
+function checkRulesThreeRooms(data) {
     let times = [];
 
     for (let loop = 0; loop < data.availableTimes1.length; loop++) {
@@ -312,7 +415,7 @@ export function checkRulesThreeRooms(data) {
     return times;
 }
 
-export async function generateTimesSingleRoom(data) {
+async function generateTimesSingleRoom(data) {
     let requiredPartyLength;
     switch (data.partyPackage) {
         case 0:
@@ -383,7 +486,7 @@ export async function generateTimesSingleRoom(data) {
     });
 }
 
-export async function generateTimesDoubleRoom(data) {
+async function generateTimesDoubleRoom(data) {
     //Length of play each party offers
     let requiredPartyLength1;
     let requiredPartyLength2;
@@ -489,7 +592,7 @@ export async function generateTimesDoubleRoom(data) {
     });
 }
 
-export async function generateTimesTripleRoom(data) {
+async function generateTimesTripleRoom(data) {
     //Length of play each party offers
     let requiredPartyLength1 = 8;
     let requiredPartyLength2 = 8;
@@ -605,7 +708,7 @@ export async function generateTimesTripleRoom(data) {
     });
 }
 
-export async function kickstartGenerateTimesFunction(data) {
+async function kickstartGenerateTimesFunction(data) {
     //Array to return
     let times = [];
 
@@ -646,7 +749,7 @@ export async function kickstartGenerateTimesFunction(data) {
     return times;
 }
 
-export function givenTimeIsInList(data) {
+function givenTimeIsInList(data) {
     //As the checking loops progress, the indices will become mis-aligned. There will be points in the iteration that the index is off count
     //However this is ok, as it is impossible for the if statements to accept the messed up index.
     //This saves the code from becoming complicated as it will do nothing but loop once and increase the index until it is on track again.
