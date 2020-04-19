@@ -1,37 +1,49 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux'
 import * as firebase from "firebase";
-import {Table} from "react-materialize";
+import {Table, Icon} from "react-materialize";
 
 class SearchForm extends Component {
     state = {
         partyName: '',
         email: '',
         parties: []
+
     };
 
     findParties = () => {
         const database = firebase.firestore();
         database.collection('Parties').get().then(snapshot => {
-
             const parties = [];
+            const ids = [];
             snapshot.forEach(doc => {
                 const data = doc.data();
                 if (data.name === this.state.partyName && data.email === this.state.email) {
-                    parties.push(data)
+                    parties.push({
+                        id: doc.id,
+                        data: doc.data()
+                    });
+
                 }
             });
-            this.setState({parties: parties})
-
+            this.setState({parties: parties});
+            console.log(parties)
         }).catch(error => {
             console.log(error)
         })
-    }
+    };
 
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         })
+    };
+
+    deleteEntry = (e) => {
+        const database = firebase.firestore();
+        const id = e.target.getAttribute('itemID');
+        database.collection('Parties').doc(id).delete().catch(error => alert('Delete not successful'));
+        alert('Delete was successful, please refresh the page!')
     };
 
 
@@ -80,13 +92,30 @@ class SearchForm extends Component {
                             <th>
                                 Email
                             </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
                         {this.state.parties && this.state.parties.map((party, i) => {
-                            return (<tr>
-                                    <td key={i}><p id={i}> {party.name}</p></td>
-                                    <td key={1000000-i}><p id={1000000-1}> {party.email}</p></td>
+                            return (<tr key={i}>
+                                    <td key={i}><p id={i}> {party.data.name}</p></td>
+                                    <td key={i + 1}><p id={i + 1}> {party.data.email}</p></td>
+                                    <td key={i + 2}><p
+                                        id={i + 2}> {party.data.month}/{party.data.day}/{party.data.year} </p></td>
+                                    <td key={i + 3}>
+                                        <button className={'btn blue'}> Edit </button>
+                                    </td>
+                                    <td key={i + 4}>
+                                        <button className={'btn red'} itemID={party.id} onClick={this.deleteEntry}>
+                                            Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             )
                         })}
