@@ -30,11 +30,12 @@ public class TimeslotActivity extends Activity {
 
     private int day, month, year, dayOfWeek, partyPackage;
     private String[] roomsStrings;
-    private List<Integer> rooms = new ArrayList<>();
+    private List<Integer> rooms  = new ArrayList<>();
     private List<Integer> times;
 
     private List<Integer> testRooms = new ArrayList<>();
-    public int[] testArray = {1};
+    public int[] testArray = {1, 3, 4};
+
 
     private FirebaseFunctions mFunctions;
 
@@ -85,59 +86,47 @@ public class TimeslotActivity extends Activity {
                             }
 
                         }
-                        times =  task.getResult();
-                        System.out.println(Arrays.toString(times.toArray()));
+                        times = task.getResult();
+                        System.out.println(times);
+                        fillTimes();
+
                     }
                 });
 
-        Spinner spinner = findViewById(R.id.spinner);
-
-//        List<Integer> timesList = new ArrayList<Integer>(times.length);
-//        for (int i : times)
-//        {
-//            timesList.add(i);
-//        }
-//        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(
-//                this, android.R.layout.simple_spinner_item, timesList
-//                );
 
 
 
 
     }
 
+    private void fillTimes() {
+        Spinner spinner = findViewById(R.id.spinner);
+
+        List<Integer> timesList = new ArrayList<Integer>(times.size());
+        timesList.addAll(times);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(
+                this, android.R.layout.simple_spinner_item, timesList
+        );
+        spinner.setAdapter(adapter);
+
+    }
+
     private Task<List<Integer>> getTimes(int partyPackage, int dayOfWeek, int[] roomsRequested, int day,
                                  int month, int year) throws JSONException {
         // Create the arguments to the callable function.
-        //JSONObject data = new JSONObject();
-        Map<String, Object> data = new HashMap<>();
-        data.put("partyPackage", 1);
-        data.put("dayOfWeek", 4);
-        data.put("roomsRequested", roomsRequested);
-        data.put("dateDay", 15);
+
+        JSONObject data = new JSONObject();
+        // Map<String, Object> data = new HashMap<>();
+        data.put("partyPackage", 3);
+        data.put("dayOfWeek", 7);
+        data.put("roomsRequested", Arrays.toString(roomsRequested));
+        data.put("dateDay", 18);
         data.put("dateMonth", 4);
         data.put("dateYear", 2020);
 
 
-
-//        if (roomsRequested.length == 1) {
-//            return mFunctions
-//                    .getHttpsCallable("checkPartyTimeOne")
-//                    .call(data)
-//                    .continueWith(new Continuation<HttpsCallableResult, String>() {
-//                        @Override
-//                        public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
-//                            // This continuation runs on either success or failure, but if the task
-//                            // has failed then getResult() will throw an Exception which will be
-//                            // propagated down.
-//                            String result = (String) task.getResult().getData();
-//                            System.out.println(result);
-//                            return result;
-//                        }
-//                    });
-//        } else if (roomsRequested.length == 2) {
             return mFunctions
-                    .getHttpsCallable("checkPartyTimeOne")
+                    .getHttpsCallable("checkPartyTime")
                     .call(data)
                     .continueWith(new Continuation<HttpsCallableResult, List<Integer>>() {
                         @Override
@@ -145,7 +134,8 @@ public class TimeslotActivity extends Activity {
                             // This continuation runs on either success or failure, but if the task
                             // has failed then getResult() will throw an Exception which will be
                             // propagated down.
-                             List<Integer> result = (List<Integer>) task.getResult().getData();
+                            List<Integer> result = (List<Integer>) task.getResult().getData();
+                            // System.out.println(task.getResult().getData());
                             return result;
                         }
                     });
