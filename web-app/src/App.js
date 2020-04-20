@@ -17,6 +17,7 @@ import SearchForm from "./components/staff/SearchForm";
 import Toolbar from './components/Toolbar/Toolbar'; //Imports for Trevor's Nearly Functional Navbar Replacement
 import SideDrawer from "./components/SideDrawer/SideDrawer";
 import Backdrop from './components/Backdrop/Backdrop'
+import EditForm from "./components/staff/EditForm";
 
 
 //todo submit to the confirmation called
@@ -48,7 +49,8 @@ function App() {
                         <Elements stripe={stripePromise}><CheckoutForm/></Elements>
                     </Route>
                     <Route path={'/dashboard'}><Dashboard/></Route>
-                    <Route path={'/staff/form'}> <SearchForm/></Route>
+                    <Route path={'/staff/search'}> <SearchForm/></Route>
+                    <Route path={'/staff/editform'}> <EditForm/></Route>
                 </Switch>
 
                 </BrowserRouter>

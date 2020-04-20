@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import {connect} from 'react-redux'
+
 import * as firebase from "firebase";
-import {Table, Icon} from "react-materialize";
+import {Button, Modal, Table} from "react-materialize";
+import {NavLink} from "react-router-dom";
 
 class SearchForm extends Component {
     state = {
@@ -43,7 +44,7 @@ class SearchForm extends Component {
         const database = firebase.firestore();
         const id = e.target.getAttribute('itemID');
         database.collection('Parties').doc(id).delete().catch(error => alert('Delete not successful'));
-        alert('Delete was successful, please refresh the page!')
+
     };
 
 
@@ -102,6 +103,7 @@ class SearchForm extends Component {
                         </tr>
                         </thead>
                         <tbody>
+
                         {this.state.parties && this.state.parties.map((party, i) => {
                             return (<tr key={i}>
                                     <td key={i}><p id={i}> {party.data.name}</p></td>
@@ -109,12 +111,51 @@ class SearchForm extends Component {
                                     <td key={i + 2}><p
                                         id={i + 2}> {party.data.month}/{party.data.day}/{party.data.year} </p></td>
                                     <td key={i + 3}>
-                                        <button className={'btn blue'}> Edit </button>
+                                        <Button className={'btn blue'}><NavLink style={{color: 'white'}}
+                                                                                to={'/staff/editform'}>Edit</NavLink>
+                                        </Button>
                                     </td>
                                     <td key={i + 4}>
-                                        <button className={'btn red'} itemID={party.id} onClick={this.deleteEntry}>
-                                            Delete
-                                        </button>
+                                        <Modal
+                                            style={{
+                                                width: '500px',
+                                                height: '300px',
+                                                textAlign: 'center',
+                                                fontSize: 'large'
+                                            }}
+                                            actions={[
+                                                <Button style={{float: 'right'}} modal='close'
+                                                        onClick={this.deleteEntry} node="button"
+                                                        className={'btn red'} itemID={party.id}>Yes</Button>,
+                                                <Button style={{float: 'left'}} modal="close" node="button"
+                                                        className={'btn blue'}>No</Button>
+                                            ]}
+                                            bottomSheet={false}
+                                            fixedFooter
+                                            header="Confirm"
+                                            id="Modal-0"
+                                            open={false}
+                                            options={{
+                                                dismissible: true,
+                                                endingTop: '10%',
+                                                inDuration: 250,
+                                                onCloseEnd: null,
+                                                onCloseStart: null,
+                                                onOpenEnd: null,
+                                                onOpenStart: null,
+                                                opacity: 0.5,
+                                                outDuration: 250,
+                                                preventScrolling: true,
+                                                startingTop: '4%'
+                                            }}
+                                            root={document.body}
+                                            trigger={<Button node="button" className={'btn red'}>Delete</Button>}
+                                        >
+                                            You are trying to delete {party.data.name}'s party scheduled
+                                            for {party.data.month}/{party.data.day}/{party.data.year}. Are you sure you
+                                            want to
+                                            continue?
+                                        </Modal>
                                     </td>
                                 </tr>
                             )

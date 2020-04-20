@@ -89,9 +89,7 @@ class Dashboard extends Component {
                     >
                         <Card
                             actions={[
-                                <NavLink to={'/staff/form'}> Search </NavLink>,
-                                <NavLink to={'/staff/form'}> Edit </NavLink>,
-                                <NavLink to={'/staff/form'}> Delete </NavLink>
+                                <NavLink to={'/staff/search'}> Search </NavLink>,
                             ]}
                             className="colorMe center-align"
                             closeIcon={<Icon>close</Icon>}
@@ -111,6 +109,7 @@ class Dashboard extends Component {
                             actions={[
                                 <NavLink to={'/staff/custom_party'}>Create</NavLink>
                             ]}
+
                             className="colorMe center-align"
                             closeIcon={<Icon>close</Icon>}
                             revealIcon={<Icon>more_vert</Icon>}
