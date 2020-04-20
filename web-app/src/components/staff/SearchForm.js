@@ -1,8 +1,7 @@
 import React, {Component} from "react";
-
 import * as firebase from "firebase";
 import {Button, Modal, Table} from "react-materialize";
-import {NavLink} from "react-router-dom";
+
 
 class SearchForm extends Component {
     state = {
@@ -43,7 +42,7 @@ class SearchForm extends Component {
     deleteEntry = (e) => {
         const database = firebase.firestore();
         const id = e.target.getAttribute('itemID');
-        database.collection('Parties').doc(id).delete().catch(error => alert('Delete not successful'));
+        database.collection('Parties').doc(id).delete().catch(error => alert(error));
 
     };
 
@@ -98,8 +97,6 @@ class SearchForm extends Component {
                             </th>
                             <th>
                             </th>
-                            <th>
-                            </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -111,9 +108,6 @@ class SearchForm extends Component {
                                     <td key={i + 2}><p
                                         id={i + 2}> {party.data.month}/{party.data.day}/{party.data.year} </p></td>
                                     <td key={i + 3}>
-                                        <Button className={'btn blue'}><NavLink style={{color: 'white'}}
-                                                                                to={'/staff/editform'}>Edit</NavLink>
-                                        </Button>
                                     </td>
                                     <td key={i + 4}>
                                         <Modal
