@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/logo"
+            android:id="@+id/ninja_logo"
             android:layout_width="133dp"
             android:layout_height="47dp"
             android:layout_marginBottom="4dp"
@@ -39,18 +39,22 @@
 
         <ImageView
             android:id="@+id/gymnastics_logo"
-            android:layout_width="295dp"
-            android:layout_height="197dp"
+            android:layout_width="240dp"
+            android:layout_height="173dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="@string/logo"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:srcCompat="@mipmap/gymnastics_logo" />
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:text="Gymnastics at Paramount\n\nWhy enroll in gymnastics? According to the USA Gymnastics Organization, here are 10 reasons why you should enroll your child in gymnastics:\n
 \n1. It’s fun\n
 2. Develops strength\n
@@ -62,12 +66,12 @@
 8. Teaches goal setting\n
 9. Develops cognitive abilities to help in the classroom\n
 10. Develops skills to enhance other sports"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gymnastics_logo"
+            app:layout_constraintStart_toEndOf="@+id/gymnastics_logo"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintVertical_bias="1.0" />
 
 

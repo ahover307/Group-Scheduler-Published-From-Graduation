@@ -7,274 +7,258 @@
     android:orientation="vertical"
     android:fillViewport="false">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".MainActivity"
-    android:background="@color/colorPrimary">
-
-
-    <TextView
-        android:id="@+id/textView_ja_sun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/text_ja_sun"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_ja_sat" />
-
-    <TextView
-        android:id="@+id/textView_ja_sat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_ja_sat"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/textView_ja_sun"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_ja_mf" />
-
-    <TextView
-        android:id="@+id/textView_ja"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_ja"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_sm_sun" />
-
-    <TextView
-        android:id="@+id/textView_ja_mf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_ja_mf"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintBottom_toTopOf="@+id/textView_ja_sat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_ja" />
-
-    <TextView
-        android:id="@+id/textView_sm_sun"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_sm_sun"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_sm_sat" />
-
-    <TextView
-        android:id="@+id/textView_sm_sat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_sm_sat"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_sm_mf" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_ninja"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:width="86dp"
-        android:height="86dp"
-        android:background="@color/colorAccent"
-        android:text="@string/button_ninja"
-        android:textColor="@color/colorPrimary"
-        android:onClick="ninjaButton"
-        app:layout_constraintEnd_toStartOf="@+id/button_gymnastics"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <Button
-        android:id="@+id/button_preschool"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:width="86dp"
-        android:height="86dp"
-        android:background="@color/colorAccent"
-        android:text="@string/button_preschool"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button_activities"
-        app:layout_constraintEnd_toStartOf="@+id/button_activities"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button_parties"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:width="86dp"
-        android:height="86dp"
-        android:background="@color/colorAccent"
-        android:onClick="partiesButton"
-        android:text="@string/button_parties"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_activities"
-        app:layout_constraintTop_toTopOf="@+id/button_activities" />
-
-    <Button
-        android:id="@+id/button_activities"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:width="86dp"
-        android:height="86dp"
-        android:background="@color/colorAccent"
-        android:text="@string/button_activities"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toStartOf="@+id/button_parties"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_preschool"
-        app:layout_constraintTop_toBottomOf="@+id/button_gymnastics" />
-
-    <Button
-        android:id="@+id/button_taeKwonDo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:width="86dp"
-        android:height="86dp"
-        android:background="@color/colorAccent"
-        android:onClick="testCheckout"
-        android:text="@string/button_taeKwonDo"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="@+id/button_activities"
-        app:layout_constraintStart_toStartOf="@+id/button_activities"
-        app:layout_constraintTop_toBottomOf="@+id/button_activities" />
-
-    <Button
-        android:id="@+id/button_gymnastics"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:width="86dp"
-        android:height="86dp"
-        android:background="@color/colorAccent"
-        android:text="@string/button_gymnastics"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toStartOf="@+id/button_fitnessCenter"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_ninja"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <Button
-        android:id="@+id/button_fitnessCenter"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:width="86dp"
-        android:height="86dp"
-        android:background="@color/colorAccent"
-        android:text="@string/button_fitnessCenter"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_gymnastics"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <TextView
-        android:id="@+id/textView_hoo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_hoo"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_taeKwonDo" />
-
-    <TextView
-        android:id="@+id/textView_sm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_sm"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_hoo" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="133dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="4dp"
-        android:contentDescription="@string/logo"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:srcCompat="@mipmap/paramount_logo" />
-
-    <TextView
-        android:id="@+id/textView_sm_mf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/text_sm_mf"
-        android:textAlignment="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_sm" />
+        android:background="@color/colorPrimary"
+        tools:context=".MainActivity">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView_ja_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/text_ja_sun"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textView_ja_sat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView_ja_sat"
+            app:layout_constraintTop_toBottomOf="@+id/textView_ja_sat" />
+
+        <TextView
+            android:id="@+id/textView_ja_sat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_ja_sat"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/textView_ja_mf"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView_ja_mf"
+            app:layout_constraintTop_toBottomOf="@+id/textView_ja_mf" />
+
+        <TextView
+            android:id="@+id/textView_ja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_ja"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView_sm"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hoo" />
+
+        <TextView
+            android:id="@+id/textView_ja_mf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_ja_mf"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/textView_ja"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView_ja"
+            app:layout_constraintTop_toBottomOf="@+id/textView_ja" />
+
+        <TextView
+            android:id="@+id/textView_sm_sun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_sm_sun"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/textView_sm_sat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView_sm_sat"
+            app:layout_constraintTop_toBottomOf="@+id/textView_sm_sat" />
+
+        <TextView
+            android:id="@+id/textView_sm_sat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_sm_sat"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/textView_sm_mf"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/textView_sm_mf"
+            app:layout_constraintTop_toBottomOf="@+id/textView_sm_mf" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_ninja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:width="128dp"
+            android:height="86dp"
+            android:background="@color/colorAccent"
+            android:onClick="ninjaButton"
+            android:text="@string/button_ninja"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/button_gymnastics"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <Button
+            android:id="@+id/button_preschool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:width="128dp"
+            android:height="86dp"
+            android:background="@color/colorAccent"
+            android:onClick="preschoolButton"
+            android:text="@string/button_preschool"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_fitnessCenter"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <Button
+            android:id="@+id/button_parties"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:width="128dp"
+            android:height="86dp"
+            android:background="@color/colorAccent"
+            android:onClick="partiesButton"
+            android:text="@string/button_parties"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/button_activities"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_ninja" />
+
+        <Button
+            android:id="@+id/button_activities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:width="128dp"
+            android:height="86dp"
+            android:background="@color/colorAccent"
+            android:text="@string/button_activities"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/button_taeKwonDo"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_parties"
+            app:layout_constraintTop_toBottomOf="@+id/button_gymnastics" />
+
+        <Button
+            android:id="@+id/button_taeKwonDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:width="128dp"
+            android:height="86dp"
+            android:background="@color/colorAccent"
+            android:onClick="testCheckout"
+            android:text="@string/button_taeKwonDo"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_activities"
+            app:layout_constraintTop_toBottomOf="@+id/button_fitnessCenter" />
+
+        <Button
+            android:id="@+id/button_gymnastics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:width="128dp"
+            android:height="86dp"
+            android:background="@color/colorAccent"
+            android:onClick="gymnasticsButton"
+            android:text="@string/button_gymnastics"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/button_fitnessCenter"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_ninja"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <Button
+            android:id="@+id/button_fitnessCenter"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:width="128dp"
+            android:height="86dp"
+            android:background="@color/colorAccent"
+            android:onClick="fitnessButton"
+            android:text="@string/button_fitnessCenter"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/button_preschool"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_gymnastics"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <TextView
+            android:id="@+id/textView_hoo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/text_hoo"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_taeKwonDo" />
+
+        <TextView
+            android:id="@+id/textView_sm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_sm"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toStartOf="@+id/textView_ja"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hoo" />
+
+        <ImageView
+            android:id="@+id/ninja_logo"
+            android:layout_width="133dp"
+            android:layout_height="47dp"
+            android:layout_marginBottom="4dp"
+            android:contentDescription="@string/logo"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar"
+            app:srcCompat="@mipmap/paramount_logo" />
+
+        <TextView
+            android:id="@+id/textView_sm_mf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_sm_mf"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="@+id/textView_sm"
+            app:layout_constraintStart_toStartOf="@+id/textView_sm"
+            app:layout_constraintTop_toBottomOf="@+id/textView_sm" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

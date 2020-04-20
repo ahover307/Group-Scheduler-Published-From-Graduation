@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -36,40 +37,40 @@
 
         <EditText
             android:id="@+id/edit_contact_last"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="380dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="16dp"
             android:width="164dp"
             android:ems="10"
             android:hint="@string/edit_contact_last"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
+            app:layout_constraintBaseline_toBaselineOf="@+id/edit_host_last"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_host_last" />
+            app:layout_constraintHorizontal_bias="0.332"
+            app:layout_constraintStart_toEndOf="@+id/edit_host_last" />
 
         <EditText
             android:id="@+id/edit_host_last"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="280dp"
+            android:layout_height="41dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="64dp"
             android:width="164dp"
             android:ems="10"
             android:hint="@string/edit_host_last"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <EditText
             android:id="@+id/edit_contact_email"
             android:layout_width="166dp"
-            android:layout_height="46dp"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:ems="10"
             android:hint="@string/edit_contact_email"
             android:importantForAutofill="no"
@@ -79,8 +80,8 @@
 
         <EditText
             android:id="@+id/edit_contact_phone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="485dp"
+            android:layout_height="0dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="16dp"
             android:width="86dp"

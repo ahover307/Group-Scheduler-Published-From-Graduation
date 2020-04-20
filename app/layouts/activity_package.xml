@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/ninja_logo"
         android:layout_width="133dp"
         android:layout_height="47dp"
         android:layout_marginBottom="4dp"

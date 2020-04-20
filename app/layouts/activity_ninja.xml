@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fillViewport="false">
 
-</LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:minHeight="1000px"
+        tools:context=".MainActivity">
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ninja_logo"
+            android:layout_width="133dp"
+            android:layout_height="47dp"
+            android:layout_marginBottom="4dp"
+            android:contentDescription="@string/logo"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar"
+            app:srcCompat="@mipmap/paramount_logo" />
+
+        <ImageView
+            android:id="@+id/preschool"
+            android:layout_width="199dp"
+            android:layout_height="145dp"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:srcCompat="@mipmap/ninja_logo" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Our Ninja Warrior course offers ninja warrior obstacles based on NBC’s American Ninja Warrior®. If you have watched the show and thought to yourself, “I can do those quintuple steps” or “That warped wall doesn’t look that high,” we invite you to come in and test your inner ninja against our obstacles. We offer open gym times, classes, competitions, parties and camps in the course.  If you are training for one of the vast amounts of obstacle course races out there such as Tough Mudder, Spartan Race, or Alpha Warrior use the course and train with ninja staff to help you get prepared for the rigors of the obstacles you will be facing."
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/preschool"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
