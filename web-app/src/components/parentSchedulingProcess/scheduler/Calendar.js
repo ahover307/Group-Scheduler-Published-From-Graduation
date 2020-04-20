@@ -6,7 +6,7 @@ class calendar extends Component {
     onClickDay = date => {
         this.props.parentCallBackDate({
             date: date.getDate(),
-            month: date.getMonth(),
+            month: date.getMonth() + 1,
             year: date.getFullYear(),
             day: date.getDay() + 1
         });
@@ -15,7 +15,7 @@ class calendar extends Component {
     //https://www.npmjs.com/package/react-calendar
     render() {
         return (
-            <div className={'cent'}>
+            <div style={{marginTop:'2%'}}>
                 <div className={'container center'}>
                     <Calendar
                         calendarType={"US"}

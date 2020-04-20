@@ -14,7 +14,8 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import SearchForm from "./components/staff/SearchForm";
 
-import Toolbar from './components/Toolbar/Toolbar'; //Imports for Trevor's Nearly Functional Navbar Replacement
+import Toolbar from './components/Toolbar/Toolbar';
+import Grid from "./components/staff/Grid"; //Imports for Trevor's Nearly Functional Navbar Replacement
 
 
 
@@ -48,6 +49,7 @@ function App() {
                     </Route>
                     <Route path={'/dashboard'}><Dashboard/></Route>
                     <Route path={'/staff/search'}> <SearchForm/></Route>
+                    <Route path={'/staff/grid'}> <Grid/></Route>
 
                 </Switch>
 

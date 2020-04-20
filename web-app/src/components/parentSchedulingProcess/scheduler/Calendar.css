@@ -1,5 +1,6 @@
-div.cent {
-    margin: auto;
-    width: 50%;
-    padding: 20px;
+.react-calendar{
+    margin-right:0px;
+    width:75%;
+    height:100%;
+    margin-left: 12.5%
 }

@@ -71,8 +71,7 @@ class Dashboard extends Component {
                     >
                         <Card
                             actions={[
-                                <a key="1" href="#">View</a>,
-                                <a key="2" href="#">Download</a>
+                                <NavLink style={{marginRight: '0px'}} to={'/staff/grid'}>View</NavLink>
                             ]}
                             className="colorMe center-align"
                             closeIcon={<Icon>close</Icon>}
@@ -89,7 +88,7 @@ class Dashboard extends Component {
                     >
                         <Card
                             actions={[
-                                <NavLink to={'/staff/search'}> Search </NavLink>,
+                                <NavLink style={{marginRight: '0px'}} to={'/staff/search'}> Search </NavLink>,
                             ]}
                             className="colorMe center-align"
                             closeIcon={<Icon>close</Icon>}
@@ -97,7 +96,7 @@ class Dashboard extends Component {
                             textClassName="white-text"
                             title="Parties"
                         >
-                            You can search, edit or delete a party
+                            You can search and delete a party
                         </Card>
                     </Col>
                 </Row>
@@ -107,7 +106,7 @@ class Dashboard extends Component {
                     <Col m={6} s={12}>
                         <Card
                             actions={[
-                                <NavLink to={'/staff/custom_party'}>Create</NavLink>
+                                <NavLink style={{marginRight: '0px'}}  to={'/staff/custom_party'}>Create</NavLink>
                             ]}
 
                             className="colorMe center-align"

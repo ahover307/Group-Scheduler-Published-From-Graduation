@@ -103,13 +103,10 @@ class SearchForm extends Component {
 
                         {this.state.parties && this.state.parties.map((party, i) => {
                             return (<tr key={i}>
-                                    <td key={i}><p id={i}> {party.data.name}</p></td>
-                                    <td key={i + 1}><p id={i + 1}> {party.data.email}</p></td>
-                                    <td key={i + 2}><p
-                                        id={i + 2}> {party.data.month}/{party.data.day}/{party.data.year} </p></td>
+                                    <td key={i}>{party.data.name}</td>
+                                    <td key={i + 1}>{party.data.email}</td>
+                                    <td key={i + 2}>{party.data.month}/{party.data.day}/{party.data.year} </td>
                                     <td key={i + 3}>
-                                    </td>
-                                    <td key={i + 4}>
                                         <Modal
                                             style={{
                                                 width: '500px',
