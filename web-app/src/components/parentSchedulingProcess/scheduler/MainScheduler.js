@@ -10,7 +10,6 @@ import connect from "react-redux/es/connect/connect";
 // import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
 import {Redirect} from "react-router-dom";
-import {updatePartyAreaString, updatePartyPackageString} from "../../globalFunctions";
 import Calendar from "./Calendar";
 import * as firebase from "firebase";
 
@@ -161,26 +160,28 @@ class MainScheduler extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault();
-        const templateId = 'confirmationemail';
-        const partyArea1String = updatePartyAreaString(this.state.partyArea1); //   <--- We are not using this state anymore
-        console.log(this.state.partyArea1);
-        console.log(partyArea1String);
-        const partyArea2String = updatePartyAreaString(this.state.partyArea2);  // <-- It is an array, rooms requested now, to match the array roomTimes
-        const partyArea3String = updatePartyAreaString(this.state.partyArea3);
-        this.sendFeedback(templateId, {
-            party_name: this.state.partyName,
-            party_package: updatePartyPackageString(this.state.partyPackage),
-            party_area1: partyArea1String,
-            party_area2: partyArea2String,
-            party_area3: partyArea3String,
-            party_host: this.state.hostName,
-            phone_number: this.state.phoneNumber,
-            to_email: this.state.email
-        });
+        // const templateId = 'confirmationemail';
+        // const partyArea1String = updatePartyAreaString(this.state.partyArea1); //   <--- We are not using this state anymore
+        // console.log(this.state.partyArea1);
+        // console.log(partyArea1String);
+        // const partyArea2String = updatePartyAreaString(this.state.partyArea2);  // <-- It is an array, rooms requested now, to match the array roomTimes
+        // const partyArea3String = updatePartyAreaString(this.state.partyArea3);
+        // this.sendFeedback(templateId, {
+        //     party_name: this.state.partyName,
+        //     party_package: updatePartyPackageString(this.state.partyPackage),
+        //     party_area1: partyArea1String,
+        //     party_area2: partyArea2String,
+        //     party_area3: partyArea3String,
+        //     party_host: this.state.hostName,
+        //     phone_number: this.state.phoneNumber,
+        //     to_email: this.state.email
+        // });
 
-        this.setState(() => ({      //Trevor added this to redirect to confirmation page
-            toConfirm: true
-        }))
+        console.log(this.state);
+
+        // this.setState(() => ({      //Trevor added this to redirect to confirmation page
+        //     toConfirm: true
+        // }))
         //this.props.history.push('./confirmation');
 
         //this.props.createParty(this.state); <-- Don't delete this    <-- why not

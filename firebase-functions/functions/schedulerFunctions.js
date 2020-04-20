@@ -17,10 +17,20 @@ const db = admin.firestore();
  * return   :   available times - 2D array containing the ordered rooms to use, and available start and end times of each time
  */
 exports.checkPartyTimes = functions.https.onCall(async (data) => {
+    let roomsRequested = [];
+    if (typeof data.roomsRequested === typeof 'string') {
+        //parse that
+        roomsRequested.push(parseInt(data.roomsRequested.charAt(1)));
+        roomsRequested.push(parseInt(data.roomsRequested.charAt(4)));
+        roomsRequested.push(parseInt(data.roomsRequested.charAt(7)));
+    } else {
+        roomsRequested = data.roomsRequested
+    }
+
     return await kickstartGenerateTimesFunction({
         partyPackage: parseInt(data.partyPackage),
         dayOfWeek: parseInt(data.dayOfWeek),
-        roomsRequested: data.roomsRequested,
+        roomsRequested: roomsRequested,
         dateDay: parseInt(data.dateDay),
         dateMonth: parseInt(data.dateMonth),
         dateYear: parseInt(data.dateYear)
@@ -48,19 +58,37 @@ exports.confirmTimeandCommitToDB = functions.https.onCall(async (data, context) 
     let participantsAge = parseInt(data.participantsAge);
     let partyName = toString(data.partyName);
     let partyPackage = parseInt(data.partyPackage);
-    let roomsRequested = data.roomsRequested;
-    // data.roomsRequested.forEach(element => roomsRequested.push(parseInt(element)));
-    let roomTimes = data.roomTimes;
-    // data.roomsRequested.forEach(element => roomTimes.push(parseInt(element)));
     let dayOfWeek = parseInt(data.dayOfWeek);
     let dateDay = parseInt(data.dateDay);
     let dateMonth = parseInt(data.dateMonth);
     let dateYear = parseInt(data.dateYear);
 
+    let roomsRequested = [];
+    let roomTimes = [];
+    //If the arrays were input as a json object, then they will enter the function as strings.
+    //If its a string, it needs to be parsed, otherwise, match it up and then continue on.
+    if (typeof data.roomsRequested === typeof 'string') {
+        //parse that
+        roomsRequested.push(parseInt(data.roomsRequested.charAt(1)));
+        roomsRequested.push(parseInt(data.roomsRequested.charAt(4)));
+        roomsRequested.push(parseInt(data.roomsRequested.charAt(7)));
+        //Split the string on commas and spaces. Find out what is inclusive and not inclusive
+        let indexOfFirstComma = data.roomTimes.indexOf(',');
+        let indexOfSecondComma = data.roomTimes.indexOf(',', indexOfFirstComma);
+        roomTimes.push(parseInt(data.roomTimes.substring(1, indexOfFirstComma)));
+        roomTimes.push(parseInt(data.roomTimes.substring(indexOfFirstComma + 2, indexOfSecondComma)));
+        roomTimes.push(parseInt(data.roomTimes.substring(indexOfSecondComma + 2, data.roomTimes.indexOf(']'))));
+    } else {
+        roomsRequested = data.roomsRequested;
+        roomTimes = data.roomTimes;
+    }
+
     let successful = false;
     //First confirm that the time is available, im not worried about this being an async call
     // and then inconsistencies from the gap of time that gives due to the volume of the website.
     //The odds of a collision are incredibly low, and can be found by periodic checks of the database
+
+    //As in - If two people call this function at the same time, then it would cause a collision. But oh well
 
     let timeList = await kickstartGenerateTimesFunction({
         partyPackage: partyPackage,
@@ -78,21 +106,22 @@ exports.confirmTimeandCommitToDB = functions.https.onCall(async (data, context) 
         testTimes: timeList
     })) {
         //Once it is confirmed that it still fits, commit this to the DB
-        successful = await db.collection("parties").doc().set({
-            contactName: contactName,
-            email: email,
-            phoneNumber: phoneNumber,
-            paid: wasPaid,
-            participantsAge: participantsAge,
-            partyName: partyName,
-            partyPackage: partyPackage,
-            roomsRequested: roomsRequested,
-            roomTimes: roomTimes,
-            dayOfWeek: dayOfWeek,
-            dateDay: dateDay,
-            dateMonth: dateMonth,
-            dateYear: dateYear,
-        })
+        successful = await db.collection("parties")
+            .doc().set({
+                contactName: contactName,
+                email: email,
+                phoneNumber: phoneNumber,
+                paid: wasPaid,
+                participantsAge: participantsAge,
+                partyName: partyName,
+                partyPackage: partyPackage,
+                roomsRequested: roomsRequested,
+                roomTimes: roomTimes,
+                dayOfWeek: dayOfWeek,
+                dateDay: dateDay,
+                dateMonth: dateMonth,
+                dateYear: dateYear,
+            })
             .then(() => {
                 return true;
             })
@@ -102,7 +131,11 @@ exports.confirmTimeandCommitToDB = functions.https.onCall(async (data, context) 
     }
 
     //Then return, if it was confirmed available and commit to the DB, or if it was not available.
-    return successful;
+    return {
+        successful: successful,
+        paymentNumber: wasPaid
+    };
+
 });
 
 async function simpleDBCheck(dbReference) {
