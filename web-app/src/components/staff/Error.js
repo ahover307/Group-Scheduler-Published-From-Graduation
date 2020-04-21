@@ -5,12 +5,9 @@ class Error extends Component {
         return (
             <div className="container">
                 <h1>Not found <span>:(</span></h1>
-                <p>Sorry, but the page you were trying to view does not exist.</p>
-                <p>It looks like this was the result of either:</p>
-                <ul>
-                    <li>a mistyped address</li>
-                    <li>an out-of-date link</li>
-                </ul>
+                <p>Sorry, you're trying to access a page that is restricted</p>
+                <p>Please login into your account to access this page</p>
+
             </div>
         );
 
