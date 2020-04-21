@@ -5,17 +5,13 @@ import CardSection from './CardSection';
 import * as firebase from "firebase";
 
 class CheckoutForm extends React.Component {
-    state = {
-        confirmed: false,
-    };
 
     paymentIntent = async () => {
-        console.log('1')
-        console.log(this.props);
-        let paymentFunction = firebase.functions().httpsCallable('paymentIntent');
+        let paymentFunction = firebase.functions().httpsCallable('paymentIntent')
+
         return (await paymentFunction({
-            price: 1099,
-            email: 'ahover307@gmail.com '
+            price: this.props.price,
+            email: this.props.email
         }).then(function (result) {
             return result;
         }).catch(function (e) {
@@ -52,7 +48,6 @@ class CheckoutForm extends React.Component {
         } else {
             // The payment has been processed!
             if (result.paymentIntent.status === 'succeeded') {
-                //Call function, and then when it is finished, pass back through the prop functions shit and give it the positive.
                 this.props.callBack();
             }
         }

@@ -10,7 +10,6 @@ import {
 class ConfirmationText extends Component {
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <span><strong> Party Package: </strong> {updatePartyPackageString(this.props.partyPackage)} </span>

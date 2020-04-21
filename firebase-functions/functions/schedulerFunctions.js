@@ -39,12 +39,12 @@ exports.checkPartyTimes = functions.https.onCall(async (data) => {
 
 exports.confirmTimeandCommitToDB = functions.https.onCall(async (data, context) => {
     //Data we need to pull to do this - We will need the entire state as all of it will be being pushed to the database.
-    let contactName = toString(data.contactName);
-    let email = toString(data.email);
-    let phoneNumber = toString(data.phoneNumber);
-    let wasPaid = parseInt(data.paid);
+    let contactName = data.contactName.toString();
+    let email = data.email.toString();
+    let phoneNumber = data.phoneNumber.toString();
+    let pricePaid = parseInt(data.pricePaid);
     let participantsAge = parseInt(data.participantsAge);
-    let partyName = toString(data.partyName);
+    let partyName = data.partyName.toString();
     let partyPackage = parseInt(data.partyPackage);
     let dayOfWeek = parseInt(data.dayOfWeek);
     let dateDay = parseInt(data.dateDay);
@@ -71,30 +71,27 @@ exports.confirmTimeandCommitToDB = functions.https.onCall(async (data, context) 
         roomTimes = data.roomTimes;
     }
 
-    let successful;
-    //First confirm that the time is available, im not worried about this being an async call
-    // and then inconsistencies from the gap of time that gives due to the volume of the website.
-    //The odds of a collision are incredibly low, and can be found by periodic checks of the database
+    //We are assuming that the time is still allowed, im not worried about this - its an allowable risk
+    // from the gap of time that gives due to the volume of the website.
+    //The odds of a collision are low, and can be found by periodic checks of the database
 
     //As in - If two people call this function at the same time, then it would cause a collision. But oh well
-
     //Once it is confirmed that it still fits, commit this to the DB
-    successful = await db.collection("parties")
-        .doc().set({
-            contactName: contactName,
-            email: email,
-            phoneNumber: phoneNumber,
-            paid: wasPaid,
-            participantsAge: participantsAge,
-            partyName: partyName,
-            partyPackage: partyPackage,
-            roomsRequested: roomsRequested,
-            roomTimes: roomTimes,
-            dayOfWeek: dayOfWeek,
-            dateDay: dateDay,
-            dateMonth: dateMonth,
-            dateYear: dateYear,
-        })
+    await db.collection('Parties').doc().create({
+        contactName: contactName,
+        email: email,
+        phoneNumber: phoneNumber,
+        pricePaid: pricePaid,
+        participantsAge: participantsAge,
+        partyName: partyName,
+        partyPackage: partyPackage,
+        roomsRequested: roomsRequested,
+        roomTimes: roomTimes,
+        dayOfWeek: dayOfWeek,
+        dateDay: dateDay,
+        dateMonth: dateMonth,
+        dateYear: dateYear,
+    })
         .then(() => {
             return true;
         })
@@ -102,9 +99,8 @@ exports.confirmTimeandCommitToDB = functions.https.onCall(async (data, context) 
             throw new functions.https.HttpsError('database-failure', 'Could not write to DB: ' + error);
         });
 
-
     //Then return, if it was confirmed available and commit to the DB, or if it was not available.
-    return successful
+    return true;
 });
 
 async function simpleDBCheck(dbReference) {

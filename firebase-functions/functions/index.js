@@ -7,10 +7,10 @@ const tests = require('./testingFunctions');
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.paymentIntent = paymentFunctions.paymentIntent;
+exports.grabPrice = paymentFunctions.grabPrice;
 
 exports.checkPartyTime = partyTimes.checkPartyTimes;
-
 exports.confirmTimeandCommitToDB = partyTimes.confirmTimeandCommitToDB;
 
-exports.fillOpenHours = tests.fillOpenHours;
-exports.pullOpenHours = tests.pullOpenHours;
+// exports.fillOpenHours = tests.fillOpenHours;
+// exports.pullOpenHours = tests.pullOpenHours;

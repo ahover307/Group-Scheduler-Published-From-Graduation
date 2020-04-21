@@ -8,6 +8,7 @@ import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
 // import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
 import Calendar from "./Calendar";
+import * as firebase from "firebase";
 
 class MainScheduler extends Component {
     state = {
@@ -23,7 +24,8 @@ class MainScheduler extends Component {
         dateDay: 0,
         dateMonth: 0,
         dateYear: 0,
-        missing: true
+        missing: true,
+        price: 0
     };
 
     componentDidMount() {
@@ -40,9 +42,19 @@ class MainScheduler extends Component {
     };
 
     // Update state from PartyPackageSelector to MainScheduler
-    callBackFunctionPartyPackage = (childData) => {
-        this.setState({
+    callBackFunctionPartyPackage = async (childData) => {
+        console.log(childData);
+        const price = (await firebase.functions().httpsCallable('grabPrice')({
             partyPackage: childData
+        }).then(function (result) {
+            return result.data;
+        }).catch(function (e) {
+            console.log('an error has occurred in grab price method. Check the firebase logs for details');
+        }))
+        console.log(price);
+        this.setState({
+            partyPackage: childData,
+            price: price
         });
     };
 
@@ -141,7 +153,8 @@ class MainScheduler extends Component {
                 dateDay: this.state.dateDay,
                 dateMonth: this.state.dateMonth,
                 dateYear: this.state.dateYear,
-                set: true
+                set: true,
+                price: this.state.price
             });
         } else {
             this.setState({missing: true});
@@ -152,6 +165,7 @@ class MainScheduler extends Component {
         // if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
         //     return <Redirect to='/confirmation'/>
         // }
+        //TODO print price somewehre on here if its not 0
         return (
             <Collapsible accordion={false}>
                 <CollapsibleItem

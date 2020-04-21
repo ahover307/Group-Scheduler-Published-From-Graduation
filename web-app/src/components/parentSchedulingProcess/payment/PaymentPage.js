@@ -9,17 +9,22 @@ const stripePromise = loadStripe("pk_test_rKltl8cKNz9NLrOL7w1KT22800Yi2Zh7n9");
 
 class PaymentPage extends Component {
     runFunction = async () => {
-        console.log('got to function');
         if (await firebase.functions().httpsCallable('confirmTimeandCommitToDB')({
+            contactName: this.props.contactName,
+            email: this.props.email,
+            phoneNumber: this.props.phoneNumber,
+            pricePaid: this.props.price,
+            participantsAge: this.props.participantsAge,
+            partyName: this.props.partyName,
             partyPackage: this.props.partyPackage,
             dayOfWeek: this.props.dayOfWeek,
+            dateDay: this.props.date,
+            dateMonth: this.props.month,
+            dateYear: this.props.year,
             roomsRequested: this.props.roomsRequested,
-            dateDay: this.props.dateDay,
-            dateMonth: this.props.dateMonth,
-            dateYear: this.props.dateYear
+            roomTimes: this.props.roomTimes
         }).then(function (result) {
-            console.log('Just finished running?');
-            return result
+            return true
         }).catch(function (e) {
             console.log(e);
             console.log(e.code);
@@ -28,11 +33,12 @@ class PaymentPage extends Component {
             console.log(e.name);
         })) {
             this.props.callBack();
+        } else {
+            //TODO Tell them there was an error and that they will need to call in to fix it.
         }
     }
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <div>Please check the information below. Please confirm that it is entirely correct, as it is not
@@ -54,7 +60,7 @@ class PaymentPage extends Component {
                 <Elements stripe={stripePromise} callBack={this.runFunction}>
                     {CheckoutForm({
                         callBack: this.runFunction,
-                        price: 1097,
+                        price: this.props.price,
                         email: this.props.email
                     })}
                 </Elements>
