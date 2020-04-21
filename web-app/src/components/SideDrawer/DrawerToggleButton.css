@@ -13,7 +13,7 @@
 .toggle-button:focus {
     outline: none;
 }
-toggle-button_line{
+.toggle-button_line{
     width:30px;
     height: 2px;
     background: white;

@@ -38,3 +38,19 @@
 .toolbar_navigationItems a:hover, .toolbar_navigationItems a:active{
     color: #32325d;
 }
+
+@media (max-width: 768px){
+    .toolbar_navigationItems {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) {
+    .toolbar_toggle-button {
+        display: none;
+    }
+
+    .toolbar_logo{
+        margain-left: 0;
+    }
+}
