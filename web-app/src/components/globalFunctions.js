@@ -83,3 +83,77 @@ export function dayOfWeekIntToString(e) {
             return "Unknown day of week"
     }
 }
+
+//Translate date in format "DayOfWeek: Month Day, Year" => "Monday: April 20, 2020"
+export function dateIntegersToString(e) {
+    let dateString = dayOfWeekIntToString(e.dayOfWeek) + ': ';
+
+    //Add month to string
+    switch (parseInt(e.month)) {
+        case 1:
+            dateString += 'January ';
+            break;
+        case 2:
+            dateString += 'February ';
+            break;
+        case 3:
+            dateString += 'March ';
+            break;
+        case 4:
+            dateString += 'April ';
+            break;
+        case 5:
+            dateString += 'May ';
+            break;
+        case 6:
+            dateString += 'June ';
+            break;
+        case 7:
+            dateString += 'July ';
+            break;
+        case 8:
+            dateString += 'August ';
+            break;
+        case 9:
+            dateString += 'September ';
+            break;
+        case 10:
+            dateString += 'October ';
+            break;
+        case 11:
+            dateString += 'November ';
+            break;
+        case 12:
+            dateString += 'December ';
+            break;
+        default:
+            dateString += 'Month? ';
+            break;
+    }
+
+    ((parseInt(e.date) === 0) ? dateString += 'Wrong Date, ' : dateString += parseInt(e.date) + ', ');
+
+    ((parseInt(e.year) === 0) ? dateString += 'Wrong Year' : dateString += parseInt(e.year));
+
+    return dateString;
+}
+
+export function formatPartyRooms(roomArray) {
+    let rooms = '';
+
+    for (let i = 0; i < roomArray.array.length - 1; i++) {
+        rooms += updatePartyAreaString(roomArray.array[i]) + ', ';
+    }
+
+    rooms += (updatePartyAreaString(roomArray.array[roomArray.array.length - 1]));
+
+    return rooms;
+}
+
+export function startAndEndTimesFromIndex(timesArray) {
+    if (!parseInt(timesArray.array.length === 0)) {
+        return translateTimeFromIndexToString(timesArray.array[0]) + ' - ' + translateTimeFromIndexToString(timesArray.array[timesArray.array.length - 1]);
+    } else {
+        return 'Empty time list';
+    }
+}

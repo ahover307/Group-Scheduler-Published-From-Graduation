@@ -15,8 +15,6 @@ class TimeList extends Component {
     // Use this.props.partyArea3 to access the value of the third party area
 
     findTimes = async () => {
-        console.log(this.props);
-
         return (await firebase.functions().httpsCallable('checkPartyTime')({
             partyPackage: this.props.partyPackage,
             dayOfWeek: this.props.dayOfWeek,
@@ -55,18 +53,17 @@ class TimeList extends Component {
     };
 
     handleChange = (e) => {
-        let id = e.target.id;
-        let subArray = [];
-
-        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
-            subArray = this.state.timeList.slice(id, id + 3);
-        if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
-            subArray = this.state.timeList.slice(id, id + 6);
-        if (parseInt(this.props.partyPackage) === 3)
-            subArray = this.state.timeList.slice(id, id + 8);
-
-        this.props.parentCallBackTimeSelected(subArray);
+        this.props.parentCallBackTimeSelected(this.state.timeList.slice(e.target.id, parseInt(e.target.id) + this.setIndexOffset() + 1));
     };
+
+    setIndexOffset = () => {
+        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
+            return 2;
+        else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
+            return 4;
+        else if (parseInt(this.props.partyPackage) === 3)
+            return 6;
+    }
 
     populateRadioButtons = async () => {
         //Load the list of radio buttons
@@ -74,7 +71,7 @@ class TimeList extends Component {
             return snapshot;
         }));
         let tempListOfRadioButtons = [];
-        let indexOffset = 0;
+        let indexOffset = this.setIndexOffset();
 
         //Time list will be organized in 1 of 3 ways, depending on how many rooms are required, this was the easiest way I could find that everything was going to stay in order.
         //1. [room, start time, end time, room, start time, end time,...
@@ -83,13 +80,6 @@ class TimeList extends Component {
         //TODO Only choose so many to add to the radio button list thing.
         // Do that before it is put into the radio button list. No button to show more. maybe a button to show more if necessary
         for (let i = 0; i < tempTimeList.length; i++) {
-            if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
-                indexOffset = 2;
-            else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
-                indexOffset = 4;
-            else if (parseInt(this.props.partyPackage) === 3)
-                indexOffset = 6;
-
             //Create string of what the option is
             let stringDescription = this.createString(tempTimeList.slice(i, i + indexOffset + 1));
             tempListOfRadioButtons.push(
@@ -106,12 +96,9 @@ class TimeList extends Component {
 
         this.setState({radioButtonList: tempListOfRadioButtons});
         this.setState({timeList: tempTimeList});
-
-        console.log(tempTimeList)
     };
 
     render() {
-
         return (
             <div>
                 <div className={'input-field'}>

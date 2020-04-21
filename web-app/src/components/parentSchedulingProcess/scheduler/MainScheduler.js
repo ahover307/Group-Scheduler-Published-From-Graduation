@@ -5,22 +5,16 @@ import PartyPackageSelector from "./PartyPackageSelector";
 import PartyAreaSelector from "./PartyAreaSelector";
 import M from "materialize-css";
 import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
-import {createParty} from "../../../store/actions/partyActions";
-import connect from "react-redux/es/connect/connect";
 // import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
-import {Redirect} from "react-router-dom";
 import Calendar from "./Calendar";
-import * as firebase from "firebase";
 
 class MainScheduler extends Component {
     state = {
         contactName: '',
         email: '',
         phoneNumber: '',
-        paid: true,
         participantsAge: 0,
-        partyEndTime: 0,
         partyName: '',
         partyPackage: 0,
         roomsRequested: [0],
@@ -29,11 +23,14 @@ class MainScheduler extends Component {
         dateDay: 0,
         dateMonth: 0,
         dateYear: 0,
-        toConfirm: false,
+        missing: true
     };
 
+    componentDidMount() {
+        M.AutoInit();
+    }
+
     callBackFunctionDate = (childData) => {
-        console.log(childData);
         this.setState({
             dateDay: childData.date,
             dateMonth: childData.month,
@@ -41,25 +38,6 @@ class MainScheduler extends Component {
             dayOfWeek: childData.day
         });
     };
-
-    callBackFunctionMonth = (childData) => {
-        console.log(childData);
-        this.setState({dateMonth: childData});
-    };
-
-    callBackFunctionYear = (childData) => {
-        console.log(childData);
-        this.setState({dateYear: childData});
-    };
-
-    callBackFunctionDay = (childData) => {
-        console.log(childData);
-        this.setState({dayOfWeek: childData});
-    };
-
-    componentDidMount() {
-        M.AutoInit();
-    }
 
     // Update state from PartyPackageSelector to MainScheduler
     callBackFunctionPartyPackage = (childData) => {
@@ -94,57 +72,37 @@ class MainScheduler extends Component {
                 break;
         }
 
-        console.log(tempArray);
-
         this.setState({
             roomsRequested: tempArray
         });
     };
 
     // Update state from CreatePartyComponent to MainScheduler
-    callbackFunctionPartyName = (childData) => {
+    callBackFunctionInfo = (childData) => {
         this.setState({
-            partyName: childData,
-        })
-    };
-
-    callbackFunctionHostName = (childData) => {
-        this.setState({
-            hostName: childData,
-        })
-    };
-
-    callbackFunctionEmail = (childData) => {
-        this.setState({
-            email: childData,
-        })
+            [childData.target]: childData.info
+        });
     };
 
     parentCallBackTimeSelected = (timeSelectedArray) => {
         //the argument passed should be a sub array, parse this to fill in the state that is passed
         //The indices are different on the array depending on how many rooms are requested
-        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5) {
+        if (parseInt(this.state.partyPackage) === 0 || parseInt(this.state.partyPackage) === 1 || parseInt(this.state.partyPackage) === 5) {
             this.setState({
                 roomsRequested: timeSelectedArray.slice(0, 1),
                 roomTimes: timeSelectedArray.slice(1, 3)
             });
-        } else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8) {
+        } else if (parseInt(this.state.partyPackage) === 2 || parseInt(this.state.partyPackage) === 6 || parseInt(this.state.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8) {
             this.setState({
                 roomsRequested: timeSelectedArray.slice(0, 2),
                 roomTimes: timeSelectedArray.slice(2, 6)
             });
-        } else if (parseInt(this.props.partyPackage) === 3) {
+        } else if (parseInt(this.state.partyPackage) === 3) {
             this.setState({
                 roomsRequested: timeSelectedArray.slice(0, 3),
                 roomTimes: timeSelectedArray.slice(3, 8)
             });
         }
-    };
-
-    callbackFunctionPhoneNumber = (childData) => {
-        this.setState({
-            phoneNumber: childData,
-        })
     };
 
     sendFeedback(templateId, variables) {
@@ -158,56 +116,42 @@ class MainScheduler extends Component {
             .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
     }
 
-    handleSubmit = async (e) => {
-        e.preventDefault();
-        // const templateId = 'confirmationemail';
-        // const partyArea1String = updatePartyAreaString(this.state.partyArea1); //   <--- We are not using this state anymore
-        // console.log(this.state.partyArea1);
-        // console.log(partyArea1String);
-        // const partyArea2String = updatePartyAreaString(this.state.partyArea2);  // <-- It is an array, rooms requested now, to match the array roomTimes
-        // const partyArea3String = updatePartyAreaString(this.state.partyArea3);
-        // this.sendFeedback(templateId, {
-        //     party_name: this.state.partyName,
-        //     party_package: updatePartyPackageString(this.state.partyPackage),
-        //     party_area1: partyArea1String,
-        //     party_area2: partyArea2String,
-        //     party_area3: partyArea3String,
-        //     party_host: this.state.hostName,
-        //     phone_number: this.state.phoneNumber,
-        //     to_email: this.state.email
-        // });
-
-        console.log(this.state);
-
-        // this.setState(() => ({      //Trevor added this to redirect to confirmation page
-        //     toConfirm: true
-        // }))
-        //this.props.history.push('./confirmation');
-
-        //this.props.createParty(this.state); <-- Don't delete this    <-- why not
-    };
-
-    testFunction = async () => {
-
-        let schedulingFunction = firebase.functions().httpsCallable('checkPartyTime');
-
-        console.log((await schedulingFunction({day: 1, room: 1})
-            .then(function (result) {
-                return result;
-            }).catch(function (e) {
-                console.log(e);
-                console.log(e.code);
-                console.log(e.message);
-                console.log(e.details);
-                console.log(e.name);
-            })));
+    isSomethingMissingText = () => {
+        if (this.state.missing) return <div>Something is missing from the form!</div>
     }
 
-    render() {
-        if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
-            return <Redirect to='/confirmation'/>
-        }
+    handleSubmit = async (e) => {
+        e.preventDefault();
 
+        //Confirm everything has a value before continuing.
+        let allGoodToContinue = true;
+
+        //If every thing has a value, then
+        if (allGoodToContinue) {
+            this.props.callBack({
+                contactName: this.state.contactName,
+                email: this.state.email,
+                phoneNumber: this.state.phoneNumber,
+                participantsAge: this.state.participantsAge,
+                partyName: this.state.partyName,
+                partyPackage: this.state.partyPackage,
+                roomsRequested: this.state.roomsRequested,
+                roomTimes: this.state.roomTimes,
+                dayOfWeek: this.state.dayOfWeek,
+                dateDay: this.state.dateDay,
+                dateMonth: this.state.dateMonth,
+                dateYear: this.state.dateYear,
+                set: true
+            });
+        } else {
+            this.setState({missing: true});
+        }
+    };
+
+    render() {
+        // if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
+        //     return <Redirect to='/confirmation'/>
+        // }
         return (
             <Collapsible accordion={false}>
                 <CollapsibleItem
@@ -262,26 +206,16 @@ class MainScheduler extends Component {
                     node="div"
                     className={'Info'}
                 >
-                    <CreatePartyComponent parentCallbackPartyName={this.callbackFunctionPartyName}
-                                          parentCallBackHostName={this.callbackFunctionHostName}
-                                          parentCallBackEmail={this.callbackFunctionEmail}
-                                          parentCallBackPhoneNumber={this.callbackFunctionPhoneNumber}/>
+                    <CreatePartyComponent parentCallback={this.callBackFunctionInfo}/>
                 </CollapsibleItem>
+                {this.isSomethingMissingText}
                 <div className={'input-field'}>
+                    <isSomethingMissingText/>
                     <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>
-                </div>
-                <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.testFunction}>Test Function Button</button>
                 </div>
             </Collapsible>
         );
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        createParty: (party) => dispatch(createParty(party))
-    }
-};
-
-export default connect(null, mapDispatchToProps)(MainScheduler);
+export default MainScheduler;

@@ -3,14 +3,15 @@ import {CardElement, ElementsConsumer} from '@stripe/react-stripe-js';
 
 import CardSection from './CardSection';
 import * as firebase from "firebase";
-import {Redirect} from "react-router-dom";
 
 class CheckoutForm extends React.Component {
     state = {
-        toConfirm: false,
+        confirmed: false,
     };
 
     paymentIntent = async () => {
+        console.log('1')
+        console.log(this.props);
         let paymentFunction = firebase.functions().httpsCallable('paymentIntent');
         return (await paymentFunction({
             price: 1099,
@@ -21,7 +22,6 @@ class CheckoutForm extends React.Component {
             console.log(e);
         })).data;
     };
-
 
     handleSubmit = async (event) => {
         // We don't want to let default form submission happen here,
@@ -52,32 +52,32 @@ class CheckoutForm extends React.Component {
         } else {
             // The payment has been processed!
             if (result.paymentIntent.status === 'succeeded') {
-                this.setState(() => ({
-                    toConfirm: true
-                }))
+                //Call function, and then when it is finished, pass back through the prop functions shit and give it the positive.
+                this.props.callBack();
             }
         }
     };
 
     render() {
-        if (this.state.toConfirm === true) {
-            return <Redirect to='/confirmation'/>
-        }
-
         return (
             <form onSubmit={this.handleSubmit}>
-                <CardSection />
-                <button class="butdef" disabled={!this.props.stripe}>Confirm order</button>
+                <CardSection/>
+                <button disabled={!this.props.stripe}>Confirm order</button>
             </form>
         );
     }
 }
 
-export default function InjectedCheckoutForm() {
+export default function InjectedCheckoutForm(args) {
     return (
         <ElementsConsumer>
             {({stripe, elements}) => (
-                <CheckoutForm  stripe={stripe} elements={elements} />
+                <CheckoutForm
+                    stripe={stripe}
+                    elements={elements}
+                    callBack={args.callBack}
+                    price={args.price}
+                    email={args.email}/>
             )}
         </ElementsConsumer>
     );

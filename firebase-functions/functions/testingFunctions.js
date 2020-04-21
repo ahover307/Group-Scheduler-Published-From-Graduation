@@ -21,9 +21,6 @@ exports.fillOpenHours = functions.https.onCall((data, context) => {
     });
 });
 
-exports.testDataTypes = functions.https.onCall((data, context) => {
-    return typeof data.elem;
-});
 
 exports.pullOpenHours = functions.https.onCall(async (data, context) => {
     // let day = 1;

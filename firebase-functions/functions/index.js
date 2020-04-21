@@ -10,7 +10,7 @@ exports.paymentIntent = paymentFunctions.paymentIntent;
 
 exports.checkPartyTime = partyTimes.checkPartyTimes;
 
-exports.testDataTypes = tests.testDataTypes;
+exports.confirmTimeandCommitToDB = partyTimes.confirmTimeandCommitToDB;
 
 exports.fillOpenHours = tests.fillOpenHours;
 exports.pullOpenHours = tests.pullOpenHours;

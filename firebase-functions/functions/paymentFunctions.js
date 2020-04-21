@@ -10,7 +10,10 @@ exports.paymentIntent = functions.https.onCall(async (data, context) => {
         receipt_email: data.email,
     });
 
-    const clientSecret = paymentIntent.client_secret;
-    return clientSecret;
+    return paymentIntent.client_secret;
+});
 
+exports.grabPrice = functions.https.onCall(async (data) => {
+    //data should be the party package
+    return 12;
 });
