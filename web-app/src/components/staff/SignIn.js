@@ -25,18 +25,16 @@ class SignIn extends Component {
 
     handleSubmit  = async (e) => {
         e.preventDefault();
-        this.setState({
-            login: true
-        });
         this.props.signIn(this.state);
-
     };
 
     render() {
-        if (this.state.login === true) {
-           return <Redirect to={'/dashboard'}/>
-        }
+
         const {authError} = this.props;
+
+        if (authError === "Login success") {
+            return <Redirect to={'/dashboard'}/>
+        }
         return (
 
             <div style={{textAlign: 'center'}}>
@@ -76,7 +74,7 @@ class SignIn extends Component {
                                 >Login
                                 </button>
                             </div>
-                            {authError ? <p style={{color: 'red'}}> {authError}</p> : null}
+                            {(authError === "Login failed") ? <p style={{color: 'red'}}> {authError}</p> : null}
                         </form>
                     </div>
                 </div>

@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
-import {Button, Modal, Table} from 'react-materialize'
+import {Table} from 'react-materialize'
 import Calendar from "../parentSchedulingProcess/scheduler/Calendar";
 import * as firebase from "firebase";
 import html2pdf from 'html2pdf.js'
 import {translateTimeFromIndexToString, updatePartyPackageString} from '../globalFunctions'
+import {Redirect} from "react-router-dom";
+import Error from "./Error";
+import {connect} from 'react-redux'
 
 
 const date = new Date();
@@ -73,141 +76,154 @@ class Grid extends Component {
 
 
     render() {
+
+        if (this.props.authError === "Logout success") {
+            return <Redirect to={'/'}/>
+        }
+
         return (
-            <div className={'container'}>
-                <div style={{textAlign: 'center'}}>
-                    <div className="section"/>
-                    <h5 style={{color: "#653487"}}>Please select a date</h5>
-                    <div className="z-depth-1 grey lighten-4 row"
-                         style={{border: '1px solid #EEE', margin: '2%'}}>
-                        <Calendar parentCallBackDate={this.callBackFunctionDate}/>
-                        <button className={'btn purple'} style={{margin: '2%'}}
-                                onClick={this.createGrid}> View Grid
-                        </button>
-                    </div>
-                </div>
+            <div>
+                {this.props.authError === "Login success" ?
+                    <div className={'container'}>
+                        <div style={{textAlign: 'center'}}>
+                            <div className="section"/>
+                            <h5 style={{color: "#653487"}}>Please select a date</h5>
+                            <div className="z-depth-1 grey lighten-4 row"
+                                 style={{border: '1px solid #EEE', margin: '2%'}}>
+                                <Calendar parentCallBackDate={this.callBackFunctionDate}/>
+                                <button className={'btn purple'} style={{margin: '2%'}}
+                                        onClick={this.createGrid}> View Grid
+                                </button>
+                            </div>
+                        </div>
 
-                <div id={'toDownload'}>
-                    {this.state.visible ?
-                        <h2 style={{color: '#653487', textAlign: 'center'}}>
-                            {this.state.dateMonth}/{this.state.dateDay}/{this.state.dateYear}
-                        </h2> : null}
-                    <Table id={'table'}>
-                        <thead>
-                        <tr>
-                            <th>
-                                Time
-                            </th>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                Party Type
-                            </th>
-                            <th>
-                                Main
-                            </th>
-                            <th>
-                                KM
-                            </th>
-                            <th>
-                                RW
-                            </th>
-                            <th>
-                                Preschool
-                            </th>
-                            <th>
-                                Ninja
-                            </th>
-
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {this.state.parties && this.state.parties.sort().map((party, i) => {
-                            return (<tr key={i}>
-                                    <td key={i}>{translateTimeFromIndexToString(party.data.partyStartTime)} - {translateTimeFromIndexToString(party.data.partyEndTime)}
-                                    </td>
-                                    <td key={i + 1}>{party.data.name}</td>
-                                    <td key={i + 2}> {updatePartyPackageString(party.data.partyPackage)}</td>
-
-                                    {party.data.roomsRequested[0] === 1 ?
-                                        <td key={i + 3}>
-                                            {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
-                                        party.data.roomsRequested[1] === 1 ?
-                                            <td key={i + 3}>
-                                                {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
-                                            party.data.roomsRequested[2] === 1 ?
-                                                <td key={i + 3}>
-                                                    {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
-                                                <td key={i + 3}/>
-                                    }
-
-                                    {party.data.roomsRequested[0] === 2 ?
-                                        <td key={i + 4}>
-                                            {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
-                                        party.data.roomsRequested[1] === 2 ?
-                                            <td key={i + 4}>
-                                                {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
-                                            party.data.roomsRequested[2] === 2 ?
-                                                <td key={i + 4}>
-                                                    {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
-                                                <td key={i + 4}/>
-                                    }
-
-                                    {party.data.roomsRequested[0] === 3 ?
-                                        <td key={i + 5}>
-                                            {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
-                                        party.data.roomsRequested[1] === 3 ?
-                                            <td key={i + 5}>
-                                                {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
-                                            party.data.roomsRequested[2] === 3 ?
-                                                <td key={i + 5}>
-                                                    {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
-                                                <td key={i + 5}/>
-                                    }
-
-                                    {party.data.roomsRequested[0] === 4 ?
-                                        <td key={i + 6}>
-                                            {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
-                                        party.data.roomsRequested[1] === 4 ?
-                                            <td key={i + 6}>
-                                                {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
-                                            party.data.roomsRequested[2] === 4 ?
-                                                <td key={i + 6}>
-                                                    {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
-                                                <td key={i + 6}/>
-                                    }
-
-                                    {party.data.roomsRequested[0] === 5 ?
-                                        <td key={i + 7}>
-                                            {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
-                                        party.data.roomsRequested[1] === 5 ?
-                                            <td key={i + 7}>
-                                                {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
-                                            party.data.roomsRequested[2] === 5 ?
-                                                <td key={i + 7}>
-                                                    {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
-                                                <td key={i + 7}/>
-                                    }
+                        <div id={'toDownload'}>
+                            {this.state.visible ?
+                                <h2 style={{color: '#653487', textAlign: 'center'}}>
+                                    {this.state.dateMonth}/{this.state.dateDay}/{this.state.dateYear}
+                                </h2> : null}
+                            <Table id={'table'} centered>
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Time
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Party Type
+                                    </th>
+                                    <th>
+                                        Main
+                                    </th>
+                                    <th>
+                                        KM
+                                    </th>
+                                    <th>
+                                        RW
+                                    </th>
+                                    <th>
+                                        Preschool
+                                    </th>
+                                    <th>
+                                        Ninja
+                                    </th>
 
                                 </tr>
-                            )
-                        })}
+                                </thead>
+                                <tbody>
+
+                                {this.state.parties && this.state.parties.sort().map((party, i) => {
+                                    return (<tr key={i}>
+                                            <td key={i}>{translateTimeFromIndexToString(party.data.partyStartTime)} - {translateTimeFromIndexToString(party.data.partyEndTime)}
+                                            </td>
+                                            <td key={i + 1}>{party.data.name}</td>
+                                            <td key={i + 2}> {updatePartyPackageString(party.data.partyPackage)}</td>
+
+                                            {party.data.roomsRequested[0] === 1 ?
+                                                <td key={i + 3}>
+                                                    {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
+                                                party.data.roomsRequested[1] === 1 ?
+                                                    <td key={i + 3}>
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                    party.data.roomsRequested[2] === 1 ?
+                                                        <td key={i + 3}>
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                        <td key={i + 3}/>
+                                            }
+
+                                            {party.data.roomsRequested[0] === 2 ?
+                                                <td key={i + 4}>
+                                                    {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
+                                                party.data.roomsRequested[1] === 2 ?
+                                                    <td key={i + 4}>
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                    party.data.roomsRequested[2] === 2 ?
+                                                        <td key={i + 4}>
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                        <td key={i + 4}/>
+                                            }
+
+                                            {party.data.roomsRequested[0] === 3 ?
+                                                <td key={i + 5}>
+                                                    {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
+                                                party.data.roomsRequested[1] === 3 ?
+                                                    <td key={i + 5}>
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                    party.data.roomsRequested[2] === 3 ?
+                                                        <td key={i + 5}>
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                        <td key={i + 5}/>
+                                            }
+
+                                            {party.data.roomsRequested[0] === 4 ?
+                                                <td key={i + 6}>
+                                                    {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
+                                                party.data.roomsRequested[1] === 4 ?
+                                                    <td key={i + 6}>
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                    party.data.roomsRequested[2] === 4 ?
+                                                        <td key={i + 6}>
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                        <td key={i + 6}/>
+                                            }
+
+                                            {party.data.roomsRequested[0] === 5 ?
+                                                <td key={i + 7}>
+                                                    {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
+                                                party.data.roomsRequested[1] === 5 ?
+                                                    <td key={i + 7}>
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                    party.data.roomsRequested[2] === 5 ?
+                                                        <td key={i + 7}>
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                        <td key={i + 7}/>
+                                            }
+
+                                        </tr>
+                                    )
+                                })}
 
 
-                        </tbody>
+                                </tbody>
 
-                    </Table>
-                </div>
-                {this.state.visible ? <div style={{margin: '2%', textAlign: 'center'}}>
-                    <button className={'btn purple'} onClick={this.downloadGrid}>Download</button>
-                </div> : null}
+                            </Table>
+                        </div>
+                        {this.state.visible ? <div style={{margin: '2%', textAlign: 'center'}}>
+                            <button className={'btn purple'} onClick={this.downloadGrid}>Download</button>
+                        </div> : null}
 
+                    </div> : <Error/>}
             </div>
-
         );
     }
 }
 
-export default Grid
+const mapStateToProps = (state) => {
+    return {
+        authError: state.auth.authError
+    }
+};
+
+export default connect(mapStateToProps)(Grid)

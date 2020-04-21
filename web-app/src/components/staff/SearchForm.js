@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import * as firebase from "firebase";
 import {Button, Modal, Table} from "react-materialize";
+import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import Error from "./Error";
 
 
 class SearchForm extends Component {
@@ -48,7 +51,11 @@ class SearchForm extends Component {
 
 
     render() {
+        if (this.props.authError === "Logout success") {
+            return <Redirect to={'/'}/>
+        }
         return (
+            <div>{this.props.authError === "Login success" ?
             <div className={'container'}>
                 <div style={{textAlign: 'center'}}>
                     <div className="section"/>
@@ -154,12 +161,16 @@ class SearchForm extends Component {
                         </tbody>
                     </Table>
                 </div>
+            </div> : <Error/>}
             </div>
-
 
         )
     }
 }
 
-
-export default SearchForm
+const mapStateToProps = (state) => {
+    return {
+        authError: state.auth.authError
+    }
+}
+export default connect(mapStateToProps)(SearchForm)
