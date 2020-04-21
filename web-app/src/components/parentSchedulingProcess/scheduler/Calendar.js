@@ -4,6 +4,9 @@ import './Calendar.css';
 
 class calendar extends Component {
     onClickDay = date => {
+        this.setState({
+            clicked : true
+        });
         this.props.parentCallBackDate({
             date: date.getDate(),
             month: date.getMonth() + 1,

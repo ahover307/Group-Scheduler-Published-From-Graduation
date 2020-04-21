@@ -2,25 +2,30 @@ import React, {Component} from 'react'
 import {Button, Modal, Table} from 'react-materialize'
 import Calendar from "../parentSchedulingProcess/scheduler/Calendar";
 import * as firebase from "firebase";
+import html2pdf from 'html2pdf.js'
 
+
+const date = new Date();
 
 class Grid extends Component {
 
     state = {
-        dateDay: 0,
-        dateMonth: 0,
-        dateYear: 0,
+        dateDay: date.getDate(),
+        dateMonth: date.getMonth() + 1,
+        dateYear: date.getFullYear(),
         dayOfWeek: 0,
         visible: false,
+        isClicked: false
     };
 
     callBackFunctionDate = (childData) => {
-        console.log(childData);
+
         this.setState({
             dateDay: childData.date,
             dateMonth: childData.month,
             dateYear: childData.year,
-            dayOfWeek: childData.day
+            dayOfWeek: childData.day,
+
         });
     };
 
@@ -73,13 +78,13 @@ class Grid extends Component {
     }
 
     createGrid = () => {
+
         this.setState({
-            visible : true
+            visible: true
         });
         const database = firebase.firestore();
         database.collection('Parties').get().then(snapshot => {
             const parties = [];
-            const ids = [];
             snapshot.forEach(doc => {
                 const data = doc.data();
                 if (data.month === this.state.dateMonth && data.day === this.state.dateDay &&
@@ -92,10 +97,25 @@ class Grid extends Component {
                 }
             });
             this.setState({parties: parties});
-            console.log(parties)
+
         }).catch(error => {
             console.log(error)
         })
+    };
+
+    downloadGrid = (e) => {
+        e.preventDefault();
+        const table = document.getElementById('toDownload')
+        const opt = {
+            margin: 0.1,
+            filename: 'grid.pdf',
+            image: {type: 'jpeg', quality: 1},
+            html2canvas: {scale: 2},
+            jsPDF: {unit: 'in', format: 'letter', orientation: 'landscape'}
+        };
+// Old monolithic-style usage:
+        html2pdf(table, opt);
+
     };
 
 
@@ -114,19 +134,19 @@ class Grid extends Component {
                     </div>
                 </div>
 
-                <div>
+                <div id={'toDownload'}>
                     {this.state.visible ?
-                    <h2 style={{color: '#653487', textAlign: 'center'}}>
-                        {this.state.dateMonth}/{this.state.dateDay}/{this.state.dateYear}
-                    </h2> : null}
-                    <Table>
+                        <h2 style={{color: '#653487', textAlign: 'center'}}>
+                            {this.state.dateMonth}/{this.state.dateDay}/{this.state.dateYear}
+                        </h2> : null}
+                    <Table id={'table'}>
                         <thead>
                         <tr>
                             <th>
-                                Name
+                                Time
                             </th>
                             <th>
-                                Time
+                                Name
                             </th>
                             <th>
                                 Party Type
@@ -153,9 +173,9 @@ class Grid extends Component {
 
                         {this.state.parties && this.state.parties.map((party, i) => {
                             return (<tr key={i}>
-                                    <td key={i}>{party.data.name}</td>
-                                    <td key={i + 1}>{this.translateTimeFromIndexToString(party.data.partyStartTime)} - {this.translateTimeFromIndexToString(party.data.partyEndTime)}
+                                    <td key={i}>{this.translateTimeFromIndexToString(party.data.partyStartTime)} - {this.translateTimeFromIndexToString(party.data.partyEndTime)}
                                     </td>
+                                    <td key={i + 1}>{party.data.name}</td>
                                     <td key={i + 2}> {this.updatePartyPackageString(party.data.partyPackage)}</td>
 
                                     {party.data.roomsRequested[0] === 1 ?
@@ -218,15 +238,19 @@ class Grid extends Component {
                                                 <td key={i + 7}/>
                                     }
 
-
-
                                 </tr>
                             )
                         })}
-                        </tbody>
-                    </Table>
 
+
+                        </tbody>
+
+                    </Table>
                 </div>
+                {this.state.visible ? <div style={{margin: '2%', textAlign: 'center'}}>
+                    <button className={'btn purple'} onClick={this.downloadGrid}>Download</button>
+                </div> : null}
+
             </div>
 
         );
