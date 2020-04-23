@@ -16,6 +16,7 @@ import SideDrawer from "./components/SideDrawer/SideDrawer";
 import Toolbar from "./components/Toolbar/Toolbar";
 import Backdrop from "./components/Backdrop/Backdrop";
 import Error from "./components/staff/Error";
+import ReservedTimes from "./components/staff/ReservedTimes";
 
 
 //todo submit to the confirmation called
@@ -71,9 +72,10 @@ class App extends Component {
                         <Route path={'/confirmation'}> <Confirmation/> </Route>
                         <Route path={'/login'}><SignIn /></Route>
                         <Route path={'/card'}> <PaymentPage/> </Route>
-                        <Route path={'/dashboard'}> <Dashboard/> </Route>
+                        <Route path={'/staff/dashboard'}> <Dashboard/> </Route>
                         <Route path={'/staff/search'}> <SearchForm/></Route>
                         <Route path={'/staff/grid'}> <Grid/></Route>
+                        <Route path={'/staff/reservedTimes'}> <ReservedTimes/></Route>
                     </Switch>
                 </BrowserRouter>
             </div>

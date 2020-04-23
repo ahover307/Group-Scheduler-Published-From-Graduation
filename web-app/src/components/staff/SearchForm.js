@@ -4,6 +4,8 @@ import {Button, Modal, Table} from "react-materialize";
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import Error from "./Error";
+import './Modal.css'
+
 
 
 class SearchForm extends Component {

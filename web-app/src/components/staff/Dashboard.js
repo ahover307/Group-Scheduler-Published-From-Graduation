@@ -61,7 +61,7 @@ class Dashboard extends Component {
                                 <Card
                                     actions={[
                                         <a key="1" href="#">Create</a>,
-                                        <a key="2" href="#">Edit</a>
+                                        <NavLink to={'/staff/reservedTimes'}>Edit</NavLink>
                                     ]}
                                     className="colorMe center-align"
                                     closeIcon={<Icon>close</Icon>}

@@ -33,7 +33,7 @@ class SignIn extends Component {
         const {authError} = this.props;
 
         if (authError === "Login success") {
-            return <Redirect to={'/dashboard'}/>
+            return <Redirect to={'/staff/dashboard'}/>
         }
         return (
 
