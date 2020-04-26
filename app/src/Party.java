@@ -13,6 +13,17 @@ public class Party {
     private int dayOfWeek;
     private int partyPackage;
     private List<Integer> roomsRequested;
+    private List<Integer> roomTimes;
+
+
+
+    public List<Integer> getRoomTimes() {
+        return roomTimes;
+    }
+
+    public void setRoomTimes(List<Integer> times) {
+        this.roomTimes = times;
+    }
 
     public int getDay() { return day; }
 

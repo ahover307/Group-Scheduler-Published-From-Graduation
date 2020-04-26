@@ -40,6 +40,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +65,7 @@ public class CheckoutActivity extends AppCompatActivity implements ConfirmationD
     private int partyPackage, day, month, year, dayOfWeek, price;
     private String contact, partyName, email, phone;
     private List<Integer> rooms;
+    private int[] roomsTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class CheckoutActivity extends AppCompatActivity implements ConfirmationD
         email = intent.getStringExtra("email");
         phone = intent.getStringExtra("phone");
         price = intent.getIntExtra("price", 0);
+        roomsTimes = intent.getIntArrayExtra("roomsTimes");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
@@ -257,7 +260,12 @@ public class CheckoutActivity extends AppCompatActivity implements ConfirmationD
             if (status == PaymentIntent.Status.Succeeded) {
                 // Payment completed successfully
                 saveToDatabase();
+
+                Bundle args = new Bundle();
+                args.putString("checkout", "You have successfully booked your party. You will receive confirmation in your email.");
+                args.putString("timeslots", "null");
                 ConfirmationDialog confirmationDialog = new ConfirmationDialog();
+                confirmationDialog.setArguments(args);
                 confirmationDialog.show(getSupportFragmentManager(), "confirmationDialog");
 
 
@@ -296,7 +304,45 @@ public class CheckoutActivity extends AppCompatActivity implements ConfirmationD
         party.setYear(year);
         party.setDayOfWeek(dayOfWeek);
         party.setPartyPackage(partyPackage);
-        party.setRoomsRequested(rooms);
+//        party.setRoomsRequested(rooms);
+
+        if (partyPackage == 2) {
+            List<Integer> rooms = new ArrayList<>();
+            rooms.add(roomsTimes[0]);
+            rooms.add(roomsTimes[1]);
+            party.setRoomsRequested(rooms);
+
+            List<Integer> times = new ArrayList<>();
+            times.add(roomsTimes[2]);
+            times.add(roomsTimes[3]);
+            times.add(roomsTimes[4]);
+            party.setRoomTimes(times);
+        }
+        else if (partyPackage == 3) {
+            List<Integer> rooms = new ArrayList<>();
+            rooms.add(roomsTimes[0]);
+            rooms.add(roomsTimes[1]);
+            rooms.add(roomsTimes[2]);
+            party.setRoomsRequested(rooms);
+
+            List<Integer> times = new ArrayList<>();
+            times.add(roomsTimes[3]);
+            times.add(roomsTimes[4]);
+            times.add(roomsTimes[5]);
+            times.add(roomsTimes[6]);
+            party.setRoomTimes(times);
+        }
+        else {
+            List<Integer> rooms = new ArrayList<>();
+            rooms.add(roomsTimes[0]);
+            party.setRoomsRequested(rooms);
+
+            List<Integer> times = new ArrayList<>();
+            times.add(roomsTimes[1]);
+            times.add(roomsTimes[2]);
+            party.setRoomTimes(times);
+        }
+
 
         database.collection("Parties").add(party);
     }

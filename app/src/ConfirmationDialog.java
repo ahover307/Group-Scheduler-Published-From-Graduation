@@ -20,12 +20,38 @@ public class ConfirmationDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        String title = "Confirmation";
-        String content = "You have successfully booked your party. You will receive confirmation in your email.";
+        String title = "";
+        String content = "";
+        String confirmButton = "";
+
+
+
+        String checkout = getArguments().getString("checkout");
+        String timeslots = getArguments().getString("timeslots");
+
+
+        if (timeslots.equals("null")) {
+            title = "Confirmation";
+            content = checkout;
+            confirmButton = "Done";
+
+        } else if (checkout.equals("null")) {
+            title = "Party Times";
+            content = timeslots;
+            confirmButton = "Okay";
+
+        }
+
+
+
+
+
+
+
 
         builder.setTitle(title)
                 .setMessage(content)
-                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                .setPositiveButton(confirmButton, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onDialogPositiveClick(ConfirmationDialog.this);
                     }
