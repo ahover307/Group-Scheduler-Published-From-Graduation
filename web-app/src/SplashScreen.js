@@ -7,7 +7,7 @@ const SplashScreen = () => {
     return (
         <header className="App-header">
             <img src={ParamountLogo} className="App-logo" alt="logo"/>
-            <p class="tagg">
+            <p className="tagg">
                 Future page for Paramount Sports Complex Party Scheduler
             </p>
             <br/>
