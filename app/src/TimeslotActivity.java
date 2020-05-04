@@ -109,11 +109,13 @@ public class TimeslotActivity extends AppCompatActivity implements ConfirmationD
                             emptySpinner();
 
                             Bundle args = new Bundle();
-                            args.putString("timeslots", "No times available. Please go back and select a different package and/or date.");
-                            args.putString("checkout", "null");
+                            args.putString("content", "No times available. Please go back and select a different package and/or date.");
+                            args.putString("title", "Party Times");
+                            args.putString("button", "Okay");
                             ConfirmationDialog confirmationDialog = new ConfirmationDialog();
                             confirmationDialog.setArguments(args);
                             confirmationDialog.show(getSupportFragmentManager(), "confirmationDialog");
+                            // TODO
 
                         }
 
@@ -347,17 +349,22 @@ public class TimeslotActivity extends AppCompatActivity implements ConfirmationD
 
         System.out.println(Arrays.toString(roomsTimes));
 
-        Intent intent = new Intent(this, FinalDetailsActivity.class);
+        if (times.isEmpty()) {
+            Intent intent = new Intent(this, MainActivity.class);
+        }
+        else {
+            Intent intent = new Intent(this, FinalDetailsActivity.class);
 
-        intent.putExtra("day", day);
-        intent.putExtra("month", month);
-        intent.putExtra("year", year);
-        intent.putExtra("dayOfWeek", dayOfWeek);
-        intent.putExtra("package", partyPackage);
-        intent.putExtra("rooms", (Serializable) rooms);
-        intent.putExtra("roomsTimes", roomsTimes);
+            intent.putExtra("day", day);
+            intent.putExtra("month", month);
+            intent.putExtra("year", year);
+            intent.putExtra("dayOfWeek", dayOfWeek);
+            intent.putExtra("package", partyPackage);
+            intent.putExtra("rooms", (Serializable) rooms);
+            intent.putExtra("roomsTimes", roomsTimes);
 
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
 

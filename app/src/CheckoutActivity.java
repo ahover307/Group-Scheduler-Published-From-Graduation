@@ -262,8 +262,9 @@ public class CheckoutActivity extends AppCompatActivity implements ConfirmationD
                 saveToDatabase();
 
                 Bundle args = new Bundle();
-                args.putString("checkout", "You have successfully booked your party. You will receive confirmation in your email.");
-                args.putString("timeslots", "null");
+                args.putString("content", "You have successfully booked your party. You will receive confirmation in your email.");
+                args.putString("title", "Confirmation");
+                args.putString("button", "Done");
                 ConfirmationDialog confirmationDialog = new ConfirmationDialog();
                 confirmationDialog.setArguments(args);
                 confirmationDialog.show(getSupportFragmentManager(), "confirmationDialog");

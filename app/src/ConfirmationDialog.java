@@ -20,34 +20,9 @@ public class ConfirmationDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        String title = "";
-        String content = "";
-        String confirmButton = "";
-
-
-
-        String checkout = getArguments().getString("checkout");
-        String timeslots = getArguments().getString("timeslots");
-
-
-        if (timeslots.equals("null")) {
-            title = "Confirmation";
-            content = checkout;
-            confirmButton = "Done";
-
-        } else if (checkout.equals("null")) {
-            title = "Party Times";
-            content = timeslots;
-            confirmButton = "Okay";
-
-        }
-
-
-
-
-
-
-
+        String title = getArguments().getString("title");
+        String content = getArguments().getString("content");
+        String confirmButton = getArguments().getString("button");
 
         builder.setTitle(title)
                 .setMessage(content)
