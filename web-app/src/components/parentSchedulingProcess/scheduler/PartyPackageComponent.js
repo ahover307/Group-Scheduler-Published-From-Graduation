@@ -10,7 +10,7 @@ import {
     single,
     sleepover,
     triple
-} from "./PartyPackageShortDescriptionsComponent";
+} from "./PartyPackageShortDescriptions";
 
 class PartyPackageComponent extends Component {
     state = {
@@ -24,7 +24,7 @@ class PartyPackageComponent extends Component {
             price: -2
         });
 
-        this.findPrice(parseInt(e.target.value))
+        this.findPrice(parseInt(e.target.value));
     }
     partyPackageDropdown = () => {
         return (
@@ -141,7 +141,6 @@ class PartyPackageComponent extends Component {
                     <div>
                         {sleepover()}
                     </div>);
-
         }
     }
 
