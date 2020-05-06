@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {Redirect} from "react-router-dom";
 import Error from "./Error";
-import Calendar from "../parentSchedulingProcess/scheduler/Calendar";
+import Calendar from "../parentSchedulingProcess/scheduler/CalendarComponent";
 import {Row, Col, Card, Icon, Button, Modal} from 'react-materialize'
 import * as firebase from "firebase";
 import {translateTimeFromIndexToString, updatePartyAreaString} from '../globalFunctions'

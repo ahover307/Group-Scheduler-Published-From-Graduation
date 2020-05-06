@@ -10,7 +10,7 @@ class ParentScheduler extends Component {
         phoneNumber: '',
         paid: false,
         set: false,
-        participantsAge: 0,
+        age: 0,
         partyName: '',
         partyPackage: 0,
         roomsRequested: [0],
@@ -28,7 +28,7 @@ class ParentScheduler extends Component {
             email: childState.email,
             phoneNumber: childState.phoneNumber,
             set: childState.set,
-            participantsAge: childState.participantsAge,
+            age: childState.age,
             partyName: childState.partyName,
             partyPackage: childState.partyPackage,
             roomsRequested: childState.roomsRequested,
@@ -63,7 +63,7 @@ class ParentScheduler extends Component {
                     email={this.state.email}
                     phoneNumber={this.state.phoneNumber}
                     paid={this.state.paid}
-                    participantsAge={this.state.participantsAge}
+                    participantsAge={this.state.age}
                     partyName={this.state.partyName}
                     partyPackage={this.state.partyPackage}
                     dayOfWeek={this.state.dayOfWeek}

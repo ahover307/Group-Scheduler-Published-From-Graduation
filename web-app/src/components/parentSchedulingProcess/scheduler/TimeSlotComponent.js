@@ -2,17 +2,13 @@ import React, {Component} from "react";
 import * as firebase from "firebase";
 import {translateTimeFromIndexToString, updatePartyAreaString} from "../../globalFunctions";
 
-class TimeList extends Component {
+class TimeSlotComponent extends Component {
     state = {
         timeList: [],
-        radioButtonList: []
+        radioButtonList: [],
+        waitingState: 0
     };
-    // ##### READ THIS #####
-    // this.props.partyAreaN returns a value between 0 and 3 (0 = Main Gym, 1 = KidMaze, 2 = Rock Wall, 3 = Preschool)
-    // Replace N with 1, 2 or 3
-    // Use this.props.partyArea1 to access the value of the first party area
-    // Use this.props.partyArea2 to access the value of the second party area
-    // Use this.props.partyArea3 to access the value of the third party area
+
 
     findTimes = async () => {
         return (await firebase.functions().httpsCallable('checkPartyTime')({
@@ -66,12 +62,19 @@ class TimeList extends Component {
     }
 
     populateRadioButtons = async () => {
+        //Signify that we are waiting for the times to be returned
+        this.setState({waitingState: 1});
+
         //Load the list of radio buttons
         let tempTimeList = (await this.findTimes().then((snapshot) => {
             return snapshot;
         }));
         let tempListOfRadioButtons = [];
         let indexOffset = this.setIndexOffset();
+
+        if (tempTimeList.length === 0) {
+            this.setState({waitingState: 2});
+        }
 
         //Time list will be organized in 1 of 3 ways, depending on how many rooms are required, this was the easiest way I could find that everything was going to stay in order.
         //1. [room, start time, end time, room, start time, end time,...
@@ -94,23 +97,72 @@ class TimeList extends Component {
             i += indexOffset;
         }
 
-        this.setState({radioButtonList: tempListOfRadioButtons});
-        this.setState({timeList: tempTimeList});
+        this.setState({
+            radioButtonList: tempListOfRadioButtons,
+            timeList: tempTimeList,
+            waitingState: 3
+        });
     };
 
-    render() {
+    fullComponent = () => {
+        switch (this.state.waitingState) {
+            case 0:
+                return this.priorToStarting();
+            case 1:
+                return this.noTimesReturnedComponent();
+            case 2:
+                return this.waitingComponent();
+            case 3:
+                return this.radioComponent();
+        }
+    }
+
+    priorToStarting = () => {
         return (
             <div>
-                <div className={'input-field'}>
-                    <button className={'btn purple'} onClick={this.populateRadioButtons}>Refresh the times shown
-                    </button>
-                </div>
+                No times have been found yet. Try pressing the button to generate some options.
+            </div>
+        )
+    }
+
+    noTimesReturnedComponent = () => {
+        return (
+            <div>
+                There were no times returned, maybe try with some different choices parameters for the times, and click
+                the button to try again.
+            </div>
+        )
+    }
+
+    waitingComponent = () => {
+        //TODO Find a loading icon or something
+        return (
+            <div>
+                {/*<icon>{loading}</icon>*/}
+                Times are being found, please wait
+            </div>
+        );
+    }
+
+    radioComponent = () => {
+        return (
+            <div>
                 <form>
                     {this.state.radioButtonList}
                 </form>
             </div>
         )
     }
+
+    render() {
+        return (
+            <div className={'input-field'}>
+                <button className={'btn purple'} onClick={this.populateRadioButtons}>Refresh the times shown
+                </button>
+                {this.fullComponent()}
+            </div>
+        );
+    }
 }
 
-export default TimeList;
+export default TimeSlotComponent;

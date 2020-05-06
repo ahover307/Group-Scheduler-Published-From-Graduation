@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-class PartyPackageSelector extends Component {
+class PartyPackageComponent extends Component {
     handleChange = (e) => {
         this.props.parentCallBackPartyPackage(parseInt(e.target.id));
     };
@@ -67,4 +67,4 @@ class PartyPackageSelector extends Component {
     }
 }
 
-export default PartyPackageSelector
+export default PartyPackageComponent

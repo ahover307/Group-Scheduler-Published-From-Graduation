@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Calendar from "react-calendar";
 import './Calendar.css';
 
-class calendar extends Component {
+class calendarComponent extends Component {
     onClickDay = date => {
         this.setState({
             clicked : true
@@ -30,4 +30,4 @@ class calendar extends Component {
     }
 }
 
-export default calendar;
+export default calendarComponent;

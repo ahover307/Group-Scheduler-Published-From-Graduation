@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-class CreatePartyComponent extends Component {
+class InformationComponent extends Component {
     render() {
         return (
             <div className={"container"} style={{width: '60%'}}>
@@ -12,6 +12,21 @@ class CreatePartyComponent extends Component {
                             placeholder={'Party Child\'s Name'}
                             type={'text'}
                             id={'partyName'}
+                            className={'validate'}
+                            required={true}
+                            onChange={(e) => {
+                                this.props.parentCallback({target: e.target.id, info: e.target.value});
+                            }}
+                        />
+                        <span className="helper-text" data-error="Please enter in the name of the party person"/>
+                    </div>
+
+                    <div className={'input-field'}>
+                        <label htmlFor={'age'}>Age of average participant:</label>
+                        <input
+                            placeholder={'Party Child\'s Name'}
+                            type={'number'}
+                            id={'age'}
                             className={'validate'}
                             required={true}
                             onChange={(e) => {
@@ -71,4 +86,4 @@ class CreatePartyComponent extends Component {
 }
 
 
-export default CreatePartyComponent
+export default InformationComponent

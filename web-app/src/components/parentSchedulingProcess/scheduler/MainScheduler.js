@@ -1,13 +1,13 @@
 import React, {Component} from "react";
-import TimeList from "./TimeList";
-import CreatePartyComponent from './CreatePartyComponent';
-import PartyPackageSelector from "./PartyPackageSelector";
-import PartyAreaSelector from "./PartyAreaSelector";
+import TimeSlotComponent from "./TimeSlotComponent";
+import InformationComponent from './InformationComponent';
+import PartyPackageComponent from "./PartyPackageComponent";
+import PartyAreaComponent from "./PartyAreaComponent";
 import M from "materialize-css";
 import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
 // import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
-import Calendar from "./Calendar";
+import Calendar from "./CalendarComponent";
 import * as firebase from "firebase";
 
 class MainScheduler extends Component {
@@ -24,8 +24,9 @@ class MainScheduler extends Component {
         dateDay: 0,
         dateMonth: 0,
         dateYear: 0,
-        missing: true,
-        price: 0
+        missing: false,
+        price: 0,
+        age: 0
     };
 
     componentDidMount() {
@@ -41,7 +42,7 @@ class MainScheduler extends Component {
         });
     };
 
-    // Update state from PartyPackageSelector to MainScheduler
+    // Update state from PartyPackageComponent to MainScheduler
     callBackFunctionPartyPackage = async (childData) => {
         console.log(childData);
         const price = (await firebase.functions().httpsCallable('grabPrice')({
@@ -58,7 +59,7 @@ class MainScheduler extends Component {
         });
     };
 
-    // Update state from PartyAreaSelector to MainScheduler
+    // Update state from PartyAreaComponent to MainScheduler
     callBackFunctionPartyArea = (childData) => {
         let tempArray = [];
 
@@ -89,7 +90,7 @@ class MainScheduler extends Component {
         });
     };
 
-    // Update state from CreatePartyComponent to MainScheduler
+    // Update state from InformationComponent to MainScheduler
     callBackFunctionInfo = (childData) => {
         this.setState({
             [childData.target]: childData.info
@@ -128,7 +129,24 @@ class MainScheduler extends Component {
             .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
     }
 
+    checkIfMissing = () => {
+        if (this.state.contactName === '') {return true}
+        if (this.state.email === '') {return true}
+        if (this.state.phoneNumber === '') {return true}
+        if (this.state.age === 0) {return true}
+        if (this.state.partyName === '') {return true}
+        if (this.state.partyPackage === 0) {return true}
+        if (this.state.roomsRequested === [0]) {return true}
+        if (this.state.roomTimes === []) {return true}
+        if (this.state.dayOfWeek === 0) {return true}
+        if (this.state.dateDay === 0) {return true}
+        if (this.state.dateMonth === 0) {return true}
+        if (this.state.dateYear === 0) {return true}
+        if (this.state.price === 0) {return true}
+    }
+
     isSomethingMissingText = () => {
+        //TODO Format this to be big and scary
         if (this.state.missing) return <div>Something is missing from the form!</div>
     }
 
@@ -136,7 +154,7 @@ class MainScheduler extends Component {
         e.preventDefault();
 
         //Confirm everything has a value before continuing.
-        let allGoodToContinue = true;
+        let allGoodToContinue = this.checkIfMissing();
 
         //If every thing has a value, then
         if (allGoodToContinue) {
@@ -144,7 +162,6 @@ class MainScheduler extends Component {
                 contactName: this.state.contactName,
                 email: this.state.email,
                 phoneNumber: this.state.phoneNumber,
-                participantsAge: this.state.participantsAge,
                 partyName: this.state.partyName,
                 partyPackage: this.state.partyPackage,
                 roomsRequested: this.state.roomsRequested,
@@ -154,7 +171,8 @@ class MainScheduler extends Component {
                 dateMonth: this.state.dateMonth,
                 dateYear: this.state.dateYear,
                 set: true,
-                price: this.state.price
+                price: this.state.price,
+                age: this.state.age
             });
         } else {
             this.setState({missing: true});
@@ -162,72 +180,78 @@ class MainScheduler extends Component {
     };
 
     render() {
-        // if (this.state.toConfirm === true) {    //Trevor added this to redirect to confirmation page
-        //     return <Redirect to='/confirmation'/>
-        // }
         //TODO print price somewehre on here if its not 0
         return (
-            <Collapsible accordion={false}>
-                <CollapsibleItem
-                    expanded={true}
-                    header="Select Date"
-                    icon={<Icon>calendar</Icon>}
-                    node="div"
-                >
-                    <Calendar
-                        parentCallBackDate={this.callBackFunctionDate}
-                    />
-                </CollapsibleItem>
-                <CollapsibleItem
-                    expanded={false}
-                    header="Select Party Package"
-                    icon={<Icon>check</Icon>}
-                    node="div"
-                    className={'PartyPackage'}
-                >
-                    <PartyPackageSelector parentCallBackPartyPackage={this.callBackFunctionPartyPackage}/>
-                </CollapsibleItem>
-                <CollapsibleItem
-                    expanded={false}
-                    header="Select Party Area"
-                    icon={<Icon>place</Icon>}
-                    node="div"
-                    className={'PartyArea'}
-                >
-                    <PartyAreaSelector partyPackage={this.state.partyPackage}
-                                       parentCallBackPartyArea={this.callBackFunctionPartyArea}/>
-                </CollapsibleItem>
-                <CollapsibleItem
-                    expanded={false}
-                    header="Select Time Slot"
-                    icon={<Icon>watch</Icon>}
-                    node="div"
-                    className={'TimeList'}
-                >
-                    <TimeList partyPackage={this.state.partyPackage}
-                              dayOfWeek={this.state.dayOfWeek}
-                              dateDay={this.state.dateDay}
-                              dateMonth={this.state.dateMonth}
-                              dateYear={this.state.dateYear}
-                              roomsRequested={this.state.roomsRequested}
-                              parentCallBackTimeSelected={this.parentCallBackTimeSelected}/>
+            <div>
+                {this.isSomethingMissingText()}
 
-                </CollapsibleItem>
-                <CollapsibleItem
-                    expanded={false}
-                    header="Enter your final information"
-                    icon={<Icon>info</Icon>}
-                    node="div"
-                    className={'Info'}
-                >
-                    <CreatePartyComponent parentCallback={this.callBackFunctionInfo}/>
-                </CollapsibleItem>
-                {this.isSomethingMissingText}
-                <div className={'input-field'}>
-                    <isSomethingMissingText/>
-                    <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>
-                </div>
-            </Collapsible>
+                <Collapsible accordion={false}>
+
+                    <CollapsibleItem
+                        expanded={true}
+                        header="Select Date"
+                        icon={<Icon>calendar</Icon>}
+                        node="div"
+                    >
+                        <Calendar
+                            parentCallBackDate={this.callBackFunctionDate}
+                        />
+                    </CollapsibleItem>
+
+                    <CollapsibleItem
+                        expanded={false}
+                        header="Select Party Package"
+                        icon={<Icon>check</Icon>}
+                        node="div"
+                        className={'PartyPackage'}
+                    >
+                        <PartyPackageComponent parentCallBackPartyPackage={this.callBackFunctionPartyPackage}/>
+                    </CollapsibleItem>
+
+                    <CollapsibleItem
+                        expanded={false}
+                        header="Select Party Area"
+                        icon={<Icon>place</Icon>}
+                        node="div"
+                        className={'PartyArea'}
+                    >
+                        <PartyAreaComponent partyPackage={this.state.partyPackage}
+                                            parentCallBackPartyArea={this.callBackFunctionPartyArea}/>
+                    </CollapsibleItem>
+
+                    <CollapsibleItem
+                        expanded={false}
+                        header="Select Time Slot"
+                        icon={<Icon>watch</Icon>}
+                        node="div"
+                        className={'TimeSlotComponent'}
+                    >
+                        <TimeSlotComponent partyPackage={this.state.partyPackage}
+                                           dayOfWeek={this.state.dayOfWeek}
+                                           dateDay={this.state.dateDay}
+                                           dateMonth={this.state.dateMonth}
+                                           dateYear={this.state.dateYear}
+                                           roomsRequested={this.state.roomsRequested}
+                                           parentCallBackTimeSelected={this.parentCallBackTimeSelected}/>
+
+                    </CollapsibleItem>
+
+                    <CollapsibleItem
+                        expanded={false}
+                        header="Enter your final information"
+                        icon={<Icon>info</Icon>}
+                        node="div"
+                        className={'Info'}
+                    >
+                        <InformationComponent parentCallback={this.callBackFunctionInfo}/>
+                    </CollapsibleItem>
+
+                    <div className={'input-field'}>
+                        <isSomethingMissingText/>
+                        <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>
+                    </div>
+                </Collapsible>
+            </div>
         );
     }
 }

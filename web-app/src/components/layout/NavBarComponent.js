@@ -23,7 +23,7 @@ const NavBarComponent = (props) => {
 
                 <ul className={'right'}>
                     <li><NavLink to={'/scheduler'}>Scheduler</NavLink></li>
-                    <li><NavLink to={'/calendar'}>Calendar</NavLink></li>
+                    <li><NavLink to={'/calendarComponent'}>Calendar</NavLink></li>
                     <li><NavLink to={'/description'}>Descriptions</NavLink></li>
                     <li><NavLink to={'/confirmation'}>Confirmation</NavLink></li>
                     <li><NavLink to={'/card'}> Payment form </NavLink></li>

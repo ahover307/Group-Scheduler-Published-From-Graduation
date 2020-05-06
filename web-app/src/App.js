@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import NavBarComponent from './components/layout/NavBarComponent'
-import Calendar from './components/parentSchedulingProcess/scheduler/Calendar';
+import Calendar from './components/parentSchedulingProcess/scheduler/CalendarComponent';
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
 import Confirmation from "./components/parentSchedulingProcess/confirmation/Confirmation";
 import SignIn from "./components/staff/SignIn";
@@ -68,7 +68,7 @@ class App extends Component {
                         <Route exact path='/'> <SplashScreen/> </Route>
                         <Route path={'/description'}> <PartyDescriptionPage/> </Route>
                         <Route path={'/scheduler'}> <ParentScheduler/></Route>
-                        <Route path={'/calendar'}> <Calendar/> </Route>
+                        <Route path={'/calendarComponent'}> <Calendar/> </Route>
                         <Route path={'/confirmation'}> <Confirmation/> </Route>
                         <Route path={'/login'}><SignIn /></Route>
                         <Route path={'/card'}> <PaymentPage/> </Route>

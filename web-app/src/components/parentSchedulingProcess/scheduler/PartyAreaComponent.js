@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-class PartyAreaSelector extends Component {
+class PartyAreaComponent extends Component {
     state = {
         area1: 0,
         area2: 0,
@@ -79,4 +79,4 @@ class PartyAreaSelector extends Component {
     };
 }
 
-export default PartyAreaSelector
+export default PartyAreaComponent

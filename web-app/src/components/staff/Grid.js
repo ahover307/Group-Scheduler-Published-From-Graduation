@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Table} from 'react-materialize'
-import Calendar from "../parentSchedulingProcess/scheduler/Calendar";
+import Calendar from "../parentSchedulingProcess/scheduler/CalendarComponent";
 import * as firebase from "firebase";
 import html2pdf from 'html2pdf.js'
 import {translateTimeFromIndexToString, updatePartyPackageString} from '../globalFunctions'

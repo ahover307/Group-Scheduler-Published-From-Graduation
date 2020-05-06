@@ -28,17 +28,17 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        DatePicker calendar = findViewById(R.id.datePicker1);
-        calendar.setMinDate(System.currentTimeMillis() - 1000);
+        DatePicker calendarComponent = findViewById(R.id.datePicker1);
+        calendarComponent.setMinDate(System.currentTimeMillis() - 1000);
     }
 
     public void Button(View view) {
-        DatePicker calendar = findViewById(R.id.datePicker1);
-        calendar.setMinDate(System.currentTimeMillis() - 1000);
+        DatePicker calendarComponent = findViewById(R.id.datePicker1);
+        calendarComponent.setMinDate(System.currentTimeMillis() - 1000);
         Intent intent = new Intent(this, PackageActivity.class);
-        int day = calendar.getDayOfMonth();
-        int month = calendar.getMonth() + 1; // Months in DatePicker are 0-based
-        int year = calendar.getYear();
+        int day = calendarComponent.getDayOfMonth();
+        int month = calendarComponent.getMonth() + 1; // Months in DatePicker are 0-based
+        int year = calendarComponent.getYear();
 
         LocalDate date = LocalDate.of(year, month, day);
         DayOfWeek dayOfWeek = DayOfWeek.from(date);
