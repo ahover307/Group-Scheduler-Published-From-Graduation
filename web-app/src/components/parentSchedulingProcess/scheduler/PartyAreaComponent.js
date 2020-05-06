@@ -2,25 +2,7 @@ import React, {Component} from "react";
 import {partyDescriptions} from "./PartyAreaShortDescriptions";
 
 class PartyAreaComponent extends Component {
-    state = {
-        area1: 0,
-        area2: 0,
-        area3: 0,
-        partyPackage: -1
-    };
 
-    checkIfParentUpdated = () => {
-        //TODO This throws an error?
-        //But it seems more like an
-        if (this.props.partyPackage !== this.state.partyPackage) {
-            this.setState({
-                area1: 0,
-                area2: 0,
-                area3: 0,
-                partyPackage: this.props.partyPackage
-            });
-        }
-    };
 
     areasNeeded = () => {
         if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
@@ -34,8 +16,6 @@ class PartyAreaComponent extends Component {
     };
 
     handleChange = (e) => {
-        this.setState({[e.target.id]: e.target.value});
-
         this.props.parentCallBackPartyArea({
             selector: e.target.id,
             area: parseInt(e.target.value)
@@ -45,11 +25,23 @@ class PartyAreaComponent extends Component {
     getRoomCodeFromState = (i) => {
         switch (i) {
             case 1:
-                return this.state.area1;
+                if (this.props.area1 === undefined) {
+                    return 0;
+                } else {
+                    return this.props.area1;
+                }
             case 2:
-                return this.state.area2;
+                if (this.props.area2 === undefined) {
+                    return 0;
+                } else {
+                    return this.props.area2;
+                }
             case 3:
-                return this.state.area3;
+                if (this.props.area3 === undefined) {
+                    return 0;
+                } else {
+                    return this.props.area3;
+                }
         }
     }
 
@@ -109,6 +101,8 @@ class PartyAreaComponent extends Component {
             )
         }
 
+        console.log(this.props);
+
         if (dropdownList.length === 0) {
             dropdownList.push(
                 <div>
@@ -125,9 +119,6 @@ class PartyAreaComponent extends Component {
     }
 
     render() {
-        //Check if the package changed, and is so reset the options lists
-        this.checkIfParentUpdated();
-
         return (
             <div className={'container'}>
                 <div className={'container'}>

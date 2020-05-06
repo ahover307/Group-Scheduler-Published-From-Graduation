@@ -217,7 +217,9 @@ class MainScheduler extends Component {
                     >
                         <PartyAreaComponent partyPackage={this.state.partyPackage}
                                             parentCallBackPartyArea={this.callBackFunctionPartyArea}
-                                            update={true}/>
+                                            area1={this.state.roomsRequested[0]}
+                                            area2={this.state.roomsRequested[1]}
+                                            area3={this.state.roomsRequested[2]}/>
                     </CollapsibleItem>
 
                     <CollapsibleItem
