@@ -14,18 +14,10 @@ import Toolbar from "./components/Toolbar/Toolbar";
 import Backdrop from "./components/Backdrop/Backdrop";
 import ReservedTimes from "./components/staff/ReservedTimes";
 
-
-//todo submit to the confirmation called
-//todo go to payment before confirming
-
-
 class App extends Component {
-
-
      state = {
          sideDrawerOpen: false
      };
-
 
      drawerToggleClickHandler = () => {
          this.setState((prevState) => {
@@ -36,8 +28,6 @@ class App extends Component {
     backdropClickHandler = () => {
         this.setState({sideDrawerOpen: false});
     };
-
-
 
     render() {
         let backdrop;

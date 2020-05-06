@@ -114,6 +114,8 @@ class TimeSlotComponent extends Component {
                 return this.waitingComponent();
             case 3:
                 return this.radioComponent();
+            default:
+                return this.errorPage();
         }
     }
 
@@ -150,6 +152,14 @@ class TimeSlotComponent extends Component {
                 <form>
                     {this.state.radioButtonList}
                 </form>
+            </div>
+        )
+    }
+
+    errorPage = () => {
+        return (
+            <div>
+                An error occurred somewhere, as it seems something is wrong
             </div>
         )
     }

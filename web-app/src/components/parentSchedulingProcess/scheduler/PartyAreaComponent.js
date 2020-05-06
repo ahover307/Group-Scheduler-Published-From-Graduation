@@ -42,6 +42,8 @@ class PartyAreaComponent extends Component {
                 } else {
                     return this.props.area3;
                 }
+            default:
+                return -1;
         }
     }
 
@@ -53,17 +55,21 @@ class PartyAreaComponent extends Component {
                 return 'area2';
             case 3:
                 return 'area3';
+            default:
+                return 'Error';
         }
     }
 
     firstSecondThird = (i) => {
         switch (i) {
             case 1:
-                return 'first';
+                return 'First';
             case 2:
-                return 'second';
+                return 'Second';
             case 3:
-                return 'third';
+                return 'Third';
+            default:
+                return 'ERROR';
         }
     }
 
@@ -78,7 +84,7 @@ class PartyAreaComponent extends Component {
         let optionsList = [];
         for (const [index, value] of partyTypes.entries()) {
             optionsList.push(
-                <option key={index} value={index + 1}>{value}</option>
+                <option key={index + 1} value={index + 1}>{value}</option>
             )
         }
 
@@ -93,7 +99,7 @@ class PartyAreaComponent extends Component {
                 <div className={'input-field'}>
                     <select name={i} className={'browser-default'} value={this.getRoomCodeFromState(i)}
                             hidden={this.areasNeeded() < (i)} id={this.getAreaText(i)} onChange={this.handleChange}>
-                        <option value={0} disabled={true}>Choose {this.firstSecondThird(i)} Party Area</option>
+                        <option key={0} value={0} disabled={true}>Choose {this.firstSecondThird(i)} Party Area</option>
                         {((i === 0) ? ((ninjaFlag) ? ninjaOption : optionsList) : optionsList)}
                     </select>
                     <div>{partyDescriptions(this.getRoomCodeFromState(i))}</div>
@@ -101,14 +107,12 @@ class PartyAreaComponent extends Component {
             )
         }
 
-        console.log(this.props);
-
         if (dropdownList.length === 0) {
-            dropdownList.push(
+            return (
                 <div>
                     Try selecting a party package so we know which rooms to offer!
                 </div>
-            )
+            );
         }
 
         return (

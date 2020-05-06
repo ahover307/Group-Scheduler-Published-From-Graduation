@@ -37,5 +37,7 @@ export function partyDescriptions(partyRoom) {
                     The ultimate of party rooms, the Ninja Warrior course will have anyone tired by the end.
                 </div>
             );
+        default:
+            return;
     }
 }

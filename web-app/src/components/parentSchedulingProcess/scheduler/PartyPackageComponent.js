@@ -141,6 +141,8 @@ class PartyPackageComponent extends Component {
                     <div>
                         {sleepover()}
                     </div>);
+            default:
+                return;
         }
     }
 

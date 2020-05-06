@@ -121,10 +121,18 @@ class MainScheduler extends Component {
     }
 
     checkIfMissing = () => {
-        if (this.state.contactName === '') {return true}
-        if (this.state.email === '') {return true}
-        if (this.state.phoneNumber === '') {return true}
-        if (this.state.age === 0) {return true}
+        if (this.state.contactName === '') {
+            return true
+        }
+        if (this.state.email === '') {
+            return true
+        }
+        if (this.state.phoneNumber === '') {
+            return true
+        }
+        if (this.state.age === 0) {
+            return true
+        }
         if (this.state.partyName === '') {
             return true
         }
@@ -134,10 +142,18 @@ class MainScheduler extends Component {
         if (this.state.roomsRequested === [0]) {
             return true
         }
-        if (this.state.roomTimes === []) {return true}
-        if (this.state.dayOfWeek === 0) {return true}
-        if (this.state.dateDay === 0) {return true}
-        if (this.state.dateMonth === 0) {return true}
+        if (this.state.roomTimes === []) {
+            return true
+        }
+        if (this.state.dayOfWeek === 0) {
+            return true
+        }
+        if (this.state.dateDay === 0) {
+            return true
+        }
+        if (this.state.dateMonth === 0) {
+            return true
+        }
         if (this.state.dateYear === 0) {
             return true
         }
@@ -148,7 +164,13 @@ class MainScheduler extends Component {
 
     isSomethingMissingText = () => {
         //TODO Format this to be big and scary
-        if (this.state.missing) return <div>Something is missing from the form!</div>
+        if (this.state.missing) {
+            return (
+                <div>
+                    Something is missing from the form!
+                </div>
+            );
+        }
     }
 
     handleSubmit = async (e) => {
@@ -250,7 +272,6 @@ class MainScheduler extends Component {
                     </CollapsibleItem>
 
                     <div className={'input-field'}>
-                        <isSomethingMissingText/>
                         <button className={'btn purple'} onClick={this.handleSubmit}>Submit</button>
                     </div>
                 </Collapsible>

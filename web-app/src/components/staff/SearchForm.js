@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import * as firebase from "firebase";
-import {Button, Modal, Table} from "react-materialize";
+import {Button, Table} from "react-materialize";
 import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import Error from "./Error";
