@@ -8,7 +8,6 @@ import {Collapsible, CollapsibleItem, Icon} from 'react-materialize'
 // import * as firebase from "firebase";
 import emailjs from 'emailjs-com'
 import Calendar from "./CalendarComponent";
-import * as firebase from "firebase";
 
 class MainScheduler extends Component {
     state = {
@@ -44,18 +43,9 @@ class MainScheduler extends Component {
 
     // Update state from PartyPackageComponent to MainScheduler
     callBackFunctionPartyPackage = async (childData) => {
-        console.log(childData);
-        const price = (await firebase.functions().httpsCallable('grabPrice')({
-            partyPackage: childData
-        }).then(function (result) {
-            return result.data;
-        }).catch(function (e) {
-            console.log('an error has occurred in grab price method. Check the firebase logs for details');
-        }))
-        console.log(price);
         this.setState({
-            partyPackage: childData,
-            price: price
+            partyPackage: childData.partyPackage,
+            price: childData.price
         });
     };
 
