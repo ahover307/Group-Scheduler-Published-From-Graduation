@@ -115,8 +115,6 @@ public class TimeslotActivity extends AppCompatActivity implements ConfirmationD
                             ConfirmationDialog confirmationDialog = new ConfirmationDialog();
                             confirmationDialog.setArguments(args);
                             confirmationDialog.show(getSupportFragmentManager(), "confirmationDialog");
-                            // TODO
-
                         }
 
                     }

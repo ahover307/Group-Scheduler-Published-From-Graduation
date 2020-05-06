@@ -96,8 +96,8 @@ class PartyAreaComponent extends Component {
         let dropdownList = [];
         for (let i = 1; i <= this.areasNeeded(); i++) {
             dropdownList.push(
-                <div className={'input-field'}>
-                    <select name={i} className={'browser-default'} value={this.getRoomCodeFromState(i)}
+                <div key={i} className={'input-field'}>
+                    <select key={i} name={i} className={'browser-default'} value={this.getRoomCodeFromState(i)}
                             hidden={this.areasNeeded() < (i)} id={this.getAreaText(i)} onChange={this.handleChange}>
                         <option key={0} value={0} disabled={true}>Choose {this.firstSecondThird(i)} Party Area</option>
                         {((i === 0) ? ((ninjaFlag) ? ninjaOption : optionsList) : optionsList)}

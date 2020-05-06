@@ -63,7 +63,7 @@ class TimeSlotComponent extends Component {
 
     populateRadioButtons = async () => {
         //Signify that we are waiting for the times to be returned
-        this.setState({waitingState: 1});
+        this.setState({waitingState: 2});
 
         //Load the list of radio buttons
         let tempTimeList = (await this.findTimes().then((snapshot) => {
@@ -73,7 +73,7 @@ class TimeSlotComponent extends Component {
         let indexOffset = this.setIndexOffset();
 
         if (tempTimeList.length === 0) {
-            this.setState({waitingState: 2});
+            this.setState({waitingState: 1});
         }
 
         //Time list will be organized in 1 of 3 ways, depending on how many rooms are required, this was the easiest way I could find that everything was going to stay in order.
@@ -137,10 +137,8 @@ class TimeSlotComponent extends Component {
     }
 
     waitingComponent = () => {
-        //TODO Find a loading icon or something
         return (
             <div>
-                {/*<icon>{loading}</icon>*/}
                 Times are being found, please wait
             </div>
         );

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import MainScheduler from "./scheduler/MainScheduler";
 import PaymentPage from "./payment/PaymentPage";
 import Confirmation from "./confirmation/Confirmation";
+import ErrorPage from "./ErrorPages/ErrorPage";
 
 class ParentScheduler extends Component {
     state = {
@@ -10,6 +11,7 @@ class ParentScheduler extends Component {
         phoneNumber: '',
         paid: false,
         set: false,
+        paymentError: false,
         age: 0,
         partyName: '',
         partyPackage: 0,
@@ -47,6 +49,12 @@ class ParentScheduler extends Component {
         });
     };
 
+    errorCallBackPayment = () => {
+        this.setState({
+            paid: false,
+            paymentError: true
+        })
+    }
 
     render() {
 
@@ -59,6 +67,7 @@ class ParentScheduler extends Component {
             return (
                 <PaymentPage
                     callBack={this.getStateFromCheckOut}
+                    errorCallBack={this.errorCallBackPayment}
                     contactName={this.state.contactName}
                     email={this.state.email}
                     phoneNumber={this.state.phoneNumber}
@@ -73,6 +82,20 @@ class ParentScheduler extends Component {
                     roomsRequested={this.state.roomsRequested}
                     roomTimes={this.state.roomTimes}
                     price={this.state.price}
+                />
+            );
+        } else if (this.state.paymentError) {
+            return (
+                <ErrorPage
+                    partyPackage={this.state.partyPackage}
+                    month={this.state.dateMonth}
+                    date={this.state.dateDay}
+                    year={this.state.dateYear}
+                    dayOfWeek={this.state.dayOfWeek}
+                    roomsRequested={this.state.roomsRequested}
+                    roomTimes={this.state.roomTimes}
+                    partyName={this.state.partyName}
+                    contactName={this.state.contactName}
                 />
             );
         } else if (this.state.set && this.state.paid) {
