@@ -1,11 +1,25 @@
 import React, {Component} from "react";
+import {partyDescriptions} from "./PartyAreaShortDescriptions";
 
 class PartyAreaComponent extends Component {
     state = {
         area1: 0,
         area2: 0,
         area3: 0,
-        update: false
+        partyPackage: -1
+    };
+
+    checkIfParentUpdated = () => {
+        //TODO This throws an error?
+        //But it seems more like an
+        if (this.props.partyPackage !== this.state.partyPackage) {
+            this.setState({
+                area1: 0,
+                area2: 0,
+                area3: 0,
+                partyPackage: this.props.partyPackage
+            });
+        }
     };
 
     areasNeeded = () => {
@@ -20,14 +34,48 @@ class PartyAreaComponent extends Component {
     };
 
     handleChange = (e) => {
+        this.setState({[e.target.id]: e.target.value});
+
         this.props.parentCallBackPartyArea({
             selector: e.target.id,
             area: parseInt(e.target.value)
         });
     };
 
-    //Remove an area once it is selected once.
-    render() {
+    getRoomCodeFromState = (i) => {
+        switch (i) {
+            case 1:
+                return this.state.area1;
+            case 2:
+                return this.state.area2;
+            case 3:
+                return this.state.area3;
+        }
+    }
+
+    getAreaText = (i) => {
+        switch (i) {
+            case 1:
+                return 'area1';
+            case 2:
+                return 'area2';
+            case 3:
+                return 'area3';
+        }
+    }
+
+    firstSecondThird = (i) => {
+        switch (i) {
+            case 1:
+                return 'first';
+            case 2:
+                return 'second';
+            case 3:
+                return 'third';
+        }
+    }
+
+    roomDropDown = () => {
         const partyTypes = [
             'Main Gym',
             'Kidmazium',
@@ -35,7 +83,7 @@ class PartyAreaComponent extends Component {
             'Preschool'
         ];
 
-        const optionsList = [];
+        let optionsList = [];
         for (const [index, value] of partyTypes.entries()) {
             optionsList.push(
                 <option key={index} value={index + 1}>{value}</option>
@@ -47,32 +95,43 @@ class PartyAreaComponent extends Component {
         //Set a flag if this is a ninja party
         const ninjaFlag = this.props.partyPackage <= 8 && this.props.partyPackage >= 5;
 
+        let dropdownList = [];
+        for (let i = 1; i <= this.areasNeeded(); i++) {
+            dropdownList.push(
+                <div className={'input-field'}>
+                    <select name={i} className={'browser-default'} value={this.getRoomCodeFromState(i)}
+                            hidden={this.areasNeeded() < (i)} id={this.getAreaText(i)} onChange={this.handleChange}>
+                        <option value={0} disabled={true}>Choose {this.firstSecondThird(i)} Party Area</option>
+                        {((i === 0) ? ((ninjaFlag) ? ninjaOption : optionsList) : optionsList)}
+                    </select>
+                    <div>{partyDescriptions(this.getRoomCodeFromState(i))}</div>
+                </div>
+            )
+        }
+
+        if (dropdownList.length === 0) {
+            dropdownList.push(
+                <div>
+                    Try selecting a party package so we know which rooms to offer!
+                </div>
+            )
+        }
+
+        return (
+            <form>
+                {dropdownList}
+            </form>
+        );
+    }
+
+    render() {
+        //Check if the package changed, and is so reset the options lists
+        this.checkIfParentUpdated();
+
         return (
             <div className={'container'}>
                 <div className={'container'}>
-                    <form>
-                        <div className={'input-field'}>
-                            <select name={'first'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 1} id={'area1'} onChange={this.handleChange}>
-                                <option value={''} disabled={true}>Choose First Party Area</option>
-                                {((ninjaFlag) ? ninjaOption : optionsList)}
-                            </select>
-                        </div>
-                        <div className="input-field">
-                            <select name={'second'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 2} id={'area2'} onChange={this.handleChange}>
-                                <option value={''} disabled>Choose Second Party Area</option>
-                                {optionsList}
-                            </select>
-                        </div>
-                        <div className="input-field">
-                            <select name={'third'} className={'browser-default'} defaultValue={''}
-                                    disabled={this.areasNeeded() < 3} id={'area3'} onChange={this.handleChange}>
-                                <option value={''} disabled>Choose Third Party Area</option>
-                                {optionsList}
-                            </select>
-                        </div>
-                    </form>
+                    {this.roomDropDown()}
                 </div>
             </div>
         );

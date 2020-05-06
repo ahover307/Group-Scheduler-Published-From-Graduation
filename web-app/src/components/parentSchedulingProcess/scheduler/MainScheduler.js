@@ -16,8 +16,8 @@ class MainScheduler extends Component {
         phoneNumber: '',
         participantsAge: 0,
         partyName: '',
-        partyPackage: 0,
-        roomsRequested: [0],
+        partyPackage: -1,
+        roomsRequested: [],
         roomTimes: [],
         dayOfWeek: 1,
         dateDay: 0,
@@ -45,7 +45,8 @@ class MainScheduler extends Component {
     callBackFunctionPartyPackage = (childData) => {
         this.setState({
             partyPackage: childData.partyPackage,
-            price: childData.price
+            price: childData.price,
+            roomsRequested: []
         });
     };
 
@@ -124,9 +125,15 @@ class MainScheduler extends Component {
         if (this.state.email === '') {return true}
         if (this.state.phoneNumber === '') {return true}
         if (this.state.age === 0) {return true}
-        if (this.state.partyName === '') {return true}
-        if (this.state.partyPackage === 0) {return true}
-        if (this.state.roomsRequested === [0]) {return true}
+        if (this.state.partyName === '') {
+            return true
+        }
+        if (this.state.partyPackage === -1) {
+            return true
+        }
+        if (this.state.roomsRequested === [0]) {
+            return true
+        }
         if (this.state.roomTimes === []) {return true}
         if (this.state.dayOfWeek === 0) {return true}
         if (this.state.dateDay === 0) {return true}
@@ -174,7 +181,6 @@ class MainScheduler extends Component {
     };
 
     render() {
-        console.log(this.state.price);
         return (
             <div>
                 {this.isSomethingMissingText()}
@@ -210,7 +216,8 @@ class MainScheduler extends Component {
                         className={'PartyArea'}
                     >
                         <PartyAreaComponent partyPackage={this.state.partyPackage}
-                                            parentCallBackPartyArea={this.callBackFunctionPartyArea}/>
+                                            parentCallBackPartyArea={this.callBackFunctionPartyArea}
+                                            update={true}/>
                     </CollapsibleItem>
 
                     <CollapsibleItem
