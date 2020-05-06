@@ -42,7 +42,7 @@ class MainScheduler extends Component {
     };
 
     // Update state from PartyPackageComponent to MainScheduler
-    callBackFunctionPartyPackage = async (childData) => {
+    callBackFunctionPartyPackage = (childData) => {
         this.setState({
             partyPackage: childData.partyPackage,
             price: childData.price
@@ -131,8 +131,12 @@ class MainScheduler extends Component {
         if (this.state.dayOfWeek === 0) {return true}
         if (this.state.dateDay === 0) {return true}
         if (this.state.dateMonth === 0) {return true}
-        if (this.state.dateYear === 0) {return true}
-        if (this.state.price === 0) {return true}
+        if (this.state.dateYear === 0) {
+            return true
+        }
+        if (this.state.price >= 0) {
+            return true
+        }
     }
 
     isSomethingMissingText = () => {
@@ -170,7 +174,7 @@ class MainScheduler extends Component {
     };
 
     render() {
-        //TODO print price somewehre on here if its not 0
+        console.log(this.state.price);
         return (
             <div>
                 {this.isSomethingMissingText()}

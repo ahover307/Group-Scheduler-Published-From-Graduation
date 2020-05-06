@@ -23,10 +23,9 @@ class PartyPackageComponent extends Component {
             partyPackage: parseInt(e.target.value),
             price: -2
         });
-        this.findPrice(parseInt(e.target.value))
-        this.props.parentCallBackPartyPackage(parseInt(e.target.value));
-    };
 
+        this.findPrice(parseInt(e.target.value))
+    }
     partyPackageDropdown = () => {
         return (
             <form>
@@ -54,6 +53,12 @@ class PartyPackageComponent extends Component {
     findPrice = async (partyPackage) => {
         let tempPrice = await priceFinder(partyPackage);
         this.setState({price: tempPrice});
+
+        //Once price is found, set that price back into the main scheduler
+        this.props.parentCallBackPartyPackage({
+            partyPackage: this.state.partyPackage,
+            price: tempPrice
+        });
     }
 
 
