@@ -130,7 +130,9 @@ class ReservedTimes extends Component {
                                 )
                             })}
                         </div>
-                    </div> : <Error/>}
+                    </div>
+                    :
+                    <Error/>}
             </div>
 
         );

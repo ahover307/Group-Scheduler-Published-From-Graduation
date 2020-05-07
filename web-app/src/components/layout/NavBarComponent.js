@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link, NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 import ParamountLogo from '../../png/ParamountLogo.png'
 import '../../index.css'
 import {connect} from 'react-redux'
@@ -22,12 +22,12 @@ const NavBarComponent = (props) => {
                                                              width={130} height={'auto'}/> </Link>
 
                 <ul className={'right'}>
-                    <li><NavLink to={'/scheduler'}>Scheduler</NavLink></li>
-                    <li><NavLink to={'/calendarComponent'}>Calendar</NavLink></li>
-                    <li><NavLink to={'/description'}>Descriptions</NavLink></li>
-                    <li><NavLink to={'/confirmation'}>Confirmation</NavLink></li>
-                    <li><NavLink to={'/card'}> Payment form </NavLink></li>
-                    { links }
+                    {/*<li><NavLink to={'/scheduler'}>Scheduler</NavLink></li>*/}
+                    {/*<li><NavLink to={'/calendarComponent'}>Calendar</NavLink></li>*/}
+                    {/*<li><NavLink to={'/description'}>Descriptions</NavLink></li>*/}
+                    {/*<li><NavLink to={'/confirmation'}>Confirmation</NavLink></li>*/}
+                    {/*<li><NavLink to={'/card'}> Payment form </NavLink></li>*/}
+                    {links}
                 </ul>
             </div>
         </nav>

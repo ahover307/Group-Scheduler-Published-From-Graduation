@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import NavBarComponent from './components/layout/NavBarComponent'
 import PartyDescriptionPage from "./components/info/PartyDescriptionPage";
 import SignIn from "./components/staff/SignIn";
 import Dashboard from "./components/staff/Dashboard";
@@ -42,7 +41,7 @@ class App extends Component {
                 {backdrop}
 
                 <BrowserRouter>
-                    <NavBarComponent/>
+                    {/*<NavBarComponent/>*/}
                     <Switch>
 
                         <Route exact path='/'> <SplashScreen/> </Route>

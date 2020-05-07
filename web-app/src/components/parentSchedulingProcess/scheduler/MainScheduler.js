@@ -158,8 +158,6 @@ class MainScheduler extends Component {
             return true
         }
         return this.state.price <= 0;
-
-
     }
 
     isSomethingMissingText = () => {
