@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import * as firebase from "firebase";
 import {translateTimeFromIndexToString, updatePartyAreaString} from "../../globalFunctions";
-import {MuiPickersUtilsProvider, TimePicker} from '@material-ui/pickers';
-import MomentUtils from "@date-io/moment";
+import {TimePicker} from '@material-ui/pickers';
 
 class TimeSlotComponent extends Component {
     state = {
@@ -219,6 +218,11 @@ class TimeSlotComponent extends Component {
         const hour = thisDate.hour();
         // const minute = thisDate.minute();
         //I dont care about the minute hand
+
+        this.setState({
+            time: thisDate
+        })
+
         this.populateRadioButtons(hour);
     };
 
@@ -228,9 +232,12 @@ class TimeSlotComponent extends Component {
                 <div>
                     Select a time here to help us narrow down which times to show you.
                 </div>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <TimePicker value={this.state.time} onChange={this.onTimeChange}/>
-                </MuiPickersUtilsProvider>
+                {/*<MuiPickersUtilsProvider utils={MomentUtils}>*/}
+                <TimePicker
+                    value={this.state.time}
+                    onChange={this.onTimeChange}
+                    minutesStep={5}/>
+                {/*</MuiPickersUtilsProvider>*/}
             </div>
         );
     }

@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import {DatePicker} from "@material-ui/pickers";
 import './Calendar.css';
-import MomentUtils from "@date-io/moment";
 
 class calendarComponent extends Component {
     state = {
@@ -24,7 +23,6 @@ class calendarComponent extends Component {
     render() {
         return (
             <div className={'container center'}>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
                     <DatePicker
                         orientation={'landscape'}
                         variant={'static'}
@@ -32,7 +30,6 @@ class calendarComponent extends Component {
                         value={this.state.date}
                         onChange={this.onClickDay}
                     />
-                </MuiPickersUtilsProvider>
             </div>
         );
     }

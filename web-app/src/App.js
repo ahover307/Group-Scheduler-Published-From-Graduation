@@ -11,18 +11,20 @@ import ParentScheduler from "./components/parentSchedulingProcess/ParentSchedule
 import SideDrawer from "./components/SideDrawer/SideDrawer";
 import Toolbar from "./components/Toolbar/Toolbar";
 import Backdrop from "./components/Backdrop/Backdrop";
-import ReservedTimes from "./components/staff/ReservedTimes";
+import ReservedTimes from "./components/staff/ReservedTimes/ReservedTimes";
+import {MuiPickersUtilsProvider} from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 class App extends Component {
-     state = {
-         sideDrawerOpen: false
-     };
+    state = {
+        sideDrawerOpen: false
+    };
 
-     drawerToggleClickHandler = () => {
-         this.setState((prevState) => {
-             return {sideDrawerOpen: !prevState.sideDrawerOpen};
-         });
-     };
+    drawerToggleClickHandler = () => {
+        this.setState((prevState) => {
+            return {sideDrawerOpen: !prevState.sideDrawerOpen};
+        });
+    };
 
     backdropClickHandler = () => {
         this.setState({sideDrawerOpen: false});
@@ -36,24 +38,26 @@ class App extends Component {
         }
         return (
             <div style={{height: '100%'}}>
-                <Toolbar drawerClickHandler={this.drawerToggleClickHandler}/>
-                <SideDrawer show={this.state.sideDrawerOpen}/>
-                {backdrop}
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <Toolbar drawerClickHandler={this.drawerToggleClickHandler}/>
+                    <SideDrawer show={this.state.sideDrawerOpen}/>
+                    {backdrop}
 
-                <BrowserRouter>
-                    {/*<NavBarComponent/>*/}
-                    <Switch>
+                    <BrowserRouter>
+                        {/*<NavBarComponent/>*/}
+                        <Switch>
 
-                        <Route exact path='/'> <SplashScreen/> </Route>
-                        <Route path={'/description'}> <PartyDescriptionPage/> </Route>
-                        <Route path={'/scheduler'}> <ParentScheduler/></Route>
-                        <Route path={'/login'}><SignIn /></Route>
-                        <Route path={'/staff/dashboard'}> <Dashboard/> </Route>
-                        <Route path={'/staff/search'}> <SearchForm/></Route>
-                        <Route path={'/staff/grid'}> <Grid/></Route>
-                        <Route path={'/staff/reservedTimes'}> <ReservedTimes/></Route>
-                    </Switch>
-                </BrowserRouter>
+                            <Route exact path='/'> <SplashScreen/> </Route>
+                            <Route path={'/description'}> <PartyDescriptionPage/> </Route>
+                            <Route path={'/scheduler'}> <ParentScheduler/></Route>
+                            <Route path={'/login'}><SignIn/></Route>
+                            <Route path={'/staff/dashboard'}> <Dashboard/> </Route>
+                            <Route path={'/staff/search'}> <SearchForm/></Route>
+                            <Route path={'/staff/grid'}> <Grid/></Route>
+                            <Route path={'/staff/reservedTimes'}> <ReservedTimes/></Route>
+                        </Switch>
+                    </BrowserRouter>
+                </MuiPickersUtilsProvider>
             </div>
         );
     }

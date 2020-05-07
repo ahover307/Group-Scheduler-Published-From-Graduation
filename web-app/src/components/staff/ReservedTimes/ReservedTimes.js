@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {Redirect} from "react-router-dom";
-import Error from "./Error";
-import Calendar from "../parentSchedulingProcess/scheduler/CalendarComponent";
+import Error from "../Error";
+import Calendar from "../../parentSchedulingProcess/scheduler/CalendarComponent";
 import {Button, Card, Col, Icon, Row} from 'react-materialize'
 import * as firebase from "firebase";
-import {translateTimeFromIndexToString, updatePartyAreaString} from '../globalFunctions'
-import './Modal.css'
+import {translateTimeFromIndexToString, updatePartyAreaString} from '../../globalFunctions'
+import '../Modal.css'
+import CreateReservedTimeCard from "./CreateReservedTimeCard";
 
 const date = new Date();
 
@@ -80,7 +81,6 @@ class ReservedTimes extends Component {
                 {this.props.authError === "Login success" ?
                     <div className={'container'}>
                         <div style={{textAlign: 'center'}}>
-                            <div className="section"/>
                             <h5 style={{color: "#653487"}}>Please select a date</h5>
                             <div className="z-depth-1 grey lighten-4 row"
                                  style={{border: '1px solid #EEE', margin: '2%'}}>
@@ -129,6 +129,9 @@ class ReservedTimes extends Component {
 
                                 )
                             })}
+                        </div>
+                        <div>
+                            <CreateReservedTimeCard/>
                         </div>
                     </div>
                     :

@@ -100,7 +100,7 @@ class PartyAreaComponent extends Component {
                     <select key={i} name={i} className={'browser-default'} value={this.getRoomCodeFromState(i)}
                             hidden={this.areasNeeded() < (i)} id={this.getAreaText(i)} onChange={this.handleChange}>
                         <option key={0} value={0} disabled={true}>Choose {this.firstSecondThird(i)} Party Area</option>
-                        {((i === 0) ? ((ninjaFlag) ? ninjaOption : optionsList) : optionsList)}
+                        {((i === 1) ? ((ninjaFlag) ? ninjaOption : optionsList) : optionsList)}
                     </select>
                     <div>{partyDescriptions(this.getRoomCodeFromState(i))}</div>
                 </div>
