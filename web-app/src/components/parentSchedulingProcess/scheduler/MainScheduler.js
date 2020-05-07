@@ -177,7 +177,7 @@ class MainScheduler extends Component {
         e.preventDefault();
 
         //Confirm everything has a value before continuing.
-        let allGoodToContinue = this.checkIfMissing();
+        let allGoodToContinue = !this.checkIfMissing();
 
         //If every thing has a value, then
         if (allGoodToContinue) {
