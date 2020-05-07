@@ -14,7 +14,6 @@ class MainScheduler extends Component {
         contactName: '',
         email: '',
         phoneNumber: '',
-        participantsAge: 0,
         partyName: '',
         partyPackage: -1,
         roomsRequested: [],
@@ -25,7 +24,7 @@ class MainScheduler extends Component {
         dateYear: 0,
         missing: false,
         price: 0,
-        age: 0
+        age: ''
     };
 
     componentDidMount() {
@@ -113,14 +112,15 @@ class MainScheduler extends Component {
         emailjs.send(
             'gmail', templateId,
             variables, "user_5Iox4i8HmOcOQCgLT1kCH"
-        ).then(res => {
+        ).then(function () {
             console.log('Email successfully sent!')
         })
             // Handle errors here however you like, or use a React error boundary
-            .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occured:', err))
+            .catch(err => console.error('Oh well, you failed. Here some thoughts on the error that occurred:', err))
     }
 
     checkIfMissing = () => {
+        //Maybe do this with the this.baseState thing i was reading about earlier
         if (this.state.contactName === '') {
             return true
         }
@@ -130,7 +130,7 @@ class MainScheduler extends Component {
         if (this.state.phoneNumber === '') {
             return true
         }
-        if (this.state.age === 0) {
+        if (this.state.age === '') {
             return true
         }
         if (this.state.partyName === '') {
@@ -139,7 +139,7 @@ class MainScheduler extends Component {
         if (this.state.partyPackage === -1) {
             return true
         }
-        if (this.state.roomsRequested === [0]) {
+        if (this.state.roomsRequested === []) {
             return true
         }
         if (this.state.roomTimes === []) {
@@ -157,9 +157,9 @@ class MainScheduler extends Component {
         if (this.state.dateYear === 0) {
             return true
         }
-        if (this.state.price >= 0) {
-            return true
-        }
+        return this.state.price <= 0;
+
+
     }
 
     isSomethingMissingText = () => {
@@ -176,11 +176,13 @@ class MainScheduler extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
 
+        console.log(this.state);
+
         //Confirm everything has a value before continuing.
-        let allGoodToContinue = !this.checkIfMissing();
+        let isSomethingMissing = this.checkIfMissing();
 
         //If every thing has a value, then
-        if (allGoodToContinue) {
+        if (!isSomethingMissing) {
             this.props.callBack({
                 contactName: this.state.contactName,
                 email: this.state.email,
