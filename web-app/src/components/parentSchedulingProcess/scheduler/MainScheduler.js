@@ -211,7 +211,7 @@ class MainScheduler extends Component {
                     <CollapsibleItem
                         expanded={true}
                         header="Select Date"
-                        icon={<Icon>calendar</Icon>}
+                        icon={<Icon>date_range</Icon>}
                         node="div"
                     >
                         <Calendar

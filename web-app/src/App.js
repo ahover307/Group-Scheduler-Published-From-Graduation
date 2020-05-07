@@ -14,6 +14,7 @@ import Backdrop from "./components/Backdrop/Backdrop";
 import ReservedTimes from "./components/staff/ReservedTimes/ReservedTimes";
 import {MuiPickersUtilsProvider} from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+import CreateReservedTimeCard from "./components/staff/ReservedTimes/CreateReservedTimeCard";
 
 class App extends Component {
     state = {
@@ -37,13 +38,14 @@ class App extends Component {
             backdrop = <Backdrop click={this.backdropClickHandler}/>
         }
         return (
-            <div style={{height: '100%'}}>
-                <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <Toolbar drawerClickHandler={this.drawerToggleClickHandler}/>
-                    <SideDrawer show={this.state.sideDrawerOpen}/>
-                    {backdrop}
+            <div style={{height: '100%', paddingTop: '55px'}}>
+                <BrowserRouter>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <Toolbar drawerClickHandler={this.drawerToggleClickHandler}/>
+                        <SideDrawer show={this.state.sideDrawerOpen}/>
+                        {backdrop}
 
-                    <BrowserRouter>
+
                         {/*<NavBarComponent/>*/}
                         <Switch>
 
@@ -55,9 +57,10 @@ class App extends Component {
                             <Route path={'/staff/search'}> <SearchForm/></Route>
                             <Route path={'/staff/grid'}> <Grid/></Route>
                             <Route path={'/staff/reservedTimes'}> <ReservedTimes/></Route>
+                            <Route path={'/staff/create_reservedTimes'}> <CreateReservedTimeCard/></Route>
                         </Switch>
-                    </BrowserRouter>
-                </MuiPickersUtilsProvider>
+
+                    </MuiPickersUtilsProvider></BrowserRouter>
             </div>
         );
     }

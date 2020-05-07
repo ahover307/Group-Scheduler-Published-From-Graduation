@@ -22,8 +22,9 @@ class calendarComponent extends Component {
     //https://www.npmjs.com/package/react-calendar
     render() {
         return (
-            <div className={'container center'}>
+            <div className={'container center'} style={{width: "470px", marginTop: '1.5%',marginBottom: '1.5%'}}>
                     <DatePicker
+                        ID={'calendar'}
                         orientation={'landscape'}
                         variant={'static'}
                         openTo={'date'}

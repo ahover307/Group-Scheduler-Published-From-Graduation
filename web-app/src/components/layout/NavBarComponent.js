@@ -8,7 +8,7 @@ import SignedOutLinks from "./SignedOutLinks";
 
 const NavBarComponent = (props) => {
     const {auth} = props;
-    const links = auth.uid ? <SignedInLinks/> : <SignedOutLinks/>
+    const links = auth.uid ? <SignedInLinks/> : <SignedOutLinks/>;
 
     return (
         //We dont need a navbar for the final product, but leave the navbar there so the logo and link to the homepage is live.

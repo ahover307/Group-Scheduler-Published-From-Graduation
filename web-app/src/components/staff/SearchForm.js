@@ -16,7 +16,6 @@ class SearchForm extends Component {
     };
 
     findParties = () => {
-
         const database = firebase.firestore();
         database.collection('Parties').get().then(snapshot => {
             const parties = [];

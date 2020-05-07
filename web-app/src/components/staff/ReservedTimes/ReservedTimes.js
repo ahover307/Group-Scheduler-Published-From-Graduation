@@ -38,12 +38,12 @@ class ReservedTimes extends Component {
             visible: true
         });
         const database = firebase.firestore();
+
         database.collection('SpecialReservedTimes').get().then(snapshot => {
             const times = [];
             console.log("This should be empty: " + this.state.times)
             snapshot.forEach(doc => {
                 const data = doc.data();
-
                 if (data.dateMonth === this.state.dateMonth && data.dateDay === this.state.dateDay &&
                     data.dateYear === this.state.dateYear) {
                     times.push({
@@ -129,9 +129,6 @@ class ReservedTimes extends Component {
 
                                 )
                             })}
-                        </div>
-                        <div>
-                            <CreateReservedTimeCard/>
                         </div>
                     </div>
                     :

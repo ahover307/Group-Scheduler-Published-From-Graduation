@@ -1,6 +1,17 @@
-.react-calendar{
-    margin-right:0px;
-    width:75%;
-    height:100%;
+.react-calendar {
+    margin-right: 0px;
+    width: 75%;
+    height: 100%;
     margin-left: 12.5%
 }
+
+div.MuiToolbar-root.MuiToolbar-regular.MuiPickersToolbar-toolbar.MuiPickersDatePickerRoot-toolbar.MuiPickersDatePickerRoot-toolbarLandscape.MuiPickersToolbar-toolbarLandscape.MuiToolbar-gutters{
+    background: #653487;
+
+}
+
+.MuiPickersStaticWrapper-staticWrapperRoot {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+
