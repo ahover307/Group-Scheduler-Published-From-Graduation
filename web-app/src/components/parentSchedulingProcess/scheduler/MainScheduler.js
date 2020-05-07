@@ -207,8 +207,7 @@ class MainScheduler extends Component {
             <div>
                 {this.isSomethingMissingText()}
 
-                <Collapsible accordion={false}>
-
+                <Collapsible accordion={false} data-start-time={10}>
                     <CollapsibleItem
                         expanded={true}
                         header="Select Date"

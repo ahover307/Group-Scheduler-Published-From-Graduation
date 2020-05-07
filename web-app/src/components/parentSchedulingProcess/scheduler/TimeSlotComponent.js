@@ -52,25 +52,29 @@ class TimeSlotComponent extends Component {
     };
 
     handleChange = (e) => {
-        this.props.parentCallBackTimeSelected(this.state.timeList.slice(e.target.id, parseInt(e.target.id) + this.setIndexOffset() + 1));
+        this.props.parentCallBackTimeSelected(this.state.timeList[e.target.id]);
     };
 
     setIndexOffsetForRoomsOnly = () => {
+        return this.areasNeeded();
+    }
+
+    setIndexOffset = () => {
+        if (this.areasNeeded() === 1)
+            return 2;
+        else if (this.areasNeeded() === 2)
+            return 4;
+        else if (this.areasNeeded() === 3)
+            return 6;
+    }
+
+    areasNeeded = () => {
         if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
             return 1;
         else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
             return 2;
         else if (parseInt(this.props.partyPackage) === 3)
             return 3;
-    }
-
-    setIndexOffset = () => {
-        if (parseInt(this.props.partyPackage) === 0 || parseInt(this.props.partyPackage) === 1 || parseInt(this.props.partyPackage) === 5)
-            return 2;
-        else if (parseInt(this.props.partyPackage) === 2 || parseInt(this.props.partyPackage) === 6 || parseInt(this.props.partyPackage) === 7 || parseInt(this.props.partyPackage) === 8)
-            return 4;
-        else if (parseInt(this.props.partyPackage) === 3)
-            return 6;
     }
 
     generateTimes = async () => {
@@ -156,7 +160,11 @@ class TimeSlotComponent extends Component {
                         //Create string of what the option is
                         let stringDescription = this.createString(tempArray);
                         tempListOfRadioButtons.push(
-                            <div className={'container'} key={tempListOfRadioButtons.length}>
+                            <div
+                                className={'container'}
+                                key={tempListOfRadioButtons.length}
+                                data-start-time={tempArray[this.setIndexOffsetForRoomsOnly()]}
+                                data-room={tempArray[0]}>
                                 <label>
                                     <input name={'listOfTimes'} id={tempListOfRadioButtons.length} type={'radio'}
                                            onChange={this.handleChange}/>
@@ -166,7 +174,7 @@ class TimeSlotComponent extends Component {
                         );
 
                         //Add it to our new time list array
-                        tempArray.forEach(dataElement => otherTimeListArray.push(dataElement));
+                        otherTimeListArray.push(tempArray);
                     }
                 }
 
@@ -186,6 +194,17 @@ class TimeSlotComponent extends Component {
                 waitingState: 1
             });
             return;
+        }
+
+        //Sort by time first
+        tempListOfRadioButtons.sort(function (a, b) {
+            return parseInt(a.props['data-start-time']) - parseInt(b.props['data-start-time']);
+        })
+        //Then if there are multiple rooms, sort by room next
+        if (this.areasNeeded() > 1) {
+            tempListOfRadioButtons.sort(function (a, b) {
+                return parseInt(a.props['data-room']) - parseInt(b.props['data-room']);
+            });
         }
 
         this.setState({
