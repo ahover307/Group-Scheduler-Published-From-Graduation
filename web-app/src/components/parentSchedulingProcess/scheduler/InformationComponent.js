@@ -24,7 +24,7 @@ class InformationComponent extends Component {
                     <div className={'input-field'}>
                         <label htmlFor={'age'}>Age of average participant:</label>
                         <input
-                            placeholder={'Party Child\'s Name'}
+                            placeholder={'Party Child\'s Age'}
                             type={'number'}
                             id={'age'}
                             className={'validate'}

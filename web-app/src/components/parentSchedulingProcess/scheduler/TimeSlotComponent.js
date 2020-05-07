@@ -181,6 +181,13 @@ class TimeSlotComponent extends Component {
             }
         }
 
+        if (tempListOfRadioButtons.length === 0) {
+            this.setState({
+                waitingState: 1
+            });
+            return;
+        }
+
         this.setState({
             radioButtonList: tempListOfRadioButtons,
             timeList: otherTimeListArray,
@@ -237,7 +244,8 @@ class TimeSlotComponent extends Component {
     noTimesReturnedComponent = () => {
         return (
             <div>
-                There were no times returned, maybe try with some different choices parameters for the times, and click
+                There were no parties available, for this selected time. Maybe try with some different choices for the
+                party, and click
                 the button to try again.
             </div>
         )
