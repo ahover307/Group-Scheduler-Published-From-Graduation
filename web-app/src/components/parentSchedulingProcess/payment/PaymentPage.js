@@ -34,7 +34,7 @@ class PaymentPage extends Component {
         })) {
             this.props.callBack();
         } else {
-            //TODO Tell them there was an error and that they will need to call in to fix it.
+            this.props.errorCallBack();
         }
     }
 
