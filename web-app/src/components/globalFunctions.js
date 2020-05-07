@@ -19,6 +19,16 @@ export function translateTimeFromIndexToString(timeIndex) {
     return (hour + ":" + minute);
 }
 
+export function translateTimeIntoIndex(hour, minute) {
+    hour = parseInt(hour);
+    minute = parseInt(minute);
+
+    let timeIndex = hour * 12;
+    timeIndex += minute / 5;
+
+    return timeIndex;
+}
+
 export function updatePartyAreaString(e) {
     switch (parseInt(e)) {
         case 1:

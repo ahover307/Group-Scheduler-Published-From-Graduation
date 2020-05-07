@@ -7,6 +7,7 @@ import {Button} from 'react-materialize'
 import * as firebase from "firebase";
 import '../Modal.css'
 import {TimePicker} from "@material-ui/pickers";
+import {translateTimeIntoIndex} from "../../globalFunctions";
 
 const date = new Date();
 
@@ -53,26 +54,16 @@ class CreateReservedTimeCard extends Component {
     };
 
     handleChangeTimeStart = (time) => {
-        //TODO Get index from the hour and minute that is passed down
-        const hour = time.hour();
-        const minute = time.minute();
-        const startTime = 9
-
         this.setState({
             dateStartTime: time,
-            startTime: startTime
+            startTime: translateTimeIntoIndex(time.hour(), time.minute())
         });
     }
 
     handleChangeTimeEnd = (time) => {
-        //TODO Get index from the hour and minute that is passed down
-        const hour = time.hour();
-        const minute = time.minute();
-        const endTime = 9
-
         this.setState({
             dateEndTime: time,
-            endTime: endTime
+            endTime: translateTimeIntoIndex(time.hour(), time.minute())
         });
     }
 
