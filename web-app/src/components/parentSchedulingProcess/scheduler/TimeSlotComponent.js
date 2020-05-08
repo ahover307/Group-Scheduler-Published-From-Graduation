@@ -13,6 +13,15 @@ class TimeSlotComponent extends Component {
     };
 
     findTimes = async () => {
+        console.log({
+            partyPackage: this.props.partyPackage,
+            dayOfWeek: this.props.dayOfWeek,
+            roomsRequested: this.props.roomsRequested,
+            dateDay: this.props.dateDay,
+            dateMonth: this.props.dateMonth,
+            dateYear: this.props.dateYear
+        })
+
         return (await firebase.functions().httpsCallable('checkPartyTime')({
             partyPackage: this.props.partyPackage,
             dayOfWeek: this.props.dayOfWeek,

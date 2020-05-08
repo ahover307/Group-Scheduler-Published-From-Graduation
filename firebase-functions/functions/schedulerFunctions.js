@@ -23,8 +23,10 @@ exports.checkPartyTimes = functions.https.onCall(async (data) => {
         roomsRequested.push(parseInt(data.roomsRequested.charAt(1)));
         roomsRequested.push(parseInt(data.roomsRequested.charAt(4)));
         roomsRequested.push(parseInt(data.roomsRequested.charAt(7)));
-    } else {
+    } else if (typeof roomsRequested === typeof []) {
         roomsRequested = data.roomsRequested
+    } else {
+        throw new functions.https.HttpsError('failure', 'Could not initialize ' + err);
     }
 
     return await kickstartGenerateTimesFunction({
@@ -125,7 +127,7 @@ async function roomDBCheck(referenceAndRoom) {
         .then((snapshot) => {
             let temp = [];
             snapshot.forEach(doc => {
-                let index = doc.data().roomsRequested.indexOf(roomRequested[0]);
+                let index = doc.data().roomsRequested.indexOf(roomRequested);
                 temp.push(doc.data().roomTimes[index]);
                 temp.push(doc.data().roomTimes[index + 1]);
             });
@@ -197,7 +199,7 @@ function createFilledTimeReference(data) {
     const day = data.day;
     const month = data.month;
     const year = data.year;
-    const roomRequested = data.roomRequested;
+    const roomRequested = parseInt(data.roomRequested);
 
     return db.collection('Parties')
         .where('dateDay', '==', day)
@@ -695,7 +697,7 @@ async function kickstartGenerateTimesFunction(data) {
             day: data.dateDay,
             month: data.dateMonth,
             year: data.dateYear,
-            room: data.roomsRequested[0],
+            room: parseInt(data.roomsRequested[0]),
             dayOfWeek: data.dayOfWeek
         });
     } else if (data.partyPackage === 2 || data.partyPackage === 6 || data.partyPackage === 7 || data.partyPackage === 8) {
@@ -704,8 +706,8 @@ async function kickstartGenerateTimesFunction(data) {
             day: data.dateDay,
             month: data.dateMonth,
             year: data.dateYear,
-            room1: data.roomsRequested[0],
-            room2: data.roomsRequested[1],
+            room1: parseInt(data.roomsRequested[0]),
+            room2: parseInt(data.roomsRequested[1]),
             dayOfWeek: data.dayOfWeek
         });
     } else if (data.partyPackage === 3) {
@@ -714,9 +716,9 @@ async function kickstartGenerateTimesFunction(data) {
             day: data.dateDay,
             month: data.dateMonth,
             year: data.dateYear,
-            room1: data.roomsRequested[0],
-            room2: data.roomsRequested[1],
-            room3: data.roomsRequested[2],
+            room1: parseInt(data.roomsRequested[0]),
+            room2: parseInt(data.roomsRequested[1]),
+            room3: parseInt(data.roomsRequested[2]),
             dayOfWeek: data.dayOfWeek
         });
     }

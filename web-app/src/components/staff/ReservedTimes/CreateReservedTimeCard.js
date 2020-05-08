@@ -33,7 +33,7 @@ class CreateReservedTimeCard extends Component {
     };
 
     handleChange = (e) => {
-        this.setState({room: e.target.value});
+        this.setState({room: parseInt(e.target.value)});
     }
 
     createTime = () => {
