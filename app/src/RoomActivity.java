@@ -26,6 +26,7 @@ public class RoomActivity extends AppCompatActivity {
         partyPackage = intent.getIntExtra("package", -1);
 
 
+
         Spinner spinner = findViewById(R.id.spinner_rooms);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -33,12 +34,10 @@ public class RoomActivity extends AppCompatActivity {
                 String room = spinner.getSelectedItem().toString();
                 TextView description = findViewById(R.id.text_roomDescription);
                 switch(room) {
-                    case "Main Gym": description.setText("This is the main gym."); break;
-                    case "Kid Maze": description.setText("Kidmazium at Paramount Sports Complex is a multi-level climbing and play structure for children. It includes tubes, nets, tunnels and slides for climbing, crawling and sliding fun! There is even a \"bouncy-house\" included!"); break;
-                        case "Rockwall": description.setText("In order to use our rockwall at Paramount by yourself and a friend, you and/or your friend need to be belay certified.  If you are interested, please let us know and our instructor can certify you with a belay course that lasts about 45 minutes (cost $15). If you have been belay certified elsewhere, arrange a time to show our climbing staff that you can belay, and then there is a $5 charge to keep a certification on file.\n" +
-                                "\nHowever, if you are not belay certified, we can supply the belayer!  Call us to arrange a time for your group (5 or more participants minimum.  $15 per person for 2 hours)."); break;
-                    case "Preschool Room": description.setText("Appropriate for 3-5 year olds."); break;
-                    case "Ninja Room": description.setText("Ninja Warrior training is a great way to build a solid strength, flexibility, and movement base for any sport. Our experienced instructors will train you to progress from the “easy” obstacles to the almost impossible!");
+                    case "Main Gym": description.setText("Our main gym provides entertainment for all ages. Your party helper will run your party however you would like. Chose between obstacle courses, trampolines, pit activities, age appropriate games, relay races, music and free play, or do it all!"); break;
+                    case "Kid Maze": description.setText("The Kidmazium is a multi-level climbing and play structure for children aged up to 12 years. It includes nets, tunnels and slides for climbing, crawling, sliding fun. There’s even a bouncy house inside! Don’t forget your socks!"); break;
+                    case "Rockwall": description.setText("Our rockwall is a great place to learn a new skill or improve your technique while having fun with friends, Free climbing time, races, games and activities with your belay certified party helper."); break;
+                    case "Preschool Room": description.setText("Our preschool gym is the perfect size for your preschooler and friends! The party will include age appropriate structured games, mini trampoline, ball pit, parachute activities, music and free play."); break;
                 }
 
             }
@@ -69,6 +68,28 @@ public class RoomActivity extends AppCompatActivity {
         intent.putExtra("rooms", rooms);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle saved) {
+        super.onRestoreInstanceState(saved);
+
+        day = saved.getInt("day");
+        month = saved.getInt("month");
+        year = saved.getInt("year" );
+        dayOfWeek = saved.getInt("dayOfWeek");
+        partyPackage = saved.getInt("package");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle saved) {
+        saved.putInt("day", day);
+        saved.putInt("month", month);
+        saved.putInt("year", year);
+        saved.putInt("dayOfWeek", dayOfWeek);
+        saved.putInt("package", partyPackage);
+
+        super.onSaveInstanceState(saved);
     }
 
 

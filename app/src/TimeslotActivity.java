@@ -115,6 +115,8 @@ public class TimeslotActivity extends AppCompatActivity implements ConfirmationD
                             ConfirmationDialog confirmationDialog = new ConfirmationDialog();
                             confirmationDialog.setArguments(args);
                             confirmationDialog.show(getSupportFragmentManager(), "confirmationDialog");
+                            // TODO
+
                         }
 
                     }
@@ -427,5 +429,29 @@ public class TimeslotActivity extends AppCompatActivity implements ConfirmationD
     public void onDialogPositiveClick (DialogFragment dialog) {
         Intent intent = new Intent(this, CalendarActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle saved) {
+        super.onRestoreInstanceState(saved);
+
+        day = saved.getInt("day");
+        month = saved.getInt("month");
+        year = saved.getInt("year" );
+        dayOfWeek = saved.getInt("dayOfWeek");
+        partyPackage = saved.getInt("package");
+        roomsStrings = saved.getStringArray("roomStrings");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle saved) {
+        saved.putInt("day", day);
+        saved.putInt("month", month);
+        saved.putInt("year", year);
+        saved.putInt("dayOfWeek", dayOfWeek);
+        saved.putInt("package", partyPackage);
+        saved.putStringArray("roomStrings", roomsStrings);
+
+        super.onSaveInstanceState(saved);
     }
 }
