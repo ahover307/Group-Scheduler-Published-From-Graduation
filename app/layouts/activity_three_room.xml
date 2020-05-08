@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TwoRoomActivity">
+    tools:context=".ThreeRoomActivity">
 
     <Button
         android:id="@+id/button_roomSelect"
@@ -20,9 +20,9 @@
 
     <TextView
         android:id="@+id/text_roomDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:text="Here is where room description will go"
         app:layout_constraintBottom_toTopOf="@+id/button_packageSelect"
@@ -33,9 +33,9 @@
 
     <TextView
         android:id="@+id/text_roomDescription2"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:text="Here is where room description will go"
         app:layout_constraintBottom_toTopOf="@+id/button_packageSelect"
@@ -46,9 +46,9 @@
 
     <TextView
         android:id="@+id/text_roomDescription3"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:text="Here is where room description will go"
         app:layout_constraintBottom_toTopOf="@+id/button_packageSelect"
@@ -62,7 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         android:background="@android:color/white"
         android:entries="@array/Rooms"
