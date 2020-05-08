@@ -44,8 +44,9 @@ class Grid extends Component {
             const parties = [];
             snapshot.forEach(doc => {
                 const data = doc.data();
-                if (data.month === this.state.dateMonth && data.day === this.state.dateDay &&
-                    data.year === this.state.dateYear) {
+                console.log(data)
+                if (data.dateMonth === this.state.dateMonth && data.dateDay === this.state.dateDay &&
+                    data.dateYear === this.state.dateYear) {
                     parties.push({
                         id: doc.id,
                         data: doc.data()
@@ -53,7 +54,7 @@ class Grid extends Component {
 
                 }
             });
-
+            console.log(parties)
             this.setState({parties: parties});
 
         }).catch(error => {
@@ -136,9 +137,15 @@ class Grid extends Component {
 
                                 {this.state.parties && this.state.parties.sort().map((party, i) => {
                                     return (<tr key={i}>
-                                            <td key={i}>{translateTimeFromIndexToString(party.data.partyStartTime)} - {translateTimeFromIndexToString(party.data.partyEndTime)}
-                                            </td>
-                                            <td key={i + 1}>{party.data.name}</td>
+                                            {parseInt(party.data.partyPackage) === 2 ? <td key={i}>
+                                                {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[2])} </td> :
+                                                parseInt(party.data.partyPackage) === 3 ? <td key={i}>
+                                                    {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                    <td key={i}>
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td>
+                                            }
+
+                                            <td key={i + 1}>{party.data.partyName}</td>
                                             <td key={i + 2}> {updatePartyPackageString(party.data.partyPackage)}</td>
 
                                             {party.data.roomsRequested[0] === 1 ?
@@ -146,10 +153,10 @@ class Grid extends Component {
                                                     {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
                                                 party.data.roomsRequested[1] === 1 ?
                                                     <td key={i + 3}>
-                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[1])} - {translateTimeFromIndexToString(party.data.roomTimes[2])} </td> :
                                                     party.data.roomsRequested[2] === 1 ?
                                                         <td key={i + 3}>
-                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
                                                         <td key={i + 3}/>
                                             }
 
@@ -158,10 +165,10 @@ class Grid extends Component {
                                                     {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
                                                 party.data.roomsRequested[1] === 2 ?
                                                     <td key={i + 4}>
-                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[1])} - {translateTimeFromIndexToString(party.data.roomTimes[2])} </td> :
                                                     party.data.roomsRequested[2] === 2 ?
                                                         <td key={i + 4}>
-                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
                                                         <td key={i + 4}/>
                                             }
 
@@ -170,10 +177,10 @@ class Grid extends Component {
                                                     {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
                                                 party.data.roomsRequested[1] === 3 ?
                                                     <td key={i + 5}>
-                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[1])} - {translateTimeFromIndexToString(party.data.roomTimes[2])} </td> :
                                                     party.data.roomsRequested[2] === 3 ?
                                                         <td key={i + 5}>
-                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
                                                         <td key={i + 5}/>
                                             }
 
@@ -182,10 +189,10 @@ class Grid extends Component {
                                                     {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
                                                 party.data.roomsRequested[1] === 4 ?
                                                     <td key={i + 6}>
-                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[1])} - {translateTimeFromIndexToString(party.data.roomTimes[2])} </td> :
                                                     party.data.roomsRequested[2] === 4 ?
                                                         <td key={i + 6}>
-                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
                                                         <td key={i + 6}/>
                                             }
 
@@ -194,17 +201,16 @@ class Grid extends Component {
                                                     {translateTimeFromIndexToString(party.data.roomTimes[0])} - {translateTimeFromIndexToString(party.data.roomTimes[1])} </td> :
                                                 party.data.roomsRequested[1] === 5 ?
                                                     <td key={i + 7}>
-                                                        {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
+                                                        {translateTimeFromIndexToString(party.data.roomTimes[1])} - {translateTimeFromIndexToString(party.data.roomTimes[2])} </td> :
                                                     party.data.roomsRequested[2] === 5 ?
                                                         <td key={i + 7}>
-                                                            {translateTimeFromIndexToString(party.data.roomTimes[4])} - {translateTimeFromIndexToString(party.data.roomTimes[5])} </td> :
+                                                            {translateTimeFromIndexToString(party.data.roomTimes[2])} - {translateTimeFromIndexToString(party.data.roomTimes[3])} </td> :
                                                         <td key={i + 7}/>
                                             }
 
                                         </tr>
                                     )
                                 })}
-
 
                                 </tbody>
 

@@ -21,7 +21,7 @@ class SearchForm extends Component {
             const parties = [];
             snapshot.forEach(doc => {
                 const data = doc.data();
-                if (data.name === this.state.partyName && data.email === this.state.email) {
+                if (data.partyName === this.state.partyName && data.email === this.state.email) {
                     parties.push({
                         id: doc.id,
                         data: doc.data()
@@ -111,9 +111,9 @@ class SearchForm extends Component {
                             {this.state.parties && this.state.parties.map((party, i) => {
                                 return (
                                         <tr key={i}>
-                                            <td key={i}>{party.data.name}</td>
+                                            <td key={i}>{party.data.partyName}</td>
                                             <td key={i + 1}>{party.data.email}</td>
-                                            <td key={i + 2}>{party.data.month}/{party.data.day}/{party.data.year} </td>
+                                            <td key={i + 2}>{party.data.dateMonth}/{party.data.dateDay}/{party.data.dateYear} </td>
                                             <td key={i + 3}>
                                                 <Button onClick={this.deleteEntry} node="button"
                                                         className={'btn red'} itemID={party.id}>Delete</Button>
