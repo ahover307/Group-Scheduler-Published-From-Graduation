@@ -1,17 +1,22 @@
-.react-calendar {
-    margin-right: 0px;
-    width: 75%;
-    height: 100%;
-    margin-left: 12.5%
-}
 
-div.MuiToolbar-root.MuiToolbar-regular.MuiPickersToolbar-toolbar.MuiPickersDatePickerRoot-toolbar.MuiPickersDatePickerRoot-toolbarLandscape.MuiPickersToolbar-toolbarLandscape.MuiToolbar-gutters{
-    background: #653487;
+.react-calendar{
+    margin-right:0;
+    width:75%;
+    height:100%;
+    margin-left: 12.5%;
 
 }
 
-.MuiPickersStaticWrapper-staticWrapperRoot {
-    border: 1px solid rgba(0, 0, 0, 0.2);
+@media screen and (max-width: 760px){
+    .react-calendar{
+        margin-left:0;
+        width:100%;
+        height:100%;
+        margin-right: 0;
+
+    }
 }
+
+
 
 

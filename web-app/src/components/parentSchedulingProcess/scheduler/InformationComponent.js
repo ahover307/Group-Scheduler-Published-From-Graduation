@@ -9,7 +9,7 @@ class InformationComponent extends Component {
                     <div className={'input-field'}>
                         <label htmlFor={'partyName'}>Name on Party:</label>
                         <input
-                            placeholder={'Party Child\'s Name'}
+
                             type={'text'}
                             id={'partyName'}
                             className={'validate'}
@@ -24,7 +24,7 @@ class InformationComponent extends Component {
                     <div className={'input-field'}>
                         <label htmlFor={'age'}>Age of average participant:</label>
                         <input
-                            placeholder={'Party Child\'s Age'}
+
                             type={'number'}
                             id={'age'}
                             className={'validate'}
@@ -39,7 +39,7 @@ class InformationComponent extends Component {
                     <div className={'input-field'}>
                         <label htmlFor={'hostName'}>Host Name:</label>
                         <input
-                            placeholder={'Parent\'s Name'}
+
                             type={'text'}
                             id={'contactName'}
                             className={'validate'}

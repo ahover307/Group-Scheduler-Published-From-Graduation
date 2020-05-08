@@ -79,7 +79,7 @@ class ReservedTimes extends Component {
         return (
             <div>
                 {this.props.authError === "Login success" ?
-                    <div className={'container'}>
+                    <div className={'container center'}>
                         <div style={{textAlign: 'center'}}>
                             <h5 style={{color: "#653487"}}>Please select a date</h5>
                             <div className="z-depth-1 grey lighten-4 row"

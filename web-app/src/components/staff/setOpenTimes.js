@@ -271,3 +271,5 @@ class setOpenTimes extends Component {
         });
     };
 }
+
+export default setOpenTimes

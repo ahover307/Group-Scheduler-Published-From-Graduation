@@ -15,6 +15,7 @@ import ReservedTimes from "./components/staff/ReservedTimes/ReservedTimes";
 import {MuiPickersUtilsProvider} from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import CreateReservedTimeCard from "./components/staff/ReservedTimes/CreateReservedTimeCard";
+import OpenTimes from "./components/staff/OpenTimes";
 
 class App extends Component {
     state = {
@@ -58,6 +59,7 @@ class App extends Component {
                             <Route path={'/staff/grid'}> <Grid/></Route>
                             <Route path={'/staff/reservedTimes'}> <ReservedTimes/></Route>
                             <Route path={'/staff/create_reservedTimes'}> <CreateReservedTimeCard/></Route>
+                            <Route path={'/staff/openTimes'}> <OpenTimes/></Route>
                         </Switch>
 
                     </MuiPickersUtilsProvider></BrowserRouter>

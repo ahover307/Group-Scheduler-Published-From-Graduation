@@ -1,38 +1,33 @@
 import React, {Component} from "react";
 import {DatePicker} from "@material-ui/pickers";
+import Calendar from "react-calendar";
 import './Calendar.css';
 
 class calendarComponent extends Component {
-    state = {
-        date: 0,
-    }
     onClickDay = date => {
         this.setState({
-            date: date
+            clicked : true
         });
-
         this.props.parentCallBackDate({
-            date: date.date(),
-            month: date.month() + 1,
-            year: date.year(),
-            day: date.day() + 1
+            date: date.getDate(),
+            month: date.getMonth() + 1,
+            year: date.getFullYear(),
+            day: date.getDay() + 1
         });
     };
 
     //https://www.npmjs.com/package/react-calendar
     render() {
         return (
-            <div className={'container center'} style={{width: "470px", marginTop: '1.5%',marginBottom: '1.5%'}}>
-                    <DatePicker
-                        ID={'calendar'}
-                        orientation={'landscape'}
-                        variant={'static'}
-                        openTo={'date'}
-                        value={this.state.date}
-                        onChange={this.onClickDay}
+            <div style={{marginTop:'2%',  marginBottom: '2%'}}>
+                <div className={'container center'}>
+                    <Calendar
+                        calendarType={"US"}
+                        onClickDay={this.onClickDay}
                     />
+                </div>
             </div>
-        );
+        )
     }
 }
 

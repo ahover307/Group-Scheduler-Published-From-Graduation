@@ -11,7 +11,7 @@ const Toolbar = (props) => {
         const {auth} = props;
         const links = auth.uid ? <SignedInLinks/> : null;
         return (
-            <header className="toolbar">
+            <header className="toolbar" style={{zIndex: '9999'}}>
                 <nav className="toolbar_navigation">
                     <div className="toolbar_toggle-button">
                         <DrawerToggleButton click={props.drawerClickHandler}/>

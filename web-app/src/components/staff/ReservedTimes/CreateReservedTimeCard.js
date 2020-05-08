@@ -87,19 +87,21 @@ class CreateReservedTimeCard extends Component {
             );
         } else {
             return (
-                <div className={'container'}>
+                <div className={'container'} style={{color: "#653487"}}>
                     <div style={{textAlign: 'center'}}>
                         <div className="section"/>
                         <h3 style={{color: "#653487"}}>Complete the form below to reserved a time in any room</h3>
                         <div>
                             <div>
-                                <h5 style={{color: "#653487"}}>Please select a date</h5>
+
                                 <div className="z-depth-1 grey lighten-4 row"
                                      style={{border: '1px solid #EEE', margin: '2%'}}>
+                                    <h5 style={{color: "#653487"}}>Please select a date</h5>
                                     <Calendar parentCallBackDate={this.callBackFunctionDate}/>
                                 </div>
                             </div>
-                            <div>
+                            <div className="z-depth-1 grey lighten-4 row"
+                                 style={{border: '1px solid #EEE', margin: '2%', paddingRight:'2%', paddingLeft:'2%'}}>
                                 <h5>Please select the room to apply this too</h5>
                                 <div key={0} className={'input-field'}>
                                     <select key={0} name={0} id={0}
@@ -118,7 +120,8 @@ class CreateReservedTimeCard extends Component {
                                     </select>
                                 </div>
                             </div>
-                            <div>
+                            <div className="z-depth-1 grey lighten-4 row"
+                                 style={{border: '1px solid #EEE', margin: '2%', padding:'2%'}}>
                                 <h5>Choose a start and end time</h5>
                                 <div>
                                     <TimePicker
@@ -140,13 +143,14 @@ class CreateReservedTimeCard extends Component {
                                         onChange={this.handleChangeTimeEnd}
                                     />
                                 </div>
+                                <Button style={{color: 'white', marginTop: '2%'}}
+                                        onClick={this.createTime}
+                                        className={'btn purple'}>
+                                    Add time to DB
+                                </Button>
                             </div>
                         </div>
-                        <Button style={{color: 'purple'}}
-                                onClick={this.createTime}
-                                className={'btn white'}>
-                            Add time to DB
-                        </Button>
+
                     </div>
 
                 </div>
